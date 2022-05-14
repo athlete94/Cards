@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import RecoveryPassword from "./components/RecoveryPassword";
 import Registration from "./components/Registration";
 import Test from "./components/Test";
+import Nav from "./components/Nav";
 
 
 export const PATH = {
@@ -22,10 +23,11 @@ export const PATH = {
 
 
 function App() {
-    debugger
+
     return (
         <BrowserRouter >
             <div className="App">
+                <Nav />
                 <Routes>
                     <Route path={PATH.LOGIN} element={<Login/>}/>
                     <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>

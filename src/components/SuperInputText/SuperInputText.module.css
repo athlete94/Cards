@@ -1,0 +1,28 @@
+.superInput {
+    color: #4a4f4f;
+    background-color: #e7e2e2;
+    margin-bottom: 10px;
+    width: 150px;
+    border: 1px solid #b0c1c1;
+    border-radius: 5px;
+    padding: 2px;
+
+    box-shadow: 0 0 5px 1px #8e64bc;
+}
+
+.superInput:active {
+    box-shadow: none;
+}
+
+.errorInput {
+    margin-bottom: 10px;
+    width: 150px;
+    border: 1px solid red;
+    border-radius: 10px;
+    color: #5d5b5b;
+    box-shadow: 0 0 15px 4px #8e64bc;
+}
+
+.error {
+    color: red;
+}
