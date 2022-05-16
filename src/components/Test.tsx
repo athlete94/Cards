@@ -17,7 +17,7 @@ const Test = () => {
         if(text === '') {
             setError('Enter text')
         }
-        dispatch(setDisplayText(text))
+        text && dispatch(setDisplayText(text))
         setText('')
     }
     const clearOnClickHandler = () => {
