@@ -25,7 +25,7 @@ export const PATH = {
 function App() {
 
     return (
-        <BrowserRouter >
+        <HashRouter >
             <div className="App">
                 <Nav />
                 <Routes>
@@ -38,7 +38,7 @@ function App() {
                     <Route path={PATH.TEST} element={<Test/>}/>
                 </Routes>
             </div>
-        </BrowserRouter>
+        </HashRouter>
 
     );
 }
