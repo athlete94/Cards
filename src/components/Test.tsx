@@ -27,9 +27,11 @@ const Test = () => {
         dispatch(disabledButton(checked))
     }
 
+    const onFocusHandler = () => {
+        setError('')
+    }
     const onChangeText = (text: string) => {
         setText(text)
-        setError('')
     }
 
     return (
@@ -38,7 +40,8 @@ const Test = () => {
             <div>
                 <SuperInputText error={error}
                                 value={text}
-                                onChangeText={onChangeText}/>
+                                onChangeText={onChangeText}
+                                onFocus={onFocusHandler}/>
             </div>
             <div>
                 <SuperButton onClick={displayOnClickHandler} disabled={disabledBtn}>Display text</SuperButton>
