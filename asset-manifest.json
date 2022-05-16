@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/athlete94.github.io/FridayApp/static/css/main.ef6e4aaf.css",
-    "main.js": "/athlete94.github.io/FridayApp/static/js/main.17997fb9.js",
+    "main.js": "/athlete94.github.io/FridayApp/static/js/main.b2361b63.js",
     "static/js/787.1adc31ab.chunk.js": "/athlete94.github.io/FridayApp/static/js/787.1adc31ab.chunk.js",
     "index.html": "/athlete94.github.io/FridayApp/index.html",
     "main.ef6e4aaf.css.map": "/athlete94.github.io/FridayApp/static/css/main.ef6e4aaf.css.map",
-    "main.17997fb9.js.map": "/athlete94.github.io/FridayApp/static/js/main.17997fb9.js.map",
+    "main.b2361b63.js.map": "/athlete94.github.io/FridayApp/static/js/main.b2361b63.js.map",
     "787.1adc31ab.chunk.js.map": "/athlete94.github.io/FridayApp/static/js/787.1adc31ab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ef6e4aaf.css",
-    "static/js/main.17997fb9.js"
+    "static/js/main.b2361b63.js"
   ]
 }
