@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
