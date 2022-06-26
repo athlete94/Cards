@@ -50,6 +50,7 @@ export const setUserDataAC = (data:any)=>{
 export const loginTC = (payload:FormLoginType) => (dispatch: TypedDispatch) => {
    authApi.login(payload).then((res)=>{
       dispatch(setUserDataAC(res.data))
+       dispatch(isLoginAC(true))
    }).catch((e)=>{
        const error = e.response
            ? e.response.data.error
