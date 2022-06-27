@@ -4,7 +4,7 @@ import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
-import Profile from "./components/Profile";
+import Profile from "./components/Profile/Profile";
 import RecoveryPassword from "./components/RecoveryPassword";
 import Registration from "./components/Registration";
 import Test from "./components/Test";
