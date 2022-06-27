@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
+import { HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
 import RecoveryPassword from "./components/RecoveryPassword";
-import Registration from "./components/Registration";
 import Test from "./components/Test";
 import Nav from "./components/Nav";
+import Registration from "./components/Registration/Registration";
 
 
 export const PATH = {
