@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
+import { Navigate, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
@@ -9,6 +9,8 @@ import RecoveryPassword from "./components/RecoveryPassword";
 import Registration from "./components/Registration";
 import Test from "./components/Test";
 import Nav from "./components/Nav";
+import {authMe} from "./redux/authReducer";
+import {useAppSelector, useTypedDispatch} from "./redux/store";
 
 
 export const PATH = {
@@ -24,8 +26,22 @@ export const PATH = {
 
 function App() {
 
+    const dispatch = useTypedDispatch()
+    let initialized = useAppSelector(state=>state.login.initialized)
+    let isLogin = useAppSelector(state=>state.login.isLogin)
+
+    useEffect(()=>{
+         dispatch(authMe())
+    },[])
+debugger
+
+
+    if(!isLogin && initialized){
+       return <Navigate to={PATH.LOGIN}/>
+    }
+
     return (
-        <HashRouter >
+
             <div className="App">
                 <Nav />
                 <div>
@@ -40,8 +56,6 @@ function App() {
                     </Routes>
                 </div>
             </div>
-        </HashRouter>
-
     );
 }
 
