@@ -25,7 +25,7 @@ const Registration = () => {
             confirmPassword: "",
         },
         validate: (values) => {
-            const errors: any = {};
+            const errors: Partial<FormRegistrationType> = {} as Partial<FormRegistrationType>;
             if (!values.email) {
                 errors.email = "Required";
             } else if (
@@ -46,7 +46,6 @@ const Registration = () => {
             return errors;
         },
         onSubmit: (values) => {
-            debugger
             dispatch(registerTC(values));
         },
     });
@@ -90,14 +89,12 @@ const Registration = () => {
                                 variant="standard"
                                 {...formik.getFieldProps("confirmPassword")}
                             />
-                            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-                                <div style={{ color: "red" }}>{formik.errors.confirmPassword}</div>
-                            ) : null}
+                            <div style={{ color: "red" ,width: "200px", height: '50px'}}>
+                                {formik.errors.confirmPassword && formik.touched.confirmPassword ? formik.errors.confirmPassword : null}
+                            </div>
                             <Button size={'small'} type={"submit"}
                                     variant={"contained"} color={"inherit"}
-                                    sx={{
-                                        marginTop: '15px',
-                                    }}>
+                                    sx={{marginTop: '15px'}}>
                                 Sign up
                             </Button>
                             <div className={style.haveAccountContainer}>

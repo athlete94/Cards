@@ -36,7 +36,7 @@ export const registerTC = (formData: SignUpFormDataType): AppThunkType => (dispa
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            alert(error)
+            dispatch(setErrorAC(error));
         })
 };
 

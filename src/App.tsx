@@ -9,6 +9,7 @@ import RecoveryPassword from "./components/RecoveryPassword";
 import Test from "./components/Test";
 import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
+import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 
 
 export const PATH = {
@@ -27,6 +28,7 @@ function App() {
     return (
         <HashRouter >
             <div className="App">
+                <ErrorSnackbar/>
                 <Nav />
                 <div>
                     <Routes>
