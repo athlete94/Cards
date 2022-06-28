@@ -1,15 +1,12 @@
 import {TypedDispatch} from "./store";
 import {authApi} from "../api/auth-api";
 import {FormLoginType} from "../components/Login/Login";
+import {setUserDataAC} from "./profileReducer";
 
 
 let initialState = {
-    isLogin:false,
-    _id: "",
-    email: "",
-    name: "",
-    avatar: "",
-    publicCardPacksCount: 0,
+    isLogin: false,
+    initialized: false,
 }
 
 
@@ -17,57 +14,63 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
     switch (action.type) {
         case'IS-LOGIN':
             return {
-                ...state, isLogin:action.payload.isLogin,
+                ...state, isLogin: action.payload.isLogin,
             };
-        case 'SET-USER-DATA':
+        case 'SET-INITIALIZE':
             return {
-                ...state,
-                _id:action.payload.data._id,
-                email:action.payload.data.email,
-                name:action.payload.data.name,
-                avatar: action.payload.data.avatar,
-                publicCardPacksCount:action.payload.data.publicCardPacksCount,
+                ...state, initialized: action.payload.isInitialized
             }
         default:
             return state
     }
 }
 
-export const isLoginAC = (isLogin:boolean) =>{
+export const isLoginAC = (isLogin: boolean) => {
     return {
-        type:"IS-LOGIN",
-        payload:{isLogin},
+        type: "IS-LOGIN",
+        payload: {isLogin},
     } as const
 }
 
-export const setUserDataAC = (data:any)=>{
+export const setInitialized = (isInitialized: boolean) => {
     return {
-        type:"SET-USER-DATA",
-        payload:{data}
+        type: 'SET-INITIALIZE',
+        payload: {isInitialized}
     } as const
 }
 
-export const loginTC = (payload:FormLoginType) => (dispatch: TypedDispatch) => {
-   authApi.login(payload).then((res)=>{
-      dispatch(setUserDataAC(res.data))
-   }).catch((e)=>{
-       const error = e.response
-           ? e.response.data.error
-           : (e.message + ', more details in the console');
-       alert(error)
-   })
+export const authMe = () => (dispatch: TypedDispatch) => {
+    authApi.auth().then((res) => {
+        dispatch(isLoginAC(true))
+    }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        alert(error)
+    }).finally(() => {
+        dispatch(setInitialized(true))
+
+    })
 }
 
-export type AuthActionsType = isLoginACType | setUserDataACType
+export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => {
+    authApi.login(payload).then((res) => {
+        dispatch(setUserDataAC(res.data))
+        dispatch(isLoginAC(true))
+    }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        alert(error)
+    })
+}
+
+export type SetInitializedType = ReturnType<typeof setInitialized>
+export type AuthActionsType = isLoginACType | SetInitializedType
 
 type isLoginACType = ReturnType<typeof isLoginAC>
-type setUserDataACType = ReturnType<typeof setUserDataAC>
 
 type AuthStateType = {
-    isLogin:boolean
-    _id: string;
-    email: string;
-    name: string;
-    avatar?: string;
-    publicCardPacksCount: number;
+    isLogin: boolean
+    initialized: boolean
 }
