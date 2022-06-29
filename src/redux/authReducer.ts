@@ -4,9 +4,10 @@ import {FormLoginType} from "../components/Login/Login";
 import {setUserDataAC} from "./profileReducer";
 
 
-let initialState = {
+let initialState:AuthStateType = {
     isLogin: false,
     initialized: false,
+    status: 'idle'
 }
 
 
@@ -19,7 +20,9 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
         case 'SET-INITIALIZE':
             return {
                 ...state, initialized: action.payload.isInitialized
-            }
+            };
+        case 'SET-STATUS':
+            return {...state, status: action.payload.status}
         default:
             return state
     }
@@ -39,38 +42,54 @@ export const setInitialized = (isInitialized: boolean) => {
     } as const
 }
 
+export const setStatus =(status: RequestStatusType)=>{
+    return {
+        type:'SET-STATUS',
+        payload:{status}
+    } as const
+}
+
 export const authMe = () => (dispatch: TypedDispatch) => {
-    authApi.auth().then((res) => {
+    dispatch(setStatus('loading'))
+    authApi.auth().then(() => {
         dispatch(isLoginAC(true))
+        dispatch(setStatus('succeeded'))
     }).catch((e) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
         alert(error)
+        dispatch(setStatus('failed'))
     }).finally(() => {
         dispatch(setInitialized(true))
-
     })
 }
 
 export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => {
+    dispatch(setStatus('loading'))
     authApi.login(payload).then((res) => {
         dispatch(setUserDataAC(res.data))
         dispatch(isLoginAC(true))
+        dispatch(setStatus('succeeded'))
     }).catch((e) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
         alert(error)
+        dispatch(setStatus('failed'))
     })
 }
 
-export type SetInitializedType = ReturnType<typeof setInitialized>
-export type AuthActionsType = isLoginACType | SetInitializedType
+export type AuthActionsType = isLoginACType | SetInitializedType | SetStatusType
 
+export type SetInitializedType = ReturnType<typeof setInitialized>
+export type SetStatusType = ReturnType<typeof setStatus>
 type isLoginACType = ReturnType<typeof isLoginAC>
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 type AuthStateType = {
     isLogin: boolean
     initialized: boolean
+    status:RequestStatusType
 }

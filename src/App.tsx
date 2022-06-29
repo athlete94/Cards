@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import { Navigate, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
@@ -11,12 +11,14 @@ import Test from "./components/Test";
 import Nav from "./components/Nav";
 import {authMe} from "./redux/authReducer";
 import {useAppSelector, useTypedDispatch} from "./redux/store";
+import {LinearProgress} from "@material-ui/core";
+
 
 
 export const PATH = {
-    LOGIN: '/login',
+    LOGIN: '/',
     NEW_PASSWORD: '/new-password',
-    PROFILE: '/',
+    PROFILE: '/profile',
     RECOVERY_PASSWORD: '/recovery-password',
     REGISTRATION: '/registration',
     TEST: '/test',
@@ -28,22 +30,22 @@ function App() {
 
     const dispatch = useTypedDispatch()
     let initialized = useAppSelector(state=>state.login.initialized)
-    let isLogin = useAppSelector(state=>state.login.isLogin)
+    let status = useAppSelector(state=>state.login.status)
 
     useEffect(()=>{
          dispatch(authMe())
     },[])
-debugger
 
 
-    if(!isLogin && initialized){
-       return <Navigate to={PATH.LOGIN}/>
+    if(!initialized){
+       return <LinearProgress/>
     }
 
     return (
 
             <div className="App">
                 <Nav />
+                {status === 'loading' && <LinearProgress/>}
                 <div>
                     <Routes>
                         <Route path={PATH.LOGIN} element={<Login/>}/>
