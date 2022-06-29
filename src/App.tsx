@@ -11,6 +11,7 @@ import Test from "./components/Test";
 import Nav from "./components/Nav";
 import {authMe} from "./redux/authReducer";
 import {useAppSelector, useTypedDispatch} from "./redux/store";
+import {Preloader} from "./components/circlePreloader/Preloader";
 
 
 export const PATH = {
@@ -33,15 +34,14 @@ function App() {
     useEffect(()=>{
          dispatch(authMe())
     },[])
-debugger
 
 
-    if(!isLogin && initialized){
-       return <Navigate to={PATH.LOGIN}/>
-    }
+   if (!initialized) {
+       return <Preloader />
+   }
+
 
     return (
-
             <div className="App">
                 <Nav />
                 <div>

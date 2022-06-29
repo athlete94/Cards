@@ -15,6 +15,11 @@ export const authApi = {
     }
 }
 
+export const profileApi = {
+    updateUserInfo(payload: {name: string, avatar?: string}) {
+        return instance.put<ResponceUpdateUserType>('auth/me', payload)
+    }
+}
 
 type ResponseUserDataLogin = {
     _id: string;
@@ -30,3 +35,20 @@ type ResponseUserDataLogin = {
     error?: string;
 }
 
+export type ResponceUpdateUserType = {
+    updatedUser: {
+        _id: string;
+        email: string;
+        name: string;
+        avatar?: string;
+        publicCardPacksCount: number;
+        created: Date;
+        updated: Date;
+        isAdmin: boolean;
+        verified: boolean; // подтвердил ли почту
+        rememberMe: boolean;
+        error?: string;
+    },
+    error?: string
+
+}

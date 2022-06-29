@@ -40,14 +40,16 @@ export const setInitialized = (isInitialized: boolean) => {
 }
 
 export const authMe = () => (dispatch: TypedDispatch) => {
-    authApi.auth().then((res) => {
-        dispatch(isLoginAC(true))
-    }).catch((e) => {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-        alert(error)
-    }).finally(() => {
+    authApi.auth()
+        .then((res) => {
+            dispatch(setUserDataAC(res.data))
+
+            }).catch((e) => {
+                const error = e.response
+                    ? e.response.data.error
+                    : (e.message + ', more de   tails in the console');
+
+        }).finally(() => {
         dispatch(setInitialized(true))
 
     })

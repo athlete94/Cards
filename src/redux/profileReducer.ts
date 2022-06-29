@@ -1,3 +1,5 @@
+import {profileApi, ResponceUpdateUserType} from "../api/auth-api";
+import {AppThunk} from "./store";
 
 
 type ProfileInitialStateType = {
@@ -16,23 +18,30 @@ let ProfileInitialState = {
     publicCardPacksCount: 0
 }
 
-export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialState, action: ActionsProfileType ): ProfileInitialStateType => {
-    switch(action.type){
+export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialState, action: ActionsProfileType): ProfileInitialStateType => {
+    switch (action.type) {
         case'SET-USER-DATA':
             return {
-        ...state,
-            _id: action.payload.data._id,
-            email: action.payload.data.email,
-            name: action.payload.data.name,
-            avatar: action.payload.data.avatar,
-            publicCardPacksCount: action.payload.data.publicCardPacksCount,
+                ...state,
+                _id: action.payload.data._id,
+                email: action.payload.data.email,
+                name: action.payload.data.name,
+                avatar: action.payload.data.avatar,
+                publicCardPacksCount: action.payload.data.publicCardPacksCount,
+            }
+        case 'UPDATE-USER-DATA':
+            return {
+                ...state,
+                ...action.payload.updatedUser
             }
     }
 
     return state
 };
 
-export type ActionsProfileType = setUserDataACType
+export type ActionsProfileType = SetUserDataACType | UpdateUserDataType
+
+type SetUserDataACType = ReturnType<typeof setUserDataAC>
 export const setUserDataAC = (data: any) => {
     return {
         type: "SET-USER-DATA",
@@ -40,4 +49,20 @@ export const setUserDataAC = (data: any) => {
     } as const
 }
 
-type setUserDataACType = ReturnType<typeof setUserDataAC>
+type UpdateUserDataType = ReturnType<typeof updateUserData>
+export const updateUserData = (data: ResponceUpdateUserType) => {
+    return {
+        type: 'UPDATE-USER-DATA',
+        payload: data
+    }as const
+}
+
+
+export const updateUserDataTC = (name: string, avatar?: string): AppThunk => dispatch => {
+    profileApi.updateUserInfo({name, avatar})
+        .then(res => {
+            dispatch(updateUserData(res.data))
+        })
+}
+
+

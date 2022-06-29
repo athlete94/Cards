@@ -46,10 +46,12 @@ const Login = () => {
              formik.resetForm();
         },
     });
+    debugger
 
     if(isLogin){
         return <Navigate to={PATH.PROFILE}/>
     }
+
 
     return (
         <div className={style.projectBlock}>
