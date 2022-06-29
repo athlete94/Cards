@@ -84,7 +84,11 @@ const Login = () => {
                                 label={"Remember me"}
                                 control={<Checkbox  {...formik.getFieldProps("rememberMe")} />}
                             />
-                            <Button size={'small'} type={"submit"} variant={"contained"} color={"inherit"}>
+                            <Button size={'small'}
+                                    type={"submit"}
+                                    variant={"contained"}
+                                    color={"inherit"}
+                                    disabled={!(formik.isValid && formik.dirty)}>
                                 Login
                             </Button>
                         </FormGroup>
