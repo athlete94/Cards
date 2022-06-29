@@ -2,23 +2,33 @@ import { useFormik } from 'formik';
 import React from 'react';
 import style from './RecoveryPassword.module.css'
 import {Button,  FormControl, FormGroup, TextField} from "@material-ui/core";
-import { useTypedDispatch} from "../../redux/store";
+import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {PATH} from "../../App";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
+import {recoveryPasswordTC} from "../../redux/recoveryPasswordReducer";
 
 
 type FormikErrorType = {
     email?: string
+    error: string
 }
 
 const RecoveryPassword = () => {
 
     const dispatch = useTypedDispatch()
     const navigate = useNavigate()
+    const error = useAppSelector((state)=> state.recoveryPassword.error)
+    const enteredEmail = useAppSelector((state) => state.recoveryPassword.enteredEmail)
+    const from = "test-front-admin <antoni.novik@yandex.ru>"
+    const message = `<div style="background-color: #eeff00; padding: 15px">
+              password recovery link:
+              <a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
+              </div>`;
 
     const formik = useFormik({
         initialValues: {
             email: "",
+            error: "",
         },
         validate: (values) => {
             const errors: Partial<FormikErrorType> = {}
@@ -32,10 +42,16 @@ const RecoveryPassword = () => {
             return errors;
         },
         onSubmit: (values) => {
-           /*dispatch(registerTC(values));*/
-            alert(values)
+           const email = values.email
+           const data = {email, message, from}
+           dispatch(recoveryPasswordTC(data));
+            console.log(values)
         },
     });
+
+    if (enteredEmail) {
+        return <Navigate to={PATH.SEND_MESSAGE}/>;
+    }
 
     return (
         <div className={style.projectBlock}>

@@ -10,6 +10,7 @@ import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
+import SendMessage from "./components/SendMessage";
 
 
 export const PATH = {
@@ -17,6 +18,7 @@ export const PATH = {
     NEW_PASSWORD: '/new-password',
     PROFILE: '/',
     RECOVERY_PASSWORD: '/recovery-password',
+    SEND_MESSAGE:'/send-message',
     REGISTRATION: '/registration',
     TEST: '/test',
     ERROR: "*"
@@ -37,6 +39,7 @@ function App() {
                         <Route path={PATH.ERROR} element={<NotFound/>}/>
                         <Route path={PATH.PROFILE} element={<Profile/>}/>
                         <Route path={PATH.RECOVERY_PASSWORD} element={<RecoveryPassword/>}/>
+                        <Route path={PATH.SEND_MESSAGE} element={<SendMessage/>}/>
                         <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                         <Route path={PATH.TEST} element={<Test/>}/>
                     </Routes>
