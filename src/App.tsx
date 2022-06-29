@@ -5,11 +5,11 @@ import Login from "./components/Login/Login";
 import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
-import RecoveryPassword from "./components/RecoveryPassword";
 import Test from "./components/Test";
 import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
+import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
 
 
 export const PATH = {
