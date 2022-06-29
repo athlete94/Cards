@@ -10,7 +10,7 @@ import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
-import SendMessage from "./components/SendMessage";
+import SendMessage from "./components/SendMessage/SendMessage";
 
 
 export const PATH = {
