@@ -33,9 +33,7 @@ export const redirectAC = (enteredEmail: string) => ({
 
 export const recoveryPasswordTC = (data:ForgotDataType)
     : AppThunkType => (dispatch) => {
-
    // for preloader
-
     passwordApi.forgot(data)
         .then(() => {
             dispatch(redirectAC(data.email))
@@ -50,6 +48,10 @@ export const recoveryPasswordTC = (data:ForgotDataType)
             // for preloader
         });
 };
+
+
+
+
 
 
 

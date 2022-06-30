@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
-import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
 import Test from "./components/Test";
@@ -11,6 +10,7 @@ import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
 import SendMessage from "./components/SendMessage/SendMessage";
+import NewPassword from './components/NewPassword/NewPassword';
 
 
 export const PATH = {

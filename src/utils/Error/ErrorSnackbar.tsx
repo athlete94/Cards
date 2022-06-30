@@ -3,6 +3,7 @@ import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {setErrorAC} from "../../redux/registrationReducer";
 import {Snackbar} from "@material-ui/core";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import {recoveryPasswordReducer, setPasswordErrorAC} from "../../redux/recoveryPasswordReducer";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref) {
