@@ -48,7 +48,7 @@ export const authMe = () => (dispatch: TypedDispatch) => {
                 const error = e.response
                     ? e.response.data.error
                     : (e.message + ', more de   tails in the console');
-
+                alert(error)
         }).finally(() => {
         dispatch(setInitialized(true))
 
@@ -64,6 +64,17 @@ export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => 
             ? e.response.data.error
             : (e.message + ', more details in the console');
         alert(error)
+    })
+}
+
+export const logoutTC = () => (dispatch: TypedDispatch) => {
+    authApi.logout()
+        .then(() => {
+        dispatch(isLoginAC(false))
+    }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
     })
 }
 

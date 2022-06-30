@@ -5,17 +5,20 @@
     height: 600px;
     border-radius: 8px;
     background-color: white;
+    position: relative;
 }
 
 .profileItem {
     width: 250px;
     background-color: #d2caee;
     border-radius: 8px;
-     position: relative;
+    position: relative;
 }
 
 .packsList {
     background-color: white;
+    width: 774px;
+    border-radius: 8px;
 }
 
 
@@ -37,6 +40,11 @@
     border-radius: 50%;
 }
 
+.userName {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
 .filter {
     display: flex;
     flex-direction: column;
@@ -49,8 +57,8 @@
 .edit {
     position: absolute;
     color: #4a4f4f;
-    left: 220px;
-    top: 5px;
+    left: 10px;
+    top: 10px;
     font-size: 12px;
 }
 
@@ -58,4 +66,21 @@
     text-decoration: none;
     border-bottom: 1px solid #4a4f4f;
     cursor: pointer;
+}
+
+
+/*///////*/
+
+.logoutButton {
+    position: absolute;
+    top: -25px;
+    right: 0px;
+}
+
+.logoutButton button {
+    background-color: #e7eaf6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #5c5394;
 }

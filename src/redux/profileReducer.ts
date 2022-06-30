@@ -1,4 +1,4 @@
-import {profileApi, ResponceUpdateUserType} from "../api/auth-api";
+import {profileApi, ResponceUpdateUserType} from "../api/profile-api";
 import {AppThunk} from "./store";
 
 
@@ -63,6 +63,12 @@ export const updateUserDataTC = (name: string, avatar?: string): AppThunk => dis
         .then(res => {
             dispatch(updateUserData(res.data))
         })
+        .catch (e => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+        })
 }
+
 
 
