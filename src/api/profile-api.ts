@@ -1,6 +1,7 @@
 import {instance} from "./auth-api";
 
 export const profileApi = {
+
     updateUserInfo(payload: {name: string, avatar?: string}) {
         return instance.put<ResponceUpdateUserType>('auth/me', payload)
     }

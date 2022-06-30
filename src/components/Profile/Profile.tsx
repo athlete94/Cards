@@ -51,10 +51,12 @@ const Profile = () => {
                 <div className={s.profileItem}>
                     <div className={s.userInfo}
                          onMouseEnter={() => setShow(true)}
-                         onMouseLeave={() => setShow(false)}>
+                         onMouseLeave={() => setShow(false)}
+                    >
                         <div className={s.avatar}>
                             <img
-                                src='https://www.meme-arsenal.com/create/template/1025248' alt=""/>
+                                src={'https://www.meme-arsenal.com/memes/b877babd9c07f94b952c7f152c4e264e.jpg'}
+                                alt=""/>
                         </div>
                         <div className={s.userName}>
                             {edit ? <input type="text"

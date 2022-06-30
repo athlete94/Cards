@@ -61,6 +61,7 @@ export const updateUserData = (data: ResponceUpdateUserType) => {
 export const updateUserDataTC = (name: string, avatar?: string): AppThunk => dispatch => {
     profileApi.updateUserInfo({name, avatar})
         .then(res => {
+            debugger
             dispatch(updateUserData(res.data))
         })
         .catch (e => {
