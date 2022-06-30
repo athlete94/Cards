@@ -3,7 +3,6 @@ import './App.css';
 import { HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NotFound from "./components/NotFound";
-
 import Profile from "./components/Profile/Profile";
 import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
