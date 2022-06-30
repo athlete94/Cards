@@ -15,7 +15,6 @@ const Profile = () => {
     let [edit, setEdit] = useState<boolean>(false)// change user data
     let [userName, setUserName] = useState<string>('')
 
-    debugger
     const dispatch = useTypedDispatch()
 
     let isLogin = useAppSelector(state => state.login.isLogin)

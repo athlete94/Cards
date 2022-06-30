@@ -5,12 +5,12 @@ type InitStateType = typeof initState;
 type SetSuccessActionType = ReturnType<typeof setSuccessAC>;
 type SetErrorActionType = ReturnType<typeof setErrorAC>;
 export type RegistrationActionsType = SetSuccessActionType | SetErrorActionType;
+
 export type SignUpFormDataType = {
     email: string
     password: string
     confirmPassword: string
 };
-
 
 const initState = {
     success: false,

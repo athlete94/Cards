@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import  {AxiosResponse} from "axios";
 import {instance} from "./instance";
 
 
@@ -13,7 +13,6 @@ export const passwordApi = {
 }
 
 //types
-
 export type NewPasswordResponseType = {
     info: string
 }

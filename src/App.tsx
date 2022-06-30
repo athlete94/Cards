@@ -15,7 +15,6 @@ import {useAppSelector, useTypedDispatch} from "./redux/store";
 import {LinearProgress} from "@material-ui/core";
 
 
-
 export const PATH = {
     LOGIN: '/login',
     NEW_PASSWORD: '/new-password',
@@ -37,7 +36,6 @@ function App() {
     useEffect(()=>{
          dispatch(authMe())
     },[])
-debugger
 
 
     if(!initialized){

@@ -1,7 +1,4 @@
-import axios from "axios";
 import {instance} from "./instance";
-
-
 
 export const registrationApi = {
     register(email: string,  password: string) {

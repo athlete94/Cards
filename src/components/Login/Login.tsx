@@ -46,7 +46,6 @@ const Login = () => {
              formik.resetForm();
         },
     });
-    debugger
 
     if(isLogin){
         return <Navigate to={PATH.PROFILE}/>
