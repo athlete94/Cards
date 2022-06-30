@@ -62,6 +62,7 @@ export const authMe = () => (dispatch: TypedDispatch) => {
         dispatch(setStatus('failed'))
     }).finally(() => {
         dispatch(setInitialized(true))
+
     })
 }
 
@@ -81,6 +82,17 @@ export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => 
 }
 
 export type AuthActionsType = isLoginACType | SetInitializedType | SetStatusType
+
+export const logoutTC = () => (dispatch: TypedDispatch) => {
+    authApi.logout()
+        .then(() => {
+        dispatch(isLoginAC(false))
+    }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+    })
+}
 
 export type SetInitializedType = ReturnType<typeof setInitialized>
 export type SetStatusType = ReturnType<typeof setStatus>

@@ -12,8 +12,12 @@ export const authApi = {
     },
     auth(){
         return instance.post('auth/me', {})
+    },
+    logout() {
+        return instance.delete('auth/me', {})
     }
 }
+
 
 
 type ResponseUserDataLogin = {

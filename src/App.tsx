@@ -4,6 +4,7 @@ import { HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NotFound from "./components/NotFound";
 
+import Profile from "./components/Profile/Profile";
 import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
@@ -32,11 +33,12 @@ function App() {
 
     const dispatch = useTypedDispatch()
     let initialized = useAppSelector(state=>state.login.initialized)
-    let status = useAppSelector(state=>state.login.status)
+    let isLogin = useAppSelector(state=>state.login.isLogin)
 
     useEffect(()=>{
          dispatch(authMe())
     },[])
+debugger
 
 
     if(!initialized){
