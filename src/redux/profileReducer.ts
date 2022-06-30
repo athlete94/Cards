@@ -1,5 +1,5 @@
 import {profileApi, ResponceUpdateUserType} from "../api/profile-api";
-import {AppThunk} from "./store";
+import {AppThunkType} from "./store";
 
 
 type ProfileInitialStateType = {
@@ -58,7 +58,7 @@ export const updateUserData = (data: ResponceUpdateUserType) => {
 }
 
 
-export const updateUserDataTC = (name: string, avatar?: string): AppThunk => dispatch => {
+export const updateUserDataTC = (name: string, avatar?: string): AppThunkType => dispatch => {
     profileApi.updateUserInfo({name, avatar})
         .then(res => {
             debugger

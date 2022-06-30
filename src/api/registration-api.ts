@@ -1,9 +1,7 @@
 import axios from "axios";
+import {instance} from "./instance";
 
-export const instance = axios.create({
-    baseURL:'http://localhost:7542/2.0/',
-    withCredentials: true,
-})
+
 
 export const registrationApi = {
     register(email: string,  password: string) {

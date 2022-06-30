@@ -9,8 +9,8 @@
 
 .container {
     background-color: #fff;
-    width: 350px;
-    height: 400px;
+    width: 450px;
+    height: 500px;
     flex-direction: column;
     border-radius: 8px;
     display: flex;

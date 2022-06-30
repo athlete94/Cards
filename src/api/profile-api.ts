@@ -1,4 +1,4 @@
-import {instance} from "./auth-api";
+import {instance} from "./instance";
 
 export const profileApi = {
 

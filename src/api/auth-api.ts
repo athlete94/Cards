@@ -1,10 +1,8 @@
 import axios from "axios";
 import {FormLoginType} from "../components/Login/Login";
+import {instance} from "./instance";
 
-export const instance = axios.create({
-    baseURL:'http://localhost:7542/2.0/',
-    withCredentials: true,
-})
+
 
 export const authApi = {
     login(payload:FormLoginType){

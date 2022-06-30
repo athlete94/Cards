@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import { HashRouter, Route, Routes} from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile/Profile";
@@ -32,7 +32,7 @@ function App() {
 
     const dispatch = useTypedDispatch()
     let initialized = useAppSelector(state=>state.login.initialized)
-    let isLogin = useAppSelector(state=>state.login.isLogin)
+    let status = useAppSelector((state)=>state.login.status)
 
     useEffect(()=>{
          dispatch(authMe())
@@ -45,7 +45,7 @@ debugger
     }
 
     return (
-        <HashRouter >
+
             <div className="App">
                 <ErrorSnackbar/>
                 <Nav />
@@ -62,7 +62,6 @@ debugger
                     </Routes>
                 </div>
             </div>
-        </HashRouter>
 
     );
 }
