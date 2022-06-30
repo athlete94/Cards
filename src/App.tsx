@@ -2,12 +2,8 @@ import React, {useEffect} from 'react';
 import './App.css';
 import { HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
-import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
-import Profile from "./components/Profile";
-import RecoveryPassword from "./components/RecoveryPassword";
-import Registration from "./components/Registration";
-import Test from "./components/Test";
+
 import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
@@ -62,7 +58,6 @@ function App() {
                         <Route path={PATH.RECOVERY_PASSWORD} element={<RecoveryPassword/>}/>
                         <Route path={PATH.SEND_MESSAGE} element={<SendMessage/>}/>
                         <Route path={PATH.REGISTRATION} element={<Registration/>}/>
-                        <Route path={PATH.TEST} element={<Test/>}/>
                     </Routes>
                 </div>
             </div>
