@@ -10,7 +10,9 @@ export const authApi = {
     login(payload:FormLoginType){
         return instance.post<ResponseUserDataLogin>('auth/login', payload)
     },
-
+    auth(){
+        return instance.post('auth/me', {})
+    }
 }
 
 

@@ -1,15 +1,13 @@
 import {TypedDispatch} from "./store";
 import {authApi} from "../api/auth-api";
 import {FormLoginType} from "../components/Login/Login";
+import {setUserDataAC} from "./profileReducer";
 
 
-let initialState = {
-    isLogin:false,
-    _id: "",
-    email: "",
-    name: "",
-    avatar: "",
-    publicCardPacksCount: 0,
+let initialState:AuthStateType = {
+    isLogin: false,
+    initialized: false,
+    status: 'idle'
 }
 
 
@@ -17,57 +15,81 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
     switch (action.type) {
         case'IS-LOGIN':
             return {
-                ...state, isLogin:action.payload.isLogin,
+                ...state, isLogin: action.payload.isLogin,
             };
-        case 'SET-USER-DATA':
+        case 'SET-INITIALIZE':
             return {
-                ...state,
-                _id:action.payload.data._id,
-                email:action.payload.data.email,
-                name:action.payload.data.name,
-                avatar: action.payload.data.avatar,
-                publicCardPacksCount:action.payload.data.publicCardPacksCount,
-            }
+                ...state, initialized: action.payload.isInitialized
+            };
+        case 'SET-STATUS':
+            return {...state, status: action.payload.status}
         default:
             return state
     }
 }
 
-export const isLoginAC = (isLogin:boolean) =>{
+export const isLoginAC = (isLogin: boolean) => {
     return {
-        type:"IS-LOGIN",
-        payload:{isLogin},
+        type: "IS-LOGIN",
+        payload: {isLogin},
     } as const
 }
 
-export const setUserDataAC = (data:any)=>{
+export const setInitialized = (isInitialized: boolean) => {
     return {
-        type:"SET-USER-DATA",
-        payload:{data}
+        type: 'SET-INITIALIZE',
+        payload: {isInitialized}
     } as const
 }
 
-export const loginTC = (payload:FormLoginType) => (dispatch: TypedDispatch) => {
-   authApi.login(payload).then((res)=>{
-      dispatch(setUserDataAC(res.data))
-   }).catch((e)=>{
-       const error = e.response
-           ? e.response.data.error
-           : (e.message + ', more details in the console');
-       alert(error)
-   })
+export const setStatus =(status: RequestStatusType)=>{
+    return {
+        type:'SET-STATUS',
+        payload:{status}
+    } as const
 }
 
-export type AuthActionsType = isLoginACType | setUserDataACType
+export const authMe = () => (dispatch: TypedDispatch) => {
+    dispatch(setStatus('loading'))
+    authApi.auth().then(() => {
+        dispatch(isLoginAC(true))
+        dispatch(setStatus('succeeded'))
+    }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        alert(error)
+        dispatch(setStatus('failed'))
+    }).finally(() => {
+        dispatch(setInitialized(true))
+    })
+}
 
+export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => {
+    dispatch(setStatus('loading'))
+    authApi.login(payload).then((res) => {
+        dispatch(setUserDataAC(res.data))
+        dispatch(isLoginAC(true))
+        dispatch(setStatus('succeeded'))
+    }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        alert(error)
+        dispatch(setStatus('failed'))
+    })
+}
+
+export type AuthActionsType = isLoginACType | SetInitializedType | SetStatusType
+
+export type SetInitializedType = ReturnType<typeof setInitialized>
+export type SetStatusType = ReturnType<typeof setStatus>
 type isLoginACType = ReturnType<typeof isLoginAC>
-type setUserDataACType = ReturnType<typeof setUserDataAC>
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 type AuthStateType = {
-    isLogin:boolean
-    _id: string;
-    email: string;
-    name: string;
-    avatar?: string;
-    publicCardPacksCount: number;
+    isLogin: boolean
+    initialized: boolean
+    status:RequestStatusType
 }

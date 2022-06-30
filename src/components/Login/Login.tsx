@@ -2,8 +2,10 @@ import { useFormik } from 'formik';
 import React from 'react';
 import style from './Login.module.css'
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, TextField} from "@material-ui/core";
-import { useTypedDispatch} from "../../redux/store";
+import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {loginTC} from "../../redux/authReducer";
+import {Navigate} from "react-router-dom";
+import {PATH} from "../../App";
 
 export type FormLoginType = {
     email:string,
@@ -14,6 +16,8 @@ export type FormLoginType = {
 const Login = () => {
 
     const dispatch = useTypedDispatch()
+
+    const isLogin = useAppSelector(state=>state.login.isLogin)
 
     const formik = useFormik({
         initialValues: {
@@ -42,6 +46,10 @@ const Login = () => {
              formik.resetForm();
         },
     });
+
+    if(isLogin){
+        return <Navigate to={PATH.PROFILE}/>
+    }
 
     return (
         <div className={style.projectBlock}>
@@ -76,7 +84,11 @@ const Login = () => {
                                 label={"Remember me"}
                                 control={<Checkbox  {...formik.getFieldProps("rememberMe")} />}
                             />
-                            <Button size={'small'} type={"submit"} variant={"contained"} color={"inherit"}>
+                            <Button size={'small'}
+                                    type={"submit"}
+                                    variant={"contained"}
+                                    color={"inherit"}
+                                    disabled={!(formik.isValid && formik.dirty)}>
                                 Login
                             </Button>
                         </FormGroup>

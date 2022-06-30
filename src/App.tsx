@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import { HashRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
+import NewPassword from "./components/NewPassword";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
+import RecoveryPassword from "./components/RecoveryPassword";
+import Registration from "./components/Registration";
 import Test from "./components/Test";
 import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
@@ -11,6 +14,10 @@ import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
 import SendMessage from "./components/SendMessage/SendMessage";
 import NewPassword from './components/NewPassword/NewPassword';
+import {authMe} from "./redux/authReducer";
+import {useAppSelector, useTypedDispatch} from "./redux/store";
+import {LinearProgress} from "@material-ui/core";
+
 
 
 export const PATH = {
@@ -27,11 +34,25 @@ export const PATH = {
 
 function App() {
 
+    const dispatch = useTypedDispatch()
+    let initialized = useAppSelector(state=>state.login.initialized)
+    let status = useAppSelector(state=>state.login.status)
+
+    useEffect(()=>{
+         dispatch(authMe())
+    },[])
+
+
+    if(!initialized){
+       return <LinearProgress/>
+    }
+
     return (
         <HashRouter >
             <div className="App">
                 <ErrorSnackbar/>
                 <Nav />
+                {status === 'loading' && <LinearProgress/>}
                 <div>
                     <Routes>
                         <Route path={PATH.LOGIN} element={<Login/>}/>
