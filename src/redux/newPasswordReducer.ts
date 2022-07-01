@@ -35,11 +35,10 @@ export const setNewPasswordTC = (data:NewPasswordDataType):AppThunkType =>
         dispatch(setStatus('loading'));
         passwordApi.updatePassword(data)
             .then(() => {
-                debugger
-                setNewPasswordSuccessAC(true)
+                dispatch(setStatus('succeeded'));
+                dispatch(setNewPasswordSuccessAC(true))
             })
             .catch((e) => {
-                debugger
                 const error = e.response
                     ? e.response.data.error
                     : (e.message + ', more details in the console');
