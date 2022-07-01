@@ -2,6 +2,7 @@ import {TypedDispatch} from "./store";
 import {authApi} from "../api/auth-api";
 import {FormLoginType} from "../components/Login/Login";
 import {setUserDataAC} from "./profileReducer";
+import {setErrorAC} from "./registrationReducer";
 
 
 let initialState:AuthStateType = {
@@ -58,7 +59,7 @@ export const authMe = () => (dispatch: TypedDispatch) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        alert(error)
+        dispatch(setErrorAC(error))
         dispatch(setStatus('failed'))
     }).finally(() => {
         dispatch(setInitialized(true))
@@ -76,7 +77,7 @@ export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => 
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        alert(error)
+        dispatch(setErrorAC(error))
         dispatch(setStatus('failed'))
     })
 }
@@ -91,6 +92,7 @@ export const logoutTC = () => (dispatch: TypedDispatch) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
+        dispatch(setErrorAC(error))
     })
 }
 
