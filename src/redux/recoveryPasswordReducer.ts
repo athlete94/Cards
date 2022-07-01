@@ -1,5 +1,6 @@
 import {AppThunkType} from "./store";
 import {ForgotDataType, passwordApi} from "../api/password-api"
+import {setInitialized, setStatus} from "./authReducer";
 
 type InitStateType = typeof initState;
 type redirectActionType = ReturnType<typeof redirectAC>;
@@ -33,10 +34,11 @@ export const redirectAC = (enteredEmail: string) => ({
 
 export const recoveryPasswordTC = (data:ForgotDataType)
     : AppThunkType => (dispatch) => {
-   // for preloader
+    dispatch(setStatus('loading'));
     passwordApi.forgot(data)
         .then(() => {
             dispatch(redirectAC(data.email))
+            dispatch(setStatus('succeeded'));
         })
         .catch((e) => {
             const error = e.response
@@ -45,7 +47,7 @@ export const recoveryPasswordTC = (data:ForgotDataType)
             dispatch(setPasswordErrorAC(error));
         })
         .finally(() => {
-            // for preloader
+            dispatch(setInitialized(true))
         });
 };
 

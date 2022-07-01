@@ -1,3 +1,6 @@
+import {AppThunkType} from "./store";
+import {setInitialized, setStatus} from "./authReducer";
+import {NewPasswordDataType, passwordApi} from "../api/password-api";
 
 type InitStateType = typeof initState
 type setNewPasswordSuccessActionType = ReturnType<typeof setNewPasswordSuccessAC>
@@ -26,3 +29,24 @@ const SET_NEW_PASSWORD_ERROR = "newPassword/SET-NEW-PASSWORD-ERROR";
 
 export const  setNewPasswordSuccessAC = (success: boolean) => ({type:SET_NEW_PASSWORD_SUCCESS, success}) as const
 export const setNewPasswordErrorAC = (error:string | null) => ({type: SET_NEW_PASSWORD_ERROR, error})as const
+
+export const setNewPasswordTC = (data:NewPasswordDataType):AppThunkType =>
+    (dispatch)=> {
+        dispatch(setStatus('loading'));
+        passwordApi.updatePassword(data)
+            .then(() => {
+                debugger
+                setNewPasswordSuccessAC(true)
+            })
+            .catch((e) => {
+                debugger
+                const error = e.response
+                    ? e.response.data.error
+                    : (e.message + ', more details in the console');
+                dispatch(setNewPasswordErrorAC(error));
+                dispatch(setStatus('failed'))
+            })
+            .finally(()=> {
+                dispatch(setInitialized(true))
+            })
+    }

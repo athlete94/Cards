@@ -2,11 +2,13 @@ import { useFormik } from 'formik';
 import React from 'react';
 import style from './NewPassword.module.css'
 import {Button,  FormControl, FormGroup, TextField} from "@material-ui/core";
-import { useTypedDispatch} from "../../redux/store";
-import {useNavigate} from "react-router-dom";
+import {useAppSelector, useTypedDispatch} from "../../redux/store";
+import {Navigate, useParams} from "react-router-dom";
+import {setNewPasswordTC} from "../../redux/newPasswordReducer";
+import { PATH } from '../../App';
 
 
-export type FormNewPasswordType = {
+type FormNewPasswordType = {
     password:string,
     confirmPassword?:string
 }
@@ -14,7 +16,9 @@ export type FormNewPasswordType = {
 const NewPassword = () => {
 
     const dispatch = useTypedDispatch()
-    const navigate = useNavigate()
+
+    const success = useAppSelector(state => state.newPassword.success)
+    const {token} = useParams()
 
     const formik = useFormik({
         initialValues: {
@@ -36,10 +40,14 @@ const NewPassword = () => {
             return errors;
         },
         onSubmit: (values) => {
-            //dispatch();
-            console.log(values)
+            dispatch(setNewPasswordTC({password: values.password, resetPasswordToken: token}))
+            formik.resetForm();
         },
     });
+
+    if (success) {
+        return <Navigate to={PATH.LOGIN}/>
+    }
 
     return (
         <div className={style.projectBlock}>
@@ -77,6 +85,9 @@ const NewPassword = () => {
                                     sx={{marginTop: '15px'}}>
                                 Create new password
                             </Button>
+                            <div>
+                                {token}
+                            </div>
                         </FormGroup>
                     </FormControl>
                 </form>

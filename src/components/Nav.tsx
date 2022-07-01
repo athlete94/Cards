@@ -8,7 +8,6 @@ const Nav = () => {
             <NavLink to={'/registration'}>Registration</NavLink>
             <NavLink to={'/profile'}>Profile</NavLink>
             <NavLink to={'/test'}>Test</NavLink>
-            <NavLink to={'/new-password'}>New password</NavLink>
             <NavLink to={'/recovery-password'}>Recovery password</NavLink>
         </div>
     );

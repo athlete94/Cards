@@ -1,5 +1,6 @@
 import {registrationApi} from "../api/registration-api";
 import {AppThunkType} from "./store";
+import {setStatus} from "./authReducer";
 
 type InitStateType = typeof initState;
 type SetSuccessActionType = ReturnType<typeof setSuccessAC>;
@@ -17,15 +18,25 @@ const initState = {
     error: null as null | string,
 };
 
-// Action creators
+export const registrationReducer = (state: InitStateType = initState, action: RegistrationActionsType): InitStateType => {
+    switch (action.type) {
+        case "registration/SET-SUCCESS":
+            return {...state, success: action.value};
+        case "registration/SET-ERROR":
+            return {...state, error: action.value};
+        default:
+            return state;
+    }
+};
+
 export const setSuccessAC = (value: boolean) =>
     ({type: "registration/SET-SUCCESS", value} as const);
 export const setErrorAC = (value: null | string) =>
     ({type: "registration/SET-ERROR", value} as const);
 
-// Thunk creators
 export const registerTC = (formData: SignUpFormDataType): AppThunkType => (dispatch) => {
     const {email, password} = formData;
+    dispatch(setStatus('loading'));
     registrationApi.register(email, password)
         .then(response => {
             console.log(response);
@@ -38,15 +49,8 @@ export const registerTC = (formData: SignUpFormDataType): AppThunkType => (dispa
                 : (e.message + ', more details in the console');
             dispatch(setErrorAC(error));
         })
+        .finally(() => {
+            dispatch(setStatus('idle'));
+        })
 };
 
-export const registrationReducer = (state: InitStateType = initState, action: RegistrationActionsType): InitStateType => {
-    switch (action.type) {
-        case "registration/SET-SUCCESS":
-            return {...state, success: action.value};
-        case "registration/SET-ERROR":
-            return {...state, error: action.value};
-        default:
-            return state;
-    }
-};

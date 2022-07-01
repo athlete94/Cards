@@ -22,7 +22,7 @@ const RecoveryPassword = () => {
     const from = "test-front-admin <antoni.novik@yandex.ru>"
     const message = `<div style="background-color: #eeff00; padding: 15px">
               password recovery link:
-              <a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
+              <a href='http://localhost:3000/#${PATH.NEW_PASSWORD}/$token$'>link</a>
               </div>`;
 
     const formik = useFormik({
