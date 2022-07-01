@@ -17,3 +17,30 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.linkRecovery{
+    cursor: pointer;
+    background-color: white;
+    width:80%;
+    border:none;
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+    text-align: right;
+    margin: 2px 0 40px 0;
+}
+
+.linkRegistration{
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    font-size: 14px;
+    text-decoration: none;
+    color: cornflowerblue;
+    text-align: center;
+}
+
+.textForRegistration{
+    text-align: center;
+    padding: 30px 0 0 0;
+}

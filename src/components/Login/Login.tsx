@@ -4,7 +4,7 @@ import style from './Login.module.css'
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, TextField} from "@material-ui/core";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {loginTC} from "../../redux/authReducer";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../App";
 
 export type FormLoginType = {
@@ -16,7 +16,7 @@ export type FormLoginType = {
 const Login = () => {
 
     const dispatch = useTypedDispatch()
-
+    const navigate = useNavigate()
     const isLogin = useAppSelector(state=>state.login.isLogin)
 
     const formik = useFormik({
@@ -86,6 +86,9 @@ const Login = () => {
                                 label={"Remember me"}
                                 control={<Checkbox  {...formik.getFieldProps("rememberMe")} />}
                             />
+
+                            <button className={style.linkRecovery} onClick={()=>navigate(PATH.RECOVERY_PASSWORD)}>Forgot password</button>
+
                             <Button size={'small'}
                                     type={"submit"}
                                     variant={"contained"}
@@ -93,6 +96,8 @@ const Login = () => {
                                     disabled={!(formik.isValid && formik.dirty)}>
                                 Login
                             </Button>
+                            <div className={style.textForRegistration}>Don't have an account?</div>
+                            <button className={style.linkRegistration} onClick={()=>navigate(PATH.REGISTRATION)}>Sing Up</button>
                         </FormGroup>
                     </FormControl>
                 </form>
