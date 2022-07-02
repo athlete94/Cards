@@ -92,8 +92,11 @@ const Registration = () => {
                             <div style={{ color: "red" ,width: "200px", height: '50px'}}>
                                 {formik.errors.confirmPassword && formik.touched.confirmPassword ? formik.errors.confirmPassword : null}
                             </div>
-                            <Button size={'small'} type={"submit"}
-                                    variant={"contained"} color={"inherit"}
+                            <Button size={'small'}
+                                    type={"submit"}
+                                    variant={"contained"}
+                                    color={"inherit"}
+                                    disabled={!(formik.isValid && formik.dirty)}
                                     sx={{marginTop: '15px'}}>
                                 Sign up
                             </Button>

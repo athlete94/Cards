@@ -82,7 +82,8 @@ const NewPassword = () => {
                             </div>
                             <Button size={'small'} type={"submit"}
                                     variant={"contained"} color={"inherit"}
-                                    sx={{marginTop: '15px'}}>
+                                    sx={{marginTop: '15px'}}
+                                    disabled={!(formik.isValid && formik.dirty)}>
                                 Create new password
                             </Button>
                             <div>

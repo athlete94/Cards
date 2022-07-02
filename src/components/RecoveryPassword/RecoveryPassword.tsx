@@ -75,8 +75,11 @@ const RecoveryPassword = () => {
                                 <div style={{ color: "red", fontStyle:"10px" }}>{formik.errors.email}</div>
                             ) : null}
 
-                            <Button size={'small'} type={"submit"}
-                                    variant={"contained"} color={"inherit"}
+                            <Button size={'small'}
+                                    type={"submit"}
+                                    variant={"contained"}
+                                    color={"inherit"}
+                                    disabled={!(formik.isValid && formik.dirty)}
                                     sx={{marginTop: '15px'}}>
                                 Send instructions
                             </Button>
