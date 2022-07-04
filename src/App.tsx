@@ -13,6 +13,7 @@ import {authMe} from "./redux/authReducer";
 import {useAppSelector, useTypedDispatch} from "./redux/store";
 import {LinearProgress} from "@material-ui/core";
 import NewPassword from "./components/NewPassword/NewPassword";
+import Packs from "./components/Packs/Packs";
 
 
 export const PATH = {
@@ -23,7 +24,8 @@ export const PATH = {
     SEND_MESSAGE:'/send-message',
     REGISTRATION: '/registration',
     TEST: '/test',
-    ERROR: "*"
+    ERROR: "*",
+    PACKS:'/packs',
 }
 
 
@@ -57,6 +59,7 @@ function App() {
                         <Route path={PATH.RECOVERY_PASSWORD} element={<RecoveryPassword/>}/>
                         <Route path={PATH.SEND_MESSAGE} element={<SendMessage/>}/>
                         <Route path={PATH.REGISTRATION} element={<Registration/>}/>
+                        <Route path={PATH.PACKS} element={<Packs/>}/>
                     </Routes>
                 </div>
             </div>
