@@ -1,4 +1,3 @@
-import axios from "axios";
 import {FormLoginType} from "../components/Login/Login";
 import {instance} from "./instance";
 
@@ -9,10 +8,10 @@ export const authApi = {
         return instance.post<ResponseUserDataLogin>('auth/login', payload)
     },
     auth(){
-        return instance.post('auth/me', {})
+        return instance.post('auth/me')
     },
     logout() {
-        return instance.delete('auth/me', {})
+        return instance.delete('auth/me')
     }
 }
 
