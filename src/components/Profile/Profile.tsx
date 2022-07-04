@@ -7,6 +7,7 @@ import MinimumDistanceSlider from "../Slider/Slider";
 import {updateUserDataTC} from "../../redux/profileReducer";
 import {PATH} from "../../App";
 import {logoutTC} from "../../redux/authReducer";
+import {Search} from "../Search/Search";
 
 
 const Profile = () => {
@@ -77,7 +78,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className={s.packsList}>
-
+                    <Search />
                 </div>
 
                 <div className={s.logoutButton}>
