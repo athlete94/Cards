@@ -10,6 +10,7 @@ const initialState = {
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
+    // paramsSlider: [0, 100] as number[],
     token: '',
     tokenDeathTime: 0,
 }

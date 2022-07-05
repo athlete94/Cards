@@ -16,10 +16,7 @@ export default function PacksTable() {
     const dispatch= useTypedDispatch()
     const cards = useAppSelector(state=>state.picks.cardPacks)
 
-    useEffect(()=>{
-        debugger
-        dispatch(setCardsAllThunkCreator())
-    },[])
+
 
     const onClickDeleteHandler = (id:string) =>{
         dispatch(deletePickToState(id))

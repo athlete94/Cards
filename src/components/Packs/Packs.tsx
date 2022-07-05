@@ -4,17 +4,25 @@ import SearchInput from '../../utils/SearchInput/SearchInput';
 import s from "../Profile/Profile.module.css";
 import MinimumDistanceSlider from "../Slider/Slider";
 import PacksTable from "./PacksTable/PacksTable";
-import {useTypedDispatch} from "../../redux/store";
-import {addPickToState} from "../../redux/packs-reducer";
+import {useAppSelector, useTypedDispatch} from "../../redux/store";
+import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
+import {Search} from "../Search/Search";
+import {useEffect} from "react";
 
 
 export default function Packs() {
 
     const dispatch = useTypedDispatch()
+    const handler = useAppSelector(state => state.search.handler)
 
     const onClickButton =()=>{
         dispatch(addPickToState())
     }
+
+    useEffect(()=>{
+        debugger
+        dispatch(setCardsAllThunkCreator())
+    },[handler])
 
     return (
         <div className={style.projectBlock}>
@@ -32,7 +40,8 @@ export default function Packs() {
                 </div>
                 <div className={s.packsList}>
                     <div>
-                    <SearchInput buttonName={'Add new pack'} onClickAddItem={onClickButton}/>
+                    <Search label={'search to packs list'} />
+                    <button onClick={onClickButton}>Add new pack</button>
                 </div>
                     <div>
                     <PacksTable/>

@@ -1,7 +1,8 @@
 type InitialStateType = typeof initialState
 let initialState = {
     searchText: '',
-    paramsSlider: [0, 100] as number[]
+    paramsSlider: [0, 100] as number[],
+    handler: 0
 }
 
 
@@ -17,12 +18,17 @@ export const searchReducer = (state: InitialStateType = initialState, action: Se
                 ...state,
                 paramsSlider: action.paramsSlider
             }
+        case 'SET_HANDLER':
+            return {
+                ...state,
+                handler: action.handler
+            }
         default:
             return state
     }
 }
 
-export type SearchReducerActionType = SetSearchType | SetSliderParamsType
+export type SearchReducerActionType = SetSearchType | SetSliderParamsType | SetHandlerType
 
 export type SetSearchType = ReturnType<typeof setSearch>
 export const setSearch = (searchText: string) => {
@@ -37,5 +43,13 @@ export const setSliderParams = (paramsSlider: number[]) => {
     return {
         type: 'SET_SLIDER_PARAMS',
         paramsSlider
+    }as const
+}
+
+export type SetHandlerType = ReturnType<typeof setHandler>
+export const setHandler = (handler: number) => {
+    return {
+        type: 'SET_HANDLER',
+        handler
     }as const
 }
