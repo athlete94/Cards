@@ -15,6 +15,7 @@ import {LinearProgress} from "@material-ui/core";
 import NewPassword from "./components/NewPassword/NewPassword";
 import {CardsList} from "./components/CardsList/CardsList";
 
+import Packs from "./components/Packs/Packs";
 
 
 export const PATH = {
@@ -26,7 +27,8 @@ export const PATH = {
     REGISTRATION: '/registration',
     TEST: '/test',
     ERROR: "*",
-    CARDS: '/cards'
+    CARDS: '/cards',
+    PACKS:'/packs',
 }
 
 
@@ -61,6 +63,7 @@ function App() {
                         <Route path={PATH.SEND_MESSAGE} element={<SendMessage/>}/>
                         <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                         <Route path={PATH.CARDS} element={<CardsList/>}/>
+                        <Route path={PATH.PACKS} element={<Packs/>}/>
                     </Routes>
                 </div>
             </div>

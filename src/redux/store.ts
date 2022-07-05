@@ -9,6 +9,8 @@ import {RegistrationActionsType, registrationReducer} from "./registrationReduce
 import {PasswordRecoveryActionsType, recoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {NewPasswordActionsType, newPasswordReducer} from "./newPasswordReducer";
 import {CardsListActionsType, cardsListReducer} from "./cardListReducer";
+import {ActionsPacksType, packsReducer} from "./packs-reducer";
+import {searchReducer, SearchReducerActionType} from "./searchReducer";
 
 
 const reducers = combineReducers({
@@ -18,6 +20,8 @@ const reducers = combineReducers({
     recoveryPassword: recoveryPasswordReducer,
     newPassword: newPasswordReducer,
     cardsList: cardsListReducer,
+    search: searchReducer,
+    picks:packsReducer,
     testReducer
 })
 
@@ -27,7 +31,10 @@ export type AppRootStateType = ReturnType<typeof reducers>
 export type AppActionType =
     AuthActionsType | ActionsProfileType |
     RegistrationActionsType | PasswordRecoveryActionsType |
-    NewPasswordActionsType | CardsListActionsType
+    NewPasswordActionsType | CardsListActionsType |
+    NewPasswordActionsType | ActionsPacksType
+    | SearchReducerActionType
+
 
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
 export type RootState = ReturnType<typeof store.getState>
