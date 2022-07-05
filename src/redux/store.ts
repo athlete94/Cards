@@ -4,10 +4,11 @@ import {ActionsProfileType, ProfileReducer} from "./profileReducer";
 import {testReducer} from "./testReducer";
 import thunkMiddleware from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import { ThunkDispatch, ThunkAction } from 'redux-thunk';
+import {ThunkDispatch, ThunkAction } from 'redux-thunk';
 import {RegistrationActionsType, registrationReducer} from "./registrationReducer";
 import {PasswordRecoveryActionsType, recoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {NewPasswordActionsType, newPasswordReducer} from "./newPasswordReducer";
+import {CardsListActionsType, cardsListReducer} from "./cardListReducer";
 
 
 const reducers = combineReducers({
@@ -16,6 +17,7 @@ const reducers = combineReducers({
     registration: registrationReducer,
     recoveryPassword: recoveryPasswordReducer,
     newPassword: newPasswordReducer,
+    cardsList: cardsListReducer,
     testReducer
 })
 
@@ -25,8 +27,7 @@ export type AppRootStateType = ReturnType<typeof reducers>
 export type AppActionType =
     AuthActionsType | ActionsProfileType |
     RegistrationActionsType | PasswordRecoveryActionsType |
-    NewPasswordActionsType
-
+    NewPasswordActionsType | CardsListActionsType
 
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
 export type RootState = ReturnType<typeof store.getState>

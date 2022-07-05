@@ -1,4 +1,3 @@
-import axios from "axios";
 import {FormLoginType} from "../components/Login/Login";
 import {instance} from "./instance";
 
