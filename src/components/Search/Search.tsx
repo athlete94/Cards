@@ -1,19 +1,24 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import s from './Search.module.css'
 import {Box, TextField} from "@mui/material";
+import {useAppSelector, useTypedDispatch} from "../../redux/store";
+import {setSearch} from "../../redux/searchReducer";
+import useDebounce from "../../common/hooks/useDebounce";
 
-export const Search = () => {
-    let [value, setValue] = useState<string>('')
+type SearchPropsType = {
+    label: string
+}
+
+export const Search = ({label}: SearchPropsType) => {
+    let value = useAppSelector(state => state.search.searchText)
+    const debouncedSearchTerm = useDebounce(value, 500);
+
+    let dispatch = useTypedDispatch()
 
     const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value.trimStart())
+        dispatch(setSearch(e.currentTarget.value.trimStart()))
     }
 
-    const setSearch = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13) {
-
-        }
-    }
 
     return (
         <div className={s.search}>
@@ -24,12 +29,12 @@ export const Search = () => {
                 }}
             >
                 <TextField
+                    value={value}
                     fullWidth
                     id="fullWidth"
-                    label="Search"
+                    label={label}
                     variant="standard"
                     onChange={searchHandler}
-                    onKeyPress={setSearch}
                 />
             </Box>
 

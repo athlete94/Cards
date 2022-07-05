@@ -9,7 +9,6 @@ import {PATH} from "../../App";
 import {logoutTC} from "../../redux/authReducer";
 import {Search} from "../Search/Search";
 
-
 const Profile = () => {
 
     let [show, setShow] = useState<boolean>(false)// show button 'edit'
@@ -21,6 +20,8 @@ const Profile = () => {
     let isLogin = useAppSelector(state => state.login.isLogin)
     let {name, avatar} = useAppSelector(state => state.profile)
 
+
+    //-----------
 
     const editUserData = () => {
         setEdit(true)
@@ -41,6 +42,9 @@ const Profile = () => {
     const logoutHandler = () => {
         dispatch(logoutTC())
     }
+
+    //---------------search func
+
 
     if (!isLogin) {
         return <Navigate to={PATH.LOGIN}/>
@@ -78,7 +82,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className={s.packsList}>
-                    <Search />
+                    <Search label={'Search of packs list'}/>
                 </div>
 
                 <div className={s.logoutButton}>

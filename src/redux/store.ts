@@ -8,6 +8,7 @@ import { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import {RegistrationActionsType, registrationReducer} from "./registrationReducer";
 import {PasswordRecoveryActionsType, recoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {NewPasswordActionsType, newPasswordReducer} from "./newPasswordReducer";
+import {searchReducer, SearchReducerActionType} from "./searchReducer";
 
 
 const reducers = combineReducers({
@@ -16,6 +17,7 @@ const reducers = combineReducers({
     registration: registrationReducer,
     recoveryPassword: recoveryPasswordReducer,
     newPassword: newPasswordReducer,
+    search: searchReducer,
     testReducer
 })
 
@@ -25,7 +27,7 @@ export type AppRootStateType = ReturnType<typeof reducers>
 export type AppActionType =
     AuthActionsType | ActionsProfileType |
     RegistrationActionsType | PasswordRecoveryActionsType |
-    NewPasswordActionsType
+    NewPasswordActionsType | SearchReducerActionType
 
 
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>

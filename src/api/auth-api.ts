@@ -6,7 +6,7 @@ import {instance} from "./instance";
 
 export const authApi = {
     login(payload:FormLoginType){
-        return instance.post<ResponseUserDataLogin>('auth/login', payload)
+            return instance.post<ResponseUserDataLogin>('auth/login', payload)
     },
     auth(){
         return instance.post('auth/me', {})
