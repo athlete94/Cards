@@ -41,9 +41,9 @@ const setCardsAll = (payload:PacksStateType) =>{
     } as const
 }
 
-export const setCardsAllThunkCreator = () =>(dispatch:TypedDispatch)=>{
+export const setCardsAllThunkCreator = (search: string, sliderParams: number[]) =>(dispatch:TypedDispatch)=>{
     dispatch(setStatus('loading'))
-    packsApi.getPacks().then((res)=>{
+    packsApi.getPacks(search, sliderParams).then((res)=>{
         debugger
         dispatch(setCardsAll(res.data))
         dispatch(setStatus('succeeded'))
@@ -51,7 +51,7 @@ export const setCardsAllThunkCreator = () =>(dispatch:TypedDispatch)=>{
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
+        // dispatch(setErrorAC(error))
         dispatch(setStatus('failed'))
     })
 }
@@ -59,7 +59,7 @@ export const setCardsAllThunkCreator = () =>(dispatch:TypedDispatch)=>{
 export const addPickToState = ()=>(dispatch:TypedDispatch)=>{
     dispatch(setStatus('loading'))
     packsApi.addPack().then(()=>{
-        packsApi.getPacks().then((res)=>{
+        packsApi.getPacks('',[0, 100]).then((res)=>{
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -75,7 +75,7 @@ export const addPickToState = ()=>(dispatch:TypedDispatch)=>{
 export const deletePickToState = (idPack:string)=>(dispatch:TypedDispatch)=>{
     dispatch(setStatus('loading'))
     packsApi.deletePick(idPack).then(()=>{
-        packsApi.getPacks().then((res)=>{
+        packsApi.getPacks('',[0, 100]).then((res)=>{
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -90,7 +90,7 @@ export const deletePickToState = (idPack:string)=>(dispatch:TypedDispatch)=>{
 export const editPackToState = (idPack:string)=>(dispatch:TypedDispatch)=>{
     dispatch(setStatus('loading'))
     packsApi.editPack(idPack).then(()=>{
-        packsApi.getPacks().then((res)=>{
+        packsApi.getPacks('',[0, 100]).then((res)=>{
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })

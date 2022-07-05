@@ -8,12 +8,19 @@ import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
 import {Search} from "../Search/Search";
 import {useEffect} from "react";
+import useDebounce from "../../common/hooks/useDebounce";
 
 
 export default function Packs() {
 
     const dispatch = useTypedDispatch()
     const handler = useAppSelector(state => state.search.handler)
+    let sliderParams = useAppSelector(state => state.search.paramsSlider)
+    let search = useAppSelector(state => state.search.searchText)
+
+
+
+    const debouncedSearchTerm = useDebounce(search, 500);
 
     const onClickButton =()=>{
         dispatch(addPickToState())
@@ -21,8 +28,8 @@ export default function Packs() {
 
     useEffect(()=>{
         debugger
-        dispatch(setCardsAllThunkCreator())
-    },[handler])
+        dispatch(setCardsAllThunkCreator(search, sliderParams))
+    },[handler, debouncedSearchTerm])
 
     return (
         <div className={style.projectBlock}>

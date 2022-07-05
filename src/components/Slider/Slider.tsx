@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {setHandler, setSliderParams} from "../../redux/searchReducer";
+import {useState} from "react";
 
 function valuetext(value: number) {
     return `${value}°C`;
@@ -15,6 +16,7 @@ export default function MinimumDistanceSlider() {
     const dispatch = useTypedDispatch()
 
     let value = useAppSelector(state => state.search.paramsSlider)
+    let [count, setCount] = useState<number>(0)
 
     const handleChange1 = (
         event: Event,
@@ -33,7 +35,8 @@ export default function MinimumDistanceSlider() {
     };
 
     const onMouseUpHandler = () => {
-        dispatch(setHandler(1))
+        setCount(++count)
+        dispatch(setHandler(count))
     }
 
     return (

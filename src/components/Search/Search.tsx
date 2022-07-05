@@ -12,7 +12,7 @@ type SearchPropsType = {
 export const Search = ({label}: SearchPropsType) => {
     let value = useAppSelector(state => state.search.searchText)
 
-    const debouncedSearchTerm = useDebounce(value, 500);
+
 
     let dispatch = useTypedDispatch()
 
