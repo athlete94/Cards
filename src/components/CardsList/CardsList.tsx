@@ -27,7 +27,7 @@ export const CardsList =() =>{
     const urlParams = useParams<'cardPackID'>();
     const cardsPack_ID = urlParams.cardPackID;
 
-    //const user_ID = useAppSelector(state => state.profile.user._id);
+    const user_ID = useAppSelector(state => state.profile._id);
     const packUser_ID = useAppSelector((state)=> state.cardsList.packUserId);
     const cards = useAppSelector<Array<CardType>>((state)=> state.cardsList.cards);
     const cardsTotalCount = useAppSelector<number>((state) => state.cardsList.cardsTotalCount);
@@ -77,13 +77,13 @@ export const CardsList =() =>{
                         <TableCell align="center">Actions</TableCell>
                     </TableRow>
                 </TableHead>
-                {/*<TableBody>
+                <TableBody>
                     {cards.map(c => {
                         return (
-                            <CardsListItem key={c._id} c/>
+                            <CardsListItem key={c._id} card={c}/>
                         );
                     })}
-                </TableBody>*/}
+                </TableBody>
             </Table>
         </TableContainer>
     );
