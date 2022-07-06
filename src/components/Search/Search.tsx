@@ -25,7 +25,7 @@ export const Search = ({label}: SearchPropsType) => {
         <div className={s.search}>
             <Box
                 sx={{
-                    width: 720,
+                    width: 600,
                     maxWidth: '100%',
                 }}
             >

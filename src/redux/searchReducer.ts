@@ -2,7 +2,7 @@ type InitialStateType = typeof initialState
 let initialState = {
     searchText: '',
     paramsSlider: [0, 100] as number[],
-    handler: 0
+    handler: 0 // изменяется при отпускании слайдера
 }
 
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
-import SearchInput from '../../utils/SearchInput/SearchInput';
 import s from "../Profile/Profile.module.css";
 import MinimumDistanceSlider from "../Slider/Slider";
 import PacksTable from "./PacksTable/PacksTable";
@@ -9,6 +8,7 @@ import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer
 import {Search} from "../Search/Search";
 import {useEffect} from "react";
 import useDebounce from "../../common/hooks/useDebounce";
+import {Button} from "@mui/material";
 
 
 export default function Packs() {
@@ -19,24 +19,22 @@ export default function Packs() {
     let search = useAppSelector(state => state.search.searchText)
 
 
-
     const debouncedSearchTerm = useDebounce(search, 500);
 
-    const onClickButton =()=>{
+    const onClickButton = () => {
         dispatch(addPickToState())
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         debugger
         dispatch(setCardsAllThunkCreator(search, sliderParams))
-    },[handler, debouncedSearchTerm])
+    }, [handler, debouncedSearchTerm])
 
     return (
         <div className={style.projectBlock}>
             <div className={s.profile}>
                 <div className={s.profileItem}>
                     <div className={s.userInfo}>
-
 
 
                     </div>
@@ -46,17 +44,17 @@ export default function Packs() {
                     </div>
                 </div>
                 <div className={s.packsList}>
+                    <div className={s.search_block}>
+                        <Search label={'search to packs list'}/>
+                        <Button variant="text" onClick={onClickButton}>Add new pack</Button>
+                    </div>
                     <div>
-                    <Search label={'search to packs list'} />
-                    <button onClick={onClickButton}>Add new pack</button>
-                </div>
-                    <div>
-                    <PacksTable/>
+                        <PacksTable/>
                     </div>
                 </div>
 
                 <div className={s.logoutButton}>
-                    <button >LOGOUT</button>
+                    <button>LOGOUT</button>
                 </div>
             </div>
         </div>

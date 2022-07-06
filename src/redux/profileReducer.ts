@@ -1,6 +1,7 @@
 import {profileApi, ResponceUpdateUserType} from "../api/profile-api";
 import {AppThunkType} from "./store";
 import {setStatus} from "./authReducer";
+import {ResponseUserDataLogin} from "../api/auth-api";
 
 
 type ProfileInitialStateType = {
@@ -43,7 +44,7 @@ export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialSt
 export type ActionsProfileType = SetUserDataACType | UpdateUserDataType
 
 type SetUserDataACType = ReturnType<typeof setUserDataAC>
-export const setUserDataAC = (data: any) => {
+export const setUserDataAC = (data: ResponseUserDataLogin) => {
     return {
         type: "SET-USER-DATA",
         payload: {data}

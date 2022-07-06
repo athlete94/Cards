@@ -20,7 +20,7 @@ const Profile = () => {
     let isLogin = useAppSelector(state => state.login.isLogin)
     let {name, avatar} = useAppSelector(state => state.profile)
 
-
+debugger
     //-----------
 
     const editUserData = () => {
