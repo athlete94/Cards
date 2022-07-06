@@ -60,7 +60,7 @@ export type NewCardDataType ={
 
 export const cardsApi = {
     getCards(params: GetCardsQueryParams){
-        return instance.post<GetCardsResponseDataType>('cards/card', {params})
+        return instance.get<GetCardsResponseDataType>('cards/card', {params})
             .then(response => response.data)
     },
     createCard(newCards:NewCardDataType){

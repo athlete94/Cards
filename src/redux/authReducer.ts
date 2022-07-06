@@ -52,8 +52,9 @@ export const setStatus =(status: RequestStatusType)=>{
 
 export const authMe = () => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
-    authApi.auth().then(() => {
+    authApi.auth().then((res) => {
         dispatch(isLoginAC(true))
+        dispatch(setUserDataAC(res.data))
         dispatch(setStatus('succeeded'))
     }).catch((e) => {
         const error = e.response

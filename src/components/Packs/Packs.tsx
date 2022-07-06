@@ -27,7 +27,7 @@ export default function Packs() {
     }
 
     useEffect(()=>{
-        debugger
+        //debugger
         dispatch(setCardsAllThunkCreator(search, sliderParams))
     },[handler, debouncedSearchTerm])
 

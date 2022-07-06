@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import {deletePickToState, editPackToState, setCardsAllThunkCreator} from "../../../redux/packs-reducer";
 import {useEffect} from "react";
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
+import {NavLink} from "react-router-dom";
 
 
 export default function PacksTable() {
@@ -43,7 +44,14 @@ export default function PacksTable() {
                             key={card.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">{card.name}</TableCell>
+                            <TableCell
+                                component="th" scope="row" onClick={() => {
+
+                            }}>
+                                <NavLink to={`/cards/${card._id}`}>
+                                    {card.name}
+                                </NavLink>
+                                </TableCell>
                             <TableCell align="center">{card.cardsCount}</TableCell>
                             <TableCell align="center">{card.updated}</TableCell>
                             <TableCell align="center">{card.user_name}</TableCell>

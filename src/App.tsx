@@ -62,7 +62,7 @@ function App() {
                         <Route path={PATH.RECOVERY_PASSWORD} element={<RecoveryPassword/>}/>
                         <Route path={PATH.SEND_MESSAGE} element={<SendMessage/>}/>
                         <Route path={PATH.REGISTRATION} element={<Registration/>}/>
-                        <Route path={PATH.CARDS} element={<CardsList/>}/>
+                        <Route path={PATH.CARDS + '/:cardPackID'} element={<CardsList/>}/>
                         <Route path={PATH.PACKS} element={<Packs/>}/>
                     </Routes>
                 </div>

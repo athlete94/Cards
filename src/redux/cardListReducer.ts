@@ -94,12 +94,12 @@ export const getCardsTC = (params: GetCardsQueryParams)
     } = getState().cardsList;
 
     const queryParams: GetCardsQueryParams = {
+        ...params,
         cardAnswer,
         cardQuestion,
         sortCards,
         page,
         pageCount,
-        ...params,
     };
 
     dispatch(setStatus('loading'));
