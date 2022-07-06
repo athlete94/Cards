@@ -14,6 +14,7 @@ import {useAppSelector, useTypedDispatch} from "./redux/store";
 import {LinearProgress} from "@material-ui/core";
 import NewPassword from "./components/NewPassword/NewPassword";
 import Packs from "./components/Packs/Packs";
+import {Navbar} from "./components/Navbar/Navbar";
 
 
 export const PATH = {
@@ -49,6 +50,7 @@ function App() {
             <div className="App">
                 <ErrorSnackbar/>
                 <Nav />
+                <Navbar/>
                 {status === 'loading' && <LinearProgress/>}
                 <div>
                     <Routes>

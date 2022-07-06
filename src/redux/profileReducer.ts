@@ -1,5 +1,6 @@
 import {profileApi, ResponceUpdateUserType} from "../api/profile-api";
 import {AppThunkType} from "./store";
+import {setStatus} from "./authReducer";
 
 
 type ProfileInitialStateType = {
@@ -59,14 +60,17 @@ export const updateUserData = (data: ResponceUpdateUserType) => {
 
 
 export const updateUserDataTC = (name: string, avatar?: string): AppThunkType => dispatch => {
+    dispatch(setStatus('loading'))
     profileApi.updateUserInfo({name, avatar})
         .then(res => {
             dispatch(updateUserData(res.data))
+            dispatch(setStatus('succeeded'))
         })
         .catch (e => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
+            dispatch(setStatus('failed'))
         })
 }
 
