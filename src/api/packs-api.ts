@@ -3,13 +3,15 @@ import {instance} from "./instance";
 
 export const packsApi = {
     //@ts-ignore
-    getPacks(search?: string, sliderParams: number[]) {
+    getPacks(search?: string, sliderParams: number[], userId?: string, sort?: string) {
         debugger
         return instance.get('cards/pack', {
             params: {
                 packName: search,
                 min: sliderParams[0],
-                max: sliderParams[1]
+                max: sliderParams[1],
+                user_id: userId,
+                sortPacks: sort,
             }
         })
     },

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent, MouseEventHandler} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import s from './Profile.module.css'
 import style from '../../common/style/ProjectBlock.module.css'
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
@@ -81,8 +81,8 @@ const Profile = () => {
                         <MinimumDistanceSlider/>
                     </div>
                 </div>
-                <div className={s.packsList}>
-                    <Search label={'Search of packs list'}/>
+                <div className={style.packsList}>
+                    <Search label={'Search of packs list'} width={'350%'}/>
                 </div>
 
                 <div className={s.logoutButton}>

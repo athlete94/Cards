@@ -49,6 +49,7 @@ export default function MinimumDistanceSlider() {
                 getAriaValueText={valuetext}
                 disableSwap
                 onMouseUp={onMouseUpHandler}
+                color="secondary"
             />
         </Box>
     );

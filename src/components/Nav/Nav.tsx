@@ -1,11 +1,11 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-import {PATH} from "../App";
+import {PATH} from "../../App";
+import style from './Nav.module.css'
 
 const Nav = () => {
     return (
-        <div className={'nav'}>
-
+        <div className={style.nav}>
             <NavLink to={PATH.PACKS}>Packs</NavLink>
             <NavLink to={PATH.LOGIN}>Login</NavLink>
             <NavLink to={PATH.REGISTRATION}>Registration</NavLink>

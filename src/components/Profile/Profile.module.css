@@ -16,6 +16,7 @@
 }
 
 .packsList {
+    padding: 20px;
     background-color: white;
     width: 774px;
     border-radius: 8px;
@@ -69,12 +70,11 @@
 }
 
 
-/*///////*/
 
 .logoutButton {
     position: absolute;
     top: -25px;
-    right: 0px;
+    right: 0;
 }
 
 .logoutButton button {

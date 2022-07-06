@@ -2,10 +2,9 @@ import {TypedDispatch} from "./store";
 import {authApi} from "../api/auth-api";
 import {FormLoginType} from "../components/Login/Login";
 import {setUserDataAC} from "./profileReducer";
-import {setErrorAC} from "./registrationReducer";
 
 
-let initialState:AuthStateType = {
+let initialState: AuthStateType = {
     isLogin: false,
     initialized: false,
     status: 'idle'
@@ -43,10 +42,10 @@ export const setInitialized = (isInitialized: boolean) => {
     } as const
 }
 
-export const setStatus =(status: RequestStatusType)=>{
+export const setStatus = (status: RequestStatusType) => {
     return {
-        type:'SET-STATUS',
-        payload:{status}
+        type: 'SET-STATUS',
+        payload: {status}
     } as const
 }
 
@@ -59,8 +58,8 @@ export const authMe = () => (dispatch: TypedDispatch) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
         dispatch(setStatus('failed'))
+        throw Error(error)
     }).finally(() => {
         dispatch(setInitialized(true))
 
@@ -70,15 +69,17 @@ export const authMe = () => (dispatch: TypedDispatch) => {
 export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
     authApi.login(payload).then((res) => {
+        debugger
         dispatch(setUserDataAC(res.data))
         dispatch(isLoginAC(true))
+        sessionStorage.setItem('userId', res.data._id)
         dispatch(setStatus('succeeded'))
     }).catch((e) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
         dispatch(setStatus('failed'))
+        throw Error(error)
     })
 }
 
@@ -87,12 +88,12 @@ export type AuthActionsType = isLoginACType | SetInitializedType | SetStatusType
 export const logoutTC = () => (dispatch: TypedDispatch) => {
     authApi.logout()
         .then(() => {
-        dispatch(isLoginAC(false))
-    }).catch((e) => {
+            dispatch(isLoginAC(false))
+        }).catch((e) => {
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
+        throw Error(error)
     })
 }
 
@@ -105,5 +106,5 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 type AuthStateType = {
     isLogin: boolean
     initialized: boolean
-    status:RequestStatusType
+    status: RequestStatusType
 }

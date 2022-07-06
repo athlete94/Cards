@@ -6,3 +6,18 @@
     justify-content: center;
     align-items: center;
 }
+
+.title {
+    padding: 10px 0 0 20px;
+    font-weight: bold;
+    font-size:20px;
+}
+.packsList{
+    display: flex;
+}
+
+.form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

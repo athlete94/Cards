@@ -21,6 +21,7 @@ let ProfileInitialState = {
 export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialState, action: ActionsProfileType): ProfileInitialStateType => {
     switch (action.type) {
         case'SET-USER-DATA':
+            debugger
             return {
                 ...state,
                 _id: action.payload.data._id,
@@ -34,12 +35,16 @@ export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialSt
                 ...state,
                 ...action.payload.updatedUser
             }
+        case 'SET-USER-ID':
+            return {
+                ...state,
+                _id:action.payload.userId
+            }
     }
-
     return state
 };
 
-export type ActionsProfileType = SetUserDataACType | UpdateUserDataType
+export type ActionsProfileType = SetUserDataACType | UpdateUserDataType | SetUserIdType
 
 type SetUserDataACType = ReturnType<typeof setUserDataAC>
 export const setUserDataAC = (data: any) => {
@@ -56,6 +61,13 @@ export const updateUserData = (data: ResponceUpdateUserType) => {
         payload: data
     }as const
 }
+type SetUserIdType = ReturnType<typeof setUserId>
+export const setUserId = (userId: string) => {
+    return {
+        type: 'SET-USER-ID',
+        payload: {userId}
+    }as const
+}
 
 
 export const updateUserDataTC = (name: string, avatar?: string): AppThunkType => dispatch => {
@@ -67,6 +79,7 @@ export const updateUserDataTC = (name: string, avatar?: string): AppThunkType =>
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
+            throw Error(error)
         })
 }
 

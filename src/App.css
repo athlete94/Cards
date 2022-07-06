@@ -1,6 +1,4 @@
-.App {
-    margin: 10px;
-}
+
 
 .App-logo {
     height: 40vmin;
@@ -39,12 +37,6 @@
 
 a {
     text-decoration: none;
-}
-
-.nav {
-    width: 450px;
-    display: flex;
-    justify-content: space-between;
 }
 
 .nav a {

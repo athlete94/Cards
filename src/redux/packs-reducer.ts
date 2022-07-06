@@ -10,7 +10,6 @@ const initialState = {
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
-    // paramsSlider: [0, 100] as number[],
     token: '',
     tokenDeathTime: 0,
 }
@@ -41,19 +40,33 @@ const setCardsAll = (payload:PacksStateType) =>{
     } as const
 }
 
-export const setCardsAllThunkCreator = (search: string, sliderParams: number[]) =>(dispatch:TypedDispatch)=>{
+export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value:string, sort?:string) =>(dispatch:TypedDispatch)=>{
     dispatch(setStatus('loading'))
-    packsApi.getPacks(search, sliderParams).then((res)=>{
+    if(value==="All") {
         debugger
-        dispatch(setCardsAll(res.data))
-        dispatch(setStatus('succeeded'))
-    }).catch((e) => {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-        // dispatch(setErrorAC(error))
-        dispatch(setStatus('failed'))
-    })
+        packsApi.getPacks(search, sliderParams, '', sort).then((res) => {
+            dispatch(setCardsAll(res.data))
+            dispatch(setStatus('succeeded'))
+        }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setStatus('failed'))
+            throw Error(error)
+        })
+    } else {
+        let userId = sessionStorage.getItem('userId')
+        if(userId!=null) packsApi.getPacks(search, sliderParams,userId,sort).then((res) => {
+            dispatch(setCardsAll(res.data))
+            dispatch(setStatus('succeeded'))
+        }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setStatus('failed'))
+            throw Error(error)
+        })
+    }
 }
 
 export const addPickToState = ()=>(dispatch:TypedDispatch)=>{

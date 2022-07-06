@@ -4,7 +4,7 @@ import { Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NotFound from "./components/Error404/NotFound";
 import Profile from "./components/Profile/Profile";
-import Nav from "./components/Nav";
+import Nav from "./components/Nav/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
@@ -47,9 +47,9 @@ function App() {
     return (
 
             <div className="App">
+                {status === 'loading' && <LinearProgress/>}
                 <ErrorSnackbar/>
                 <Nav />
-                {status === 'loading' && <LinearProgress/>}
                 <div>
                     <Routes>
                         <Route path={PATH.LOGIN} element={<Login/>}/>
