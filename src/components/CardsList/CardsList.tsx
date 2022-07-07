@@ -1,22 +1,23 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
-import SearchInput from '../../utils/SearchInput/SearchInput';
 import s from "./CardsList.module.css";
-import MinimumDistanceSlider from "../Slider/Slider";
-import {useAppSelector, useTypedDispatch} from "../../redux/store";
-import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
+import {useTypedDispatch} from "../../redux/store";
 import {Search} from "../Search/Search";
 import {useCallback, useEffect} from "react";
-import useDebounce from "../../common/hooks/useDebounce";
 import {CardsListTable} from "./CardListItem/CardsListTable";
 import {addNewCardTC, getCardsTC} from "../../redux/cardListReducer";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {NewCardDataType} from "../../api/cardsApi";
+import {Button} from "@material-ui/core";
+import {PATH} from "../../App";
+
+
 
 
 export  const CardsList = ()=> {
 
     const urlParams = useParams<'cardPackID'>();
+    const navigate = useNavigate()
     const cardsPack_ID = urlParams.cardPackID;
 
     const dispatch = useTypedDispatch()
@@ -39,12 +40,23 @@ export  const CardsList = ()=> {
     return (
         <div className={style.projectBlock}>
             <div className={s.profile}>
-                    <div>Page name</div>
+                    <span className={s.text}
+                          onClick={()=>navigate(PATH. PACKS)}>
+                       ⬅ Pack name
+                    </span>
                     <div>
-                        <Search label={'Search ...'} />
-                        <button onClick={addCardHandler}>Add card</button>
+                        <Search label={'🔍Search ...'} />
                     </div>
-                    <div>
+                    <div className={s.button}>
+                        <Button size={'small'}
+                                type={"submit"}
+                                variant={"contained"}
+                                color={"inherit"}
+                                onClick={addCardHandler}>
+                            Add card
+                        </Button>
+                    </div>
+                    <div className={s.table}>
                         <CardsListTable/>
                     </div>
             </div>
