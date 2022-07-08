@@ -1,0 +1,39 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 450px;
+    min-height: 500px;
+    border-radius: 8px;
+    background-color: #b7a8dd;
+    position: relative;
+}
+
+.avatar img {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+}
+
+.userName {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/*////////////////*/
+
+
+.backBtn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
-import s from "../Profile/Profile.module.css";
+import s from "./Packs.module.css";
 import MinimumDistanceSlider from "../Slider/Slider";
 import PacksTable from "./PacksTable/PacksTable";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";

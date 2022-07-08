@@ -1,44 +1,37 @@
-import React, {ChangeEvent, useState, KeyboardEvent, MouseEventHandler} from 'react';
+import React, {useState} from 'react';
 import s from './Profile.module.css'
 import style from '../../common/style/ProjectBlock.module.css'
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
-import {Navigate} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import MinimumDistanceSlider from "../Slider/Slider";
-import {updateUserDataTC} from "../../redux/profileReducer";
 import {PATH} from "../../App";
 import {logoutTC} from "../../redux/authReducer";
 import {Search} from "../Search/Search";
-import {Button} from "@mui/material";
 
 const Profile = () => {
 
     let [show, setShow] = useState<boolean>(false)// show button 'edit'
-    let [edit, setEdit] = useState<boolean>(false)// change user data
-    let [userName, setUserName] = useState<string>('')
 
     const dispatch = useTypedDispatch()
 
     let isLogin = useAppSelector(state => state.login.isLogin)
     let {name, avatar} = useAppSelector(state => state.profile)
 
-debugger
+    debugger
     //-----------
 
-    const editUserData = () => {
-        setEdit(true)
-    }
-    const changeUserName = (e: ChangeEvent<HTMLInputElement>) => {
-        setUserName(e.currentTarget.value.trimStart())
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13) {
-            onBlurHandler()
-        }
-    }
-    const onBlurHandler = () => {
-        userName && dispatch(updateUserDataTC(userName))
-        setEdit(false)
-    }
+
+    // const changeUserName = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setUserName(e.currentTarget.value.trimStart())
+    // }
+    // const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    //     if (e.charCode === 13) {
+    //         onBlurHandler()
+    //     }
+    // }
+    // const onBlurHandler = () => {
+    //     userName && dispatch(updateUserDataTC(userName))
+    // }
 
     const logoutHandler = () => {
         dispatch(logoutTC())
@@ -50,6 +43,7 @@ debugger
     if (!isLogin) {
         return <Navigate to={PATH.LOGIN}/>
     }
+
     return (
         <div className={style.projectBlock}>
             <div className={s.profile}>
@@ -64,18 +58,22 @@ debugger
                                 alt=""/>
                         </div>
                         <div className={s.userName}>
-                            {edit ? <input type="text"
-                                           autoFocus
-                                           placeholder={name}
-                                           onChange={changeUserName}
-                                           onBlur={onBlurHandler}
-                                           onKeyPress={onKeyPressHandler}/>
-                                : <span className={s.userName}>
+                            {/*<input type="text"*/}
+                            {/*              autoFocus*/}
+                            {/*              placeholder={name}*/}
+                            {/*              onChange={changeUserName}*/}
+                            {/*              onBlur={onBlurHandler}*/}
+                            {/*              onKeyPress={onKeyPressHandler}/>*/}
+                            <span className={s.userName}>
                                     {name}
-                                </span>}
+                                </span>
                         </div>
 
-                        {show && <div className={s.edit} onClick={editUserData}>Edit</div>}
+                        {show && <div className={s.edit}>
+                            <NavLink to={PATH.EDIT_PROFILE}>
+                                Edit
+                            </NavLink>
+                        </div>}
                     </div>
                     <div className={s.filter}>
                         <h3>Number of cards</h3>
@@ -84,7 +82,7 @@ debugger
                 </div>
                 <div className={s.packsList}>
                     <div className={s.search_block}>
-                        <Search label={'search to packs list'} width={'80%'} />
+                        <Search label={'search to packs list'} width={'280%'}/>
                     </div>
                 </div>
 
