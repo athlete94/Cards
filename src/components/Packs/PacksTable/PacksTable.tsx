@@ -23,9 +23,9 @@ export default function PacksTable(props: PacksTableType) {
     const cards = useAppSelector(state => state.picks.cardPacks)
 
     const userId = sessionStorage.getItem('userId')
-    if(userId!=null)
+    if(userId!=null){}
 
-debugger
+
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id))
