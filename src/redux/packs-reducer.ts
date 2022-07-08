@@ -19,7 +19,7 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
     switch (action.type) {
         case'SET-CARDS':
             return {
-                state,
+                ...state,
                 cardPacks: action.payload.cardPacks,
                 cardPacksTotalCount: action.payload.cardPacksTotalCount,
                 maxCardsCount: action.payload.maxCardsCount,
