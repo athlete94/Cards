@@ -10,6 +10,7 @@ import {deletePickToState, editPackToState} from "../../../redux/packs-reducer";
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
+import {NavLink} from "react-router-dom";
 
 type PacksTableType = {
     sort: string
@@ -22,9 +23,9 @@ export default function PacksTable(props: PacksTableType) {
     const cards = useAppSelector(state => state.picks.cardPacks)
 
     const userId = sessionStorage.getItem('userId')
-    // if(userId!=null)
+    if(userId!=null)
 
-
+debugger
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id))

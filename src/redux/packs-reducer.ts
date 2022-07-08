@@ -15,34 +15,34 @@ const initialState = {
 }
 
 
-export const packsReducer = (state: PacksStateType=initialState, action: ActionsPacksType) => {
+export const packsReducer = (state: PacksStateType = initialState, action: ActionsPacksType) => {
     switch (action.type) {
         case'SET-CARDS':
             return {
-        ...state,
-                cardPacks:action.payload.cardPacks,
-                cardPacksTotalCount:action.payload.cardPacksTotalCount,
-                maxCardsCount:action.payload.maxCardsCount,
-                minCardsCount:action.payload.minCardsCount,
-                page:action.payload.page,
-                pageCount:action.payload.pageCount,
+                ...state,
+                cardPacks: action.payload.cardPacks,
+                cardPacksTotalCount: action.payload.cardPacksTotalCount,
+                maxCardsCount: action.payload.maxCardsCount,
+                minCardsCount: action.payload.minCardsCount,
+                page: action.payload.page,
+                pageCount: action.payload.pageCount,
             }
         default:
-           return state
+            return state
     }
 }
 
-const setCardsAll = (payload:PacksStateType) =>{
+const setCardsAll = (payload: PacksStateType) => {
     debugger
     return {
-        type:'SET-CARDS',
+        type: 'SET-CARDS',
         payload
     } as const
 }
 
-export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value:string, sort?:string) =>(dispatch:TypedDispatch)=>{
+export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string) => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
-    if(value==="All") {
+    if (value === "All") {
         debugger
         packsApi.getPacks(search, sliderParams, '', sort).then((res) => {
             dispatch(setCardsAll(res.data))
@@ -56,23 +56,28 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
         })
     } else {
         let userId = sessionStorage.getItem('userId')
-        if(userId!=null) packsApi.getPacks(search, sliderParams,userId,sort).then((res) => {
-            dispatch(setCardsAll(res.data))
-            dispatch(setStatus('succeeded'))
-        }).catch((e) => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ', more details in the console');
-            dispatch(setStatus('failed'))
-            throw Error(error)
-        })
+        if (userId != null) packsApi.getPacks(search, sliderParams, userId, sort)
+            .then((res) => {
+                debugger
+                dispatch(setCardsAll(res.data))
+                dispatch(setStatus('succeeded'))
+            }).catch((e) => {
+                const error = e.response
+                    ? e.response.data.error
+                    : (e.message + ', more details in the console');
+                dispatch(setStatus('failed'))
+                throw Error(error)
+            })
+        // .finally(() => {
+        //     dispatch(setStatus('succeeded'))
+        // })
     }
 }
 
-export const addPickToState = ()=>(dispatch:TypedDispatch)=>{
+export const addPickToState = () => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
-    packsApi.addPack().then(()=>{
-        packsApi.getPacks('',[0, 100]).then((res)=>{
+    packsApi.addPack().then(() => {
+        packsApi.getPacks('', [0, 100]).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -85,10 +90,10 @@ export const addPickToState = ()=>(dispatch:TypedDispatch)=>{
     })
 }
 
-export const deletePickToState = (idPack:string)=>(dispatch:TypedDispatch)=>{
+export const deletePickToState = (idPack: string) => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
-    packsApi.deletePick(idPack).then(()=>{
-        packsApi.getPacks('',[0, 100]).then((res)=>{
+    packsApi.deletePick(idPack).then(() => {
+        packsApi.getPacks('', [0, 100]).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -100,10 +105,10 @@ export const deletePickToState = (idPack:string)=>(dispatch:TypedDispatch)=>{
         dispatch(setStatus('failed'))
     })
 }
-export const editPackToState = (idPack:string)=>(dispatch:TypedDispatch)=>{
+export const editPackToState = (idPack: string) => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
-    packsApi.editPack(idPack).then(()=>{
-        packsApi.getPacks('',[0, 100]).then((res)=>{
+    packsApi.editPack(idPack).then(() => {
+        packsApi.getPacks('', [0, 100]).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -122,32 +127,31 @@ type SetCardsAllType = ReturnType<typeof setCardsAll>
 export type ActionsPacksType = SetCardsAllType
 
 
-
 export type PacksStateType = {
-	cardPacks: CardPacksType[];
-	page: number;
-	pageCount: number;
-	cardPacksTotalCount: number;
-	minCardsCount: number;
-	maxCardsCount: number;
-	token: string;
-	tokenDeathTime: number;
+    cardPacks: CardPacksType[];
+    page: number;
+    pageCount: number;
+    cardPacksTotalCount: number;
+    minCardsCount: number;
+    maxCardsCount: number;
+    token: string;
+    tokenDeathTime: number;
 }
 export type CardPacksType = {
-	_id: string;
-	user_id: string;
-	user_name: string;
-	private: boolean;
-	name: string;
-	path: string;
-	grade: number;
-	shots: number;
-	deckCover: string;
-	cardsCount: number;
-	type: string;
-	rating: number;
-	created: string;
-	updated: string;
-	more_id: string;
-	__v: number;
+    _id: string;
+    user_id: string;
+    user_name: string;
+    private: boolean;
+    name: string;
+    path: string;
+    grade: number;
+    shots: number;
+    deckCover: string;
+    cardsCount: number;
+    type: string;
+    rating: number;
+    created: string;
+    updated: string;
+    more_id: string;
+    __v: number;
 }

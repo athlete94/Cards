@@ -45,7 +45,7 @@ export  const CardsList = ()=> {
                        ⬅ Pack name
                     </span>
                     <div>
-                        <Search label={'🔍Search ...'} />
+                        <Search label={'🔍Search ...'} width={'100%'} />
                     </div>
                     <div className={s.button}>
                         <Button size={'small'}

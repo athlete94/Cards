@@ -33,15 +33,16 @@ export default function Packs() {
 
     const [value, setValue] = useState<string>("All")
     const [sort, setSort] = useState<string>('0updated')
-    debugger
+
 
     useEffect(() => {
         dispatch(setCardsAllThunkCreator(search, sliderParams, value, sort))
-    }, [handler, debouncedSearchTerm, value,sort])
+    }, [handler, debouncedSearchTerm, value, sort])
 
 
     const onChangeListener = (value: string) => {
         setValue(value)
+
     }
 
     const onClickSortHandler  =()=>{
