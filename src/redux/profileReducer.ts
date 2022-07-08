@@ -79,14 +79,11 @@ export const updateUserDataTC = (name: string, avatar?: string): AppThunkType =>
             dispatch(updateUserData(res.data))
             dispatch(setStatus('succeeded'))
         })
-        .catch (e => {
+        .catch(e => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            throw Error(error)
             dispatch(setStatus('failed'))
+            throw Error(error)
         })
 }
-
-
-

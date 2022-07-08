@@ -17,6 +17,7 @@ import {CardsList} from "./components/CardsList/CardsList";
 
 import Packs from "./components/Packs/Packs";
 import {Navbar} from "./components/Navbar/Navbar";
+import EditProfile from "./components/Profile/EditProfile/EditProfile";
 
 
 export const PATH = {
@@ -30,6 +31,7 @@ export const PATH = {
     ERROR: "*",
     CARDS: '/cards',
     PACKS:'/packs',
+    EDIT_PROFILE: '/edit-profile'
 }
 
 
@@ -66,6 +68,7 @@ function App() {
                         <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                         <Route path={PATH.CARDS + '/:cardPackID'} element={<CardsList/>}/>
                         <Route path={PATH.PACKS} element={<Packs/>}/>
+                        <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
                     </Routes>
                 </div>
             </div>

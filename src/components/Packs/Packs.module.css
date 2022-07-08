@@ -1,0 +1,96 @@
+.profile {
+    display: flex;
+    justify-content: flex-start;
+    width: 1024px;
+    min-height: 600px;
+    border-radius: 8px;
+    background-color: white;
+    position: relative;
+}
+
+.profileItem {
+    width: 250px;
+    background-color: #d2caee;
+    border-radius: 8px 0 0 8px;
+    position: relative;
+}
+
+.packsList {
+    padding: 20px;
+    background-color: white;
+    width: 774px;
+    border-radius: 8px;
+}
+
+
+/*////////////////*/
+.userInfo {
+    background-color: #b7a8dd;
+    height: 200px;
+    border-radius: 8px 0 8px 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.userName {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/*////////////////*/
+
+.edit {
+    position: absolute;
+    color: #4a4f4f;
+    left: 10px;
+    top: 10px;
+    font-size: 12px;
+}
+
+.edit:hover {
+    text-decoration: none;
+    border-bottom: 1px solid #4a4f4f;
+    cursor: pointer;
+}
+
+
+
+.logoutButton {
+    position: absolute;
+    top: -25px;
+    right: 0;
+}
+
+.logoutButton button {
+    background-color: #e7eaf6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #5c5394;
+}
+
+.search_block {
+    display: flex;
+    align-items: center;
+}
+
+.search_block button {
+    height: 40px;
+    font-size: 0.8em;
+}
