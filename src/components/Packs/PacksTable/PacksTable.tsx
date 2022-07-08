@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {deletePickToState, editPackToState} from "../../../redux/packs-reducer";
+import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/packs-reducer";
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
@@ -20,11 +20,11 @@ type PacksTableType = {
 export default function PacksTable(props: PacksTableType) {
 
     const dispatch = useTypedDispatch()
+
     const cards = useAppSelector(state => state.picks.cardPacks)
 
-    const userId = sessionStorage.getItem('userId')
+    const userId = useAppSelector(state => state.profile._id)
     if(userId!=null){}
-
 
 
     const onClickDeleteHandler = (id: string) => {
@@ -52,7 +52,7 @@ export default function PacksTable(props: PacksTableType) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards != [] && cards.map((card) => (
+                    {cards !== [] && cards.map((card: CardPacksType) => (
                         <TableRow
                             key={card.name}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}

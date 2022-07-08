@@ -7,6 +7,8 @@ import MinimumDistanceSlider from "../Slider/Slider";
 import {PATH} from "../../App";
 import {logoutTC} from "../../redux/authReducer";
 import {Search} from "../Search/Search";
+import Packs from "../Packs/Packs";
+import PacksTable from "../Packs/PacksTable/PacksTable";
 
 const Profile = () => {
 
@@ -84,6 +86,7 @@ const Profile = () => {
                     <div className={s.search_block}>
                         <Search label={'search to packs list'} width={'280%'}/>
                     </div>
+                    <PacksTable  sort={'0updated'}/>
                 </div>
 
                 <div className={s.logoutButton}>

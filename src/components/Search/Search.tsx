@@ -13,15 +13,12 @@ type SearchPropsType = {
 export const Search = ({label, width}: SearchPropsType) => {
     let value = useAppSelector(state => state.search.searchText)
 
-
-
     let dispatch = useTypedDispatch()
 
     const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearch(e.currentTarget.value.trimStart()))
     }
-
-
+ debugger
     return (
         <div className={s.search}>
             <Box

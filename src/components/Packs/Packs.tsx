@@ -22,6 +22,7 @@ export default function Packs() {
     let sliderParams = useAppSelector(state => state.search.paramsSlider)
     let search = useAppSelector(state => state.search.searchText)
     let isLogin = useAppSelector(state => state.login)
+    let cardPacks = useAppSelector(state => state.picks.cardPacks)
 
 
 
