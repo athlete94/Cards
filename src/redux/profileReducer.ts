@@ -1,6 +1,7 @@
 import {profileApi, ResponceUpdateUserType} from "../api/profile-api";
 import {AppThunkType} from "./store";
 import {ResponseUserDataLogin} from "../api/auth-api";
+import {setStatus} from "./authReducer";
 
 
 type ProfileInitialStateType = {

@@ -6,7 +6,7 @@ import PacksTable from "./PacksTable/PacksTable";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
 import {Search} from "../Search/Search";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import useDebounce from "../../common/hooks/useDebounce";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../App";
@@ -21,6 +21,7 @@ export default function Packs() {
     const handler = useAppSelector(state => state.search.handler)
     let sliderParams = useAppSelector(state => state.search.paramsSlider)
     let search = useAppSelector(state => state.search.searchText)
+    let isLogin = useAppSelector(state => state.login)
 
 
 
@@ -33,6 +34,7 @@ export default function Packs() {
     const [value, setValue] = useState<string>("All")
     const [sort, setSort] = useState<string>('0updated')
     debugger
+
     useEffect(() => {
         dispatch(setCardsAllThunkCreator(search, sliderParams, value, sort))
     }, [handler, debouncedSearchTerm, value,sort])

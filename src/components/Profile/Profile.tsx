@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent, MouseEventHandler} from 'react';
 import s from './Profile.module.css'
 import style from '../../common/style/ProjectBlock.module.css'
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
@@ -8,6 +8,7 @@ import {updateUserDataTC} from "../../redux/profileReducer";
 import {PATH} from "../../App";
 import {logoutTC} from "../../redux/authReducer";
 import {Search} from "../Search/Search";
+import {Button} from "@mui/material";
 
 const Profile = () => {
 
@@ -81,8 +82,10 @@ debugger
                         <MinimumDistanceSlider/>
                     </div>
                 </div>
-                <div className={style.packsList}>
-                    <Search label={'Search of packs list'} width={'350%'}/>
+                <div className={s.packsList}>
+                    <div className={s.search_block}>
+                        <Search label={'search to packs list'} width={'80%'} />
+                    </div>
                 </div>
 
                 <div className={s.logoutButton}>
