@@ -26,6 +26,8 @@ export default function PacksTable() {
         dispatch(editPackToState(id))
     }
 
+    // lololo
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 400 }} aria-label="simple table">
@@ -46,12 +48,11 @@ export default function PacksTable() {
                         >
                             <TableCell
                                 component="th" scope="row" onClick={() => {
-
                             }}>
                                 <NavLink to={`/cards/${card._id}`}>
                                     {card.name}
                                 </NavLink>
-                                </TableCell>
+                            </TableCell>
                             <TableCell align="center">{card.cardsCount}</TableCell>
                             <TableCell align="center">{card.updated}</TableCell>
                             <TableCell align="center">{card.user_name}</TableCell>
