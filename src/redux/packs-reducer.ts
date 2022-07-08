@@ -1,4 +1,4 @@
-import {TypedDispatch} from "./store";
+import {AppThunkType, TypedDispatch} from "./store";
 import {setStatus} from "./authReducer";
 import {packsApi} from "../api/packs-api";
 import {setErrorAC} from "./registrationReducer";
@@ -19,7 +19,7 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
     switch (action.type) {
         case'SET-CARDS':
             return {
-                ...state,
+                state,
                 cardPacks: action.payload.cardPacks,
                 cardPacksTotalCount: action.payload.cardPacksTotalCount,
                 maxCardsCount: action.payload.maxCardsCount,
@@ -40,7 +40,7 @@ const setCardsAll = (payload: PacksStateType) => {
     } as const
 }
 
-export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string) => (dispatch: TypedDispatch) => {
+export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string): AppThunkType => (dispatch, getState) => {
     dispatch(setStatus('loading'))
     if (value === "All") {
         debugger
@@ -55,7 +55,8 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
             throw Error(error)
         })
     } else {
-        let userId = sessionStorage.getItem('userId')
+        let userId = getState().profile._id;
+
         if (userId != null) packsApi.getPacks(search, sliderParams, userId, sort)
             .then((res) => {
                 debugger

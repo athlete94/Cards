@@ -42,7 +42,6 @@ export default function Packs() {
 
     const onChangeListener = (value: string) => {
         setValue(value)
-
     }
 
     const onClickSortHandler  =()=>{
@@ -65,7 +64,6 @@ export default function Packs() {
                         <div className="form_radio_group">
                             <RadioButton value={value} onChangeListener={onChangeListener}/>
                         </div>
-
 
                     </div>
                     <div className={s.filter}>
