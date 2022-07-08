@@ -1,0 +1,25 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 1024px;
+    height: 600px;
+    border-radius: 8px;
+    background-color: white;
+    position: relative;
+    padding: 2%;
+}
+
+.text {
+    font-size: larger;
+    color: #8e8e8e;
+    font-weight: 800;
+}
+
+.button {
+   margin-bottom: 15px;
+}
+
+
+
+

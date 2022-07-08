@@ -1,11 +1,19 @@
 import { useFormik } from 'formik';
-import React from 'react';
+import React, {useState} from 'react';
 import style from './NewPassword.module.css'
-import {Button,  FormControl, FormGroup, TextField} from "@material-ui/core";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Navigate, useParams} from "react-router-dom";
 import {setNewPasswordTC} from "../../redux/newPasswordReducer";
 import { PATH } from '../../App';
+import {StatePasswordStatusType} from "../Registration/Registration";
+//mui imports
+import Button from "@mui/material/Button";
+import FormGroup from "@mui/material/FormGroup";
+import TextField from "@mui/material/TextField";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import {FormControl} from "@material-ui/core";
 
 
 type FormNewPasswordType = {
@@ -45,6 +53,22 @@ const NewPassword = () => {
         },
     });
 
+    const [value, setValue] = useState<StatePasswordStatusType>({
+        password: '',
+        showPassword: false,
+    });
+
+    const handleClickShowPassword = () => {
+        setValue({
+            ...value,
+            showPassword: !value.showPassword,
+        });
+    };
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     if (success) {
         return <Navigate to={PATH.LOGIN}/>
     }
@@ -60,29 +84,53 @@ const NewPassword = () => {
                             <TextField
                                 id="standard-password-input"
                                 label="Password"
-                                type="password"
                                 autoComplete="current-password"
                                 variant="standard"
+                                type={value.showPassword ? 'text' : 'password'}
                                 {...formik.getFieldProps("password")}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}>
+                                                {value.showPassword ?<Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
                             />
                             {formik.touched.password && formik.errors.password ? (
                                 <div style={{ color: "red" }}>{formik.errors.password}</div>
                             ) : null}
-
                             <TextField
                                 id="confirm-password-input"
                                 label="Confirm Password"
-                                type="password"
                                 autoComplete="current-password"
                                 variant="standard"
+                                type={value.showPassword ? 'text' : 'password'}
                                 {...formik.getFieldProps("confirmPassword")}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}>
+                                                {value.showPassword ?<Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
                             />
                             <div style={{ color: "red" ,width: "200px", height: '50px'}}>
                                 {formik.errors.confirmPassword && formik.touched.confirmPassword ? formik.errors.confirmPassword : null}
                             </div>
                             <Button size={'small'} type={"submit"}
                                     variant={"contained"} color={"inherit"}
-                                    sx={{marginTop: '15px'}}>
+                                    sx={{marginTop: '15px'}}
+                                    disabled={!(formik.isValid && formik.dirty)}>
                                 Create new password
                             </Button>
                             <div>

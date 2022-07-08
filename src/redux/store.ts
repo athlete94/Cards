@@ -4,10 +4,11 @@ import {ActionsProfileType, ProfileReducer} from "./profileReducer";
 import {testReducer} from "./testReducer";
 import thunkMiddleware from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import { ThunkDispatch, ThunkAction } from 'redux-thunk';
+import {ThunkDispatch, ThunkAction } from 'redux-thunk';
 import {RegistrationActionsType, registrationReducer} from "./registrationReducer";
 import {PasswordRecoveryActionsType, recoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {NewPasswordActionsType, newPasswordReducer} from "./newPasswordReducer";
+import {CardsListActionsType, cardsListReducer} from "./cardListReducer";
 import {ActionsPacksType, packsReducer} from "./packs-reducer";
 import {searchReducer, SearchReducerActionType} from "./searchReducer";
 
@@ -18,6 +19,7 @@ const reducers = combineReducers({
     registration: registrationReducer,
     recoveryPassword: recoveryPasswordReducer,
     newPassword: newPasswordReducer,
+    cardsList: cardsListReducer,
     search: searchReducer,
     picks:packsReducer,
     testReducer
@@ -29,6 +31,7 @@ export type AppRootStateType = ReturnType<typeof reducers>
 export type AppActionType =
     AuthActionsType | ActionsProfileType |
     RegistrationActionsType | PasswordRecoveryActionsType |
+    NewPasswordActionsType | CardsListActionsType |
     NewPasswordActionsType | ActionsPacksType
     | SearchReducerActionType
 

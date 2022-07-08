@@ -23,6 +23,7 @@ export default function Packs() {
     let search = useAppSelector(state => state.search.searchText)
 
 
+
     const debouncedSearchTerm = useDebounce(search, 500);
 
     const onClickButton = () => {
@@ -52,10 +53,6 @@ export default function Packs() {
     if (!isLogin) {
         return <Navigate to={PATH.LOGIN}/>
     }
-    useEffect(() => {
-        debugger
-        dispatch(setCardsAllThunkCreator(search, sliderParams))
-    }, [handler, debouncedSearchTerm])
 
     return (
         <div className={style.projectBlock}>

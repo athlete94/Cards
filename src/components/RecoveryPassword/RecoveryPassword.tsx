@@ -20,7 +20,7 @@ const RecoveryPassword = () => {
     const error = useAppSelector((state)=> state.recoveryPassword.error)
     const enteredEmail = useAppSelector((state) => state.recoveryPassword.enteredEmail)
     const from = "test-front-admin <antoni.novik@yandex.ru>"
-    const message = `<div style="background-color: #eeff00; padding: 15px">
+    const message = `<div style="background-color: #fff; padding: 15px">
               password recovery link:
               <a href='http://localhost:3000/#${PATH.NEW_PASSWORD}/$token$'>link</a>
               </div>`;
@@ -45,7 +45,6 @@ const RecoveryPassword = () => {
            const email = values.email
            const data = {email, message, from}
            dispatch(recoveryPasswordTC(data));
-            console.log(values)
         },
     });
 
@@ -74,27 +73,28 @@ const RecoveryPassword = () => {
                             {formik.touched.email && formik.errors.email ? (
                                 <div style={{ color: "red", fontStyle:"10px" }}>{formik.errors.email}</div>
                             ) : null}
-
-                            <Button size={'small'} type={"submit"}
-                                    variant={"contained"} color={"inherit"}
+                            <Button size={'small'}
+                                    type={"submit"}
+                                    variant={"contained"}
+                                    color={"inherit"}
+                                    disabled={!(formik.isValid && formik.dirty)}
                                     sx={{marginTop: '15px'}}>
                                 Send instructions
                             </Button>
-
                             <div className={style.text}>
                                 Did you remember you password?
                             </div>
-
                             <div className={style.buttonLink}>
-                                <Button variant="text" size="small" onClick={() => navigate(PATH.LOGIN)}>Back to login</Button>
+                                <Button variant="text" size="small" onClick={() => navigate(PATH.LOGIN)}>
+                                    Back to login
+                                </Button>
                             </div>
-
                             <div className={style.textOR}>OR</div>
-
                             <div className={style.buttonLink}>
-                                <Button variant="text" size="small" onClick={() => navigate(PATH.REGISTRATION)}>Create New Account</Button>
+                                <Button variant="text" size="small" onClick={() => navigate(PATH.REGISTRATION)}>
+                                    Create New Account
+                                </Button>
                             </div>
-
                         </FormGroup>
                     </FormControl>
                 </form>
