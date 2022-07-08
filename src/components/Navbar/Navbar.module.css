@@ -1,0 +1,30 @@
+.navbar {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4%;
+
+    background-color: #c7acef;
+}
+
+.navbar a {
+    width: 150px;
+    border-radius: 1000px;
+
+
+    text-align: center;
+    height: 25px;
+}
+
+.navbar a:hover {
+    background-color: #b296db;
+}
+
+.navbar a:active {
+    color: #3f2e67;
+}
+
+.active {
+    background-color: #b296db;
+}

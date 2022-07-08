@@ -17,7 +17,7 @@ export const authApi = {
 
 
 
-type ResponseUserDataLogin = {
+export type ResponseUserDataLogin = {
     _id: string;
     email: string;
     name: string;

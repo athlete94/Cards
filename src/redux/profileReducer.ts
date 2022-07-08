@@ -1,5 +1,6 @@
 import {profileApi, ResponceUpdateUserType} from "../api/profile-api";
 import {AppThunkType} from "./store";
+import {ResponseUserDataLogin} from "../api/auth-api";
 
 
 type ProfileInitialStateType = {
@@ -21,7 +22,6 @@ let ProfileInitialState = {
 export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialState, action: ActionsProfileType): ProfileInitialStateType => {
     switch (action.type) {
         case'SET-USER-DATA':
-            debugger
             return {
                 ...state,
                 _id: action.payload.data._id,
@@ -41,13 +41,14 @@ export const ProfileReducer = (state: ProfileInitialStateType = ProfileInitialSt
                 _id:action.payload.userId
             }
     }
+
     return state
 };
 
 export type ActionsProfileType = SetUserDataACType | UpdateUserDataType | SetUserIdType
 
 type SetUserDataACType = ReturnType<typeof setUserDataAC>
-export const setUserDataAC = (data: any) => {
+export const setUserDataAC = (data: ResponseUserDataLogin) => {
     return {
         type: "SET-USER-DATA",
         payload: {data}
@@ -71,15 +72,18 @@ export const setUserId = (userId: string) => {
 
 
 export const updateUserDataTC = (name: string, avatar?: string): AppThunkType => dispatch => {
+    dispatch(setStatus('loading'))
     profileApi.updateUserInfo({name, avatar})
         .then(res => {
             dispatch(updateUserData(res.data))
+            dispatch(setStatus('succeeded'))
         })
         .catch (e => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
             throw Error(error)
+            dispatch(setStatus('failed'))
         })
 }
 

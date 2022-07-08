@@ -2,7 +2,7 @@
     display: flex;
     justify-content: flex-start;
     width: 1024px;
-    height: 600px;
+    min-height: 600px;
     border-radius: 8px;
     background-color: white;
     position: relative;
@@ -11,7 +11,7 @@
 .profileItem {
     width: 250px;
     background-color: #d2caee;
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
     position: relative;
 }
 
@@ -27,7 +27,7 @@
 .userInfo {
     background-color: #b7a8dd;
     height: 200px;
-    border-radius: 8px;
+    border-radius: 8px 0 8px 8px;
 
     display: flex;
     flex-direction: column;
@@ -83,4 +83,14 @@
     border-radius: 5px;
     cursor: pointer;
     color: #5c5394;
+}
+
+.search_block {
+    display: flex;
+    align-items: center;
+}
+
+.search_block button {
+    height: 40px;
+    font-size: 0.8em;
 }

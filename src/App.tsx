@@ -4,7 +4,7 @@ import { Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NotFound from "./components/Error404/NotFound";
 import Profile from "./components/Profile/Profile";
-import Nav from "./components/Nav/Nav";
+import Nav from "./components/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
@@ -14,6 +14,7 @@ import {useAppSelector, useTypedDispatch} from "./redux/store";
 import {LinearProgress} from "@material-ui/core";
 import NewPassword from "./components/NewPassword/NewPassword";
 import Packs from "./components/Packs/Packs";
+import {Navbar} from "./components/Navbar/Navbar";
 
 
 export const PATH = {
@@ -47,9 +48,10 @@ function App() {
     return (
 
             <div className="App">
-                {status === 'loading' && <LinearProgress/>}
                 <ErrorSnackbar/>
                 <Nav />
+                <Navbar/>
+                {status === 'loading' && <LinearProgress/>}
                 <div>
                     <Routes>
                         <Route path={PATH.LOGIN} element={<Login/>}/>

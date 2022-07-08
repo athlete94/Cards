@@ -6,12 +6,13 @@ import PacksTable from "./PacksTable/PacksTable";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
 import {Search} from "../Search/Search";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import useDebounce from "../../common/hooks/useDebounce";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../App";
 import {RadioButton} from "../../utils/RadioButton/RadioButton";
 import {Button} from "@mui/material";
+
 
 
 export default function Packs() {
@@ -20,7 +21,6 @@ export default function Packs() {
     const handler = useAppSelector(state => state.search.handler)
     let sliderParams = useAppSelector(state => state.search.paramsSlider)
     let search = useAppSelector(state => state.search.searchText)
-    let isLogin = useAppSelector(state => state.login.isLogin)
 
 
     const debouncedSearchTerm = useDebounce(search, 500);
@@ -52,6 +52,10 @@ export default function Packs() {
     if (!isLogin) {
         return <Navigate to={PATH.LOGIN}/>
     }
+    useEffect(() => {
+        debugger
+        dispatch(setCardsAllThunkCreator(search, sliderParams))
+    }, [handler, debouncedSearchTerm])
 
     return (
         <div className={style.projectBlock}>
@@ -61,6 +65,8 @@ export default function Packs() {
                         <div className="form_radio_group">
                             <RadioButton value={value} onChangeListener={onChangeListener}/>
                         </div>
+
+
                     </div>
                     <div className={s.filter}>
                         <h3>Number of cards</h3>
@@ -83,7 +89,7 @@ export default function Packs() {
                 </div>
 
                 <div className={s.logoutButton}>
-                    <button>LOGOUT</button>
+                    <button >LOGOUT</button>
                 </div>
             </div>
         </div>

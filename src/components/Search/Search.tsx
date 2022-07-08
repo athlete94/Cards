@@ -3,7 +3,7 @@ import s from './Search.module.css'
 import {Box, TextField} from "@mui/material";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {setSearch} from "../../redux/searchReducer";
-
+import useDebounce from "../../common/hooks/useDebounce";
 
 type SearchPropsType = {
     label: string,
@@ -12,6 +12,7 @@ type SearchPropsType = {
 
 export const Search = ({label, width}: SearchPropsType) => {
     let value = useAppSelector(state => state.search.searchText)
+
 
 
     let dispatch = useTypedDispatch()
