@@ -84,7 +84,7 @@ const Profile = () => {
                 </div>
                 <div className={s.packsList}>
                     <div className={s.search_block}>
-                        <Search label={'search to packs list'} width={'280%'}/>
+                        {/*<Search label={'search to packs list'} width={'280%'}/>*/}
                     </div>
                     <PacksTable  sort={'0updated'}/>
                 </div>

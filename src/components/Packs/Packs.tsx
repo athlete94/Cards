@@ -12,7 +12,7 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../App";
 import {RadioButton} from "../../utils/RadioButton/RadioButton";
 import {Button} from "@mui/material";
-
+import {setSearch} from "../../redux/searchReducer";
 
 
 export default function Packs() {
@@ -22,8 +22,6 @@ export default function Packs() {
     let sliderParams = useAppSelector(state => state.search.paramsSlider)
     let search = useAppSelector(state => state.search.searchText)
     let isLogin = useAppSelector(state => state.login)
-    let cardPacks = useAppSelector(state => state.picks.cardPacks)
-
 
 
     const debouncedSearchTerm = useDebounce(search, 500);
@@ -45,12 +43,19 @@ export default function Packs() {
         setValue(value)
     }
 
-    const onClickSortHandler  =()=>{
-        if(sort==='0updated'){
+    const onClickSortHandler = () => {
+        if (sort === '0updated') {
             setSort('1updated')
         } else {
             setSort('0updated')
         }
+    }
+
+    // search
+
+    const searchHandler = (value: string) => {
+        dispatch(setSearch(value))
+
     }
 
     if (!isLogin) {
@@ -77,7 +82,10 @@ export default function Packs() {
                         {value === "All" ? <div className={style.title}>All Packs</div> :
                             <div className={style.title}>My packs</div>}
                         <div className={style.form}>
-                        <Search label={'Search'} width={'280%'}/>
+                            <Search label={'Search'}
+                                    width={'280%'}
+                                    callback={searchHandler}
+                                    value={search}/>
                             <Button variant="contained" color="secondary" onClick={onClickButton}>Add new pack</Button>
                         </div>
                     </div>
@@ -88,7 +96,7 @@ export default function Packs() {
                 </div>
 
                 <div className={s.logoutButton}>
-                    <button >LOGOUT</button>
+                    <button>LOGOUT</button>
                 </div>
             </div>
         </div>
