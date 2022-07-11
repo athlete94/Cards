@@ -1,39 +1,45 @@
-import { TextField } from '@mui/material';
+import {TextField} from '@mui/material';
 import React from 'react';
 import {GeneralModal} from "../GeneralModal";
 import {Button} from "@material-ui/core";
 
 
+
 export const ModalAddCard = () => {
-    /*const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);*/
 
     return (
         <GeneralModal>
             <div>
                 <h2>Card Info</h2>
-                <TextField id="standard-basic" label="Question" variant="standard" />
-                <TextField id="standard-basic" label="Answer" variant="standard" />
+                <div>
+                    <TextField id="standard-basic"
+                               label="Question"
+                               variant="standard"
+                               //value={questionValue}
+                    />
+                </div>
+                <div>
+                    <TextField id="standard-basic"
+                               label="Answer"
+                               variant="standard"
+                               //value={answerValue}
+                    />
+                </div>
                 <Button size={'small'}
                         type={"submit"}
                         variant={"contained"}
-                        color={"inherit"}>
+                        color={"inherit"}
+                >
                     Cancel
                 </Button>
                 <Button size={'small'}
                         type={"submit"}
                         variant={"contained"}
-                        color={"inherit"}>
+                        color={"inherit"}
+                >
                     Save
                 </Button>
             </div>
         </GeneralModal>
     );
 }
-
-/*
-<input>Question<input/>
-    <input>Answer<input/>
-        <button>Cancel</button>
-        <button>Save</button>*/
