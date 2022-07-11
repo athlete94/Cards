@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {CardType, UpdateCardModelType} from "../../../api/cardsApi";
 import {deleteCardTC, updateCardTC} from "../../../redux/cardListReducer";
@@ -36,7 +35,7 @@ export const CardsListTable = () => {
     };
 
     return (
-        <TableContainer component={Paper}>
+
             <Table sx={{minWidth: 400}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -47,6 +46,8 @@ export const CardsListTable = () => {
                         {userId === packUser_ID && <TableCell align="center">Actions</TableCell>}
                     </TableRow>
                 </TableHead>
+
+
                 <TableBody>
                     {cards != [] && cards.map((card) => {
                             return <TableRow
@@ -77,6 +78,5 @@ export const CardsListTable = () => {
                     )}
                 </TableBody>
             </Table>
-        </TableContainer>
     );
 };

@@ -42,6 +42,7 @@ export default function Packs() {
 
     const onChangeListener = (value: string) => {
         setValue(value)
+
     }
 
     const onClickSortHandler  =()=>{

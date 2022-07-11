@@ -10,6 +10,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import {NewCardDataType} from "../../api/cardsApi";
 import {Button} from "@material-ui/core";
 import {PATH} from "../../App";
+import { GeneralModal } from '../Modals/GeneralModal';
+import {ModalAddCard} from "../Modals/ModalCard/ModalAddCard";
 
 
 
@@ -55,6 +57,7 @@ export  const CardsList = ()=> {
                                 onClick={addCardHandler}>
                             Add card
                         </Button>
+                        <ModalAddCard/>
                     </div>
                     <div className={s.table}>
                         <CardsListTable/>
