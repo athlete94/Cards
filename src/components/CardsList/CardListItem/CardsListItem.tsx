@@ -1,16 +1,12 @@
 import React, {FC, useState} from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {CardType, UpdateCardModelType} from "../../../api/cardsApi";
 import {deleteCardTC, updateCardTC} from "../../../redux/cardListReducer";
+import Button from "@mui/material/Button";
 
 //"62b9b4a05803e85268e8a67c" id profile
 
@@ -22,18 +18,28 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
 
     const dispatch = useTypedDispatch()
     const userId = useAppSelector<string>((state) => state.profile._id);
+    const isFetchingCards = useAppSelector<boolean>((state)=> state.cardsList.isFetchingCards)
 
+    const [activeDeleteModal,setActiveDeleteModal] = useState<boolean>(false)
+    const [activeModal, setActiveModal] = useState<boolean>(false)
+    const [question, setQuestion] = useState<string>(card.question)
+    const [answer, setAnswer] = useState<string>(card.answer)
 
-    const onClickDeleteHandler = (cardsPackId: string, cardId: string) => {
-        dispatch(deleteCardTC(cardsPackId, cardId))
-    }
-    const editCardHandler = (id: string, cardPackId: string) => {
+    const editCardHandler = () => {
         const cardUpdateModel: UpdateCardModelType = {
-            _id: id,
-            question: 'New question',
-            answer: 'New answer',
+            _id: card._id,
+            question: question,
+            answer: answer,
         };
-        dispatch(updateCardTC(cardPackId, cardUpdateModel));
+        dispatch(updateCardTC(card.cardsPack_id, cardUpdateModel));
+    };
+
+    const deleteCardHandler = () => {
+        dispatch(deleteCardTC(card.cardsPack_id, card._id));
+        setActiveDeleteModal(false);
+    };
+    const deleteButtonHandler = () => {
+        setActiveDeleteModal(true);
     };
 
     return (
@@ -44,16 +50,12 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
             <TableCell align="center">{card.grade}</TableCell>
             {card.user_id === userId &&
                 <TableCell align="center">
-                    <button onClick={() => {
-                        onClickDeleteHandler(card.cardsPack_id, card._id)
-                    }}>
-                        <DeleteIcon/>
-                    </button>
-                    <button onClick={() => {
-                        editCardHandler(card._id, card.cardsPack_id)
-                    }}>
+                    <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards} color="inherit" >
                         <ModeEditIcon/>
-                    </button>
+                    </Button>
+                    <Button onClick={deleteButtonHandler} disabled={isFetchingCards} color="error" >
+                        <DeleteIcon/>
+                    </Button>
                 </TableCell>
             }
         </TableRow>
