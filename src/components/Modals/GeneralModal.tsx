@@ -35,7 +35,7 @@ export const GeneralModal: FC<PropsType> = ({visible, setVisible, children}) => 
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style}>
+            <Box sx={style} >
                 {children}
             </Box>
         </Modal>
