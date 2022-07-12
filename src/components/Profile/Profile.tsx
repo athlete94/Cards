@@ -7,6 +7,9 @@ import MinimumDistanceSlider from "../Slider/Slider";
 import {PATH} from "../../App";
 import {logoutTC} from "../../redux/authReducer";
 import {Search} from "../Search/Search";
+import Packs from "../Packs/Packs";
+import PacksTable from "../Packs/PacksTable/PacksTable";
+import {Logout} from "../Logout/Logout";
 
 const Profile = () => {
 
@@ -16,28 +19,8 @@ const Profile = () => {
 
     let isLogin = useAppSelector(state => state.login.isLogin)
     let {name, avatar} = useAppSelector(state => state.profile)
-
-    debugger
     //-----------
 
-
-    // const changeUserName = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setUserName(e.currentTarget.value.trimStart())
-    // }
-    // const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    //     if (e.charCode === 13) {
-    //         onBlurHandler()
-    //     }
-    // }
-    // const onBlurHandler = () => {
-    //     userName && dispatch(updateUserDataTC(userName))
-    // }
-
-    const logoutHandler = () => {
-        dispatch(logoutTC())
-    }
-
-    //---------------search func
 
 
     if (!isLogin) {
@@ -82,13 +65,11 @@ const Profile = () => {
                 </div>
                 <div className={s.packsList}>
                     <div className={s.search_block}>
-                        <Search label={'search to packs list'} width={'280%'}/>
+                        {/*<Search label={'search to packs list'} width={'280%'}/>*/}
                     </div>
+                    <PacksTable  sort={'0updated'}/>
                 </div>
-
-                <div className={s.logoutButton}>
-                    <button onClick={logoutHandler}>LOGOUT</button>
-                </div>
+                <Logout/>
             </div>
         </div>
     );

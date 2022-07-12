@@ -11,7 +11,7 @@ import {setStatus} from "./authReducer";
 import {handleAppRequestError} from "../utils/Error/errorUtils";
 
 
-type InitialStateType =  typeof initialState
+type InitialStateType = typeof initialState
 export type CardsListActionsType =
     | ReturnType<typeof setCardsDataAC>
     | ReturnType<typeof updateCardGradeAC>
@@ -82,9 +82,8 @@ export const setIsFetchingCards = (value: boolean) =>
     ({type: "cardsList/SET_IS_FETCHING", value} as const);
 
 
-export const getCardsTC = (params: GetCardsQueryParams)
-    : AppThunkType => (dispatch,
-                       getState: () => AppRootStateType) => {
+export const getCardsTC = (params: GetCardsQueryParams): AppThunkType => (dispatch,
+                                                                          getState: () => AppRootStateType) => {
     const {
         cardAnswer,
         cardQuestion,

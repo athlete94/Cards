@@ -6,6 +6,14 @@ import {Search} from "../Search/Search";
 import {useCallback, useEffect, useState} from "react";
 import {CardsListItem} from "./CardListItem/CardsListItem";
 import {addNewCardTC, getCardsTC} from "../../redux/cardListReducer";
+import {useCallback, useEffect} from "react";
+import {CardsListTable} from "./CardListItem/CardsListTable";
+import {
+    addNewCardTC,
+    getCardsTC,
+    setSearchQueryByAnswerAC,
+    setSearchQueryByQuestionAC
+} from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {CardType, NewCardDataType} from "../../api/cardsApi";
 import {Button} from "@material-ui/core";
@@ -16,9 +24,14 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
+import useDebounce from "../../common/hooks/useDebounce";
+import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 
 
 export const CardsList = () => {
+export const CardsList = () => {
+    const cardQuestion = useAppSelector(state => state.cardsList.cardQuestion)
+    const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
 
     const urlParams = useParams<'cardPackID'>();
     const navigate = useNavigate();
@@ -48,6 +61,19 @@ export const CardsList = () => {
     }, [dispatch, cardsPack_ID, question, answer]);
 
 
+    //radio
+    const [valueRadio, setValueRadio] = React.useState('question');
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValueRadio((event.target as HTMLInputElement).value);
+    };
+    //search
+    const searchHandler = (value: string) => {
+        valueRadio === 'question' ?
+            dispatch(setSearchQueryByQuestionAC(value))
+            : dispatch(setSearchQueryByAnswerAC(value))
+    }
+    const valueSearch = valueRadio === 'question' ? cardQuestion : cardAnswer
+
     return (
         <div className={style.projectBlock}>
             <div className={s.profile}>
@@ -56,7 +82,10 @@ export const CardsList = () => {
                        ⬅ Pack name
                     </span>
                 <div>
-                    <Search label={'🔍Search ...'} width={'100%'}/>
+                    <Search label={'Search'}
+                            width={'100%'}
+                            callback={searchHandler}
+                            value={valueSearch}/>
                 </div>
 
                 {userId === packUser_ID &&
