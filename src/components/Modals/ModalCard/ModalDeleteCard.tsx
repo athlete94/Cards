@@ -24,11 +24,11 @@ export const ModalDeleteCard: React.FC<ModalDeleteCardType> = (
     }
 
     return (
-       <GeneralModal visible={active} setVisible={setActive}>
+        <GeneralModal visible={active} setVisible={setActive}>
             <h1>Delete Pack</h1>
             <h3>Do you really want to remove? All cards will be excluded from this course.</h3>
             <div>
-                <Button  onClick={cancelHandler}>Cancel</Button>
+                <Button onClick={cancelHandler}>Cancel</Button>
                 <Button onClick={deleteHandler}>Delete</Button>
             </div>
         </GeneralModal>

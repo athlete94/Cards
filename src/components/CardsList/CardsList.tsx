@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./CardsList.module.css";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
@@ -23,7 +23,6 @@ export const CardsList = () => {
     const urlParams = useParams<'cardPackID'>();
     const navigate = useNavigate();
     const cardsPack_ID = urlParams.cardPackID;
-
     const dispatch = useTypedDispatch()
 
     const cards = useAppSelector<Array<CardType>>((state) => state.cardsList.cards);
@@ -46,7 +45,7 @@ export const CardsList = () => {
             answer: answer,
         };
         dispatch(addNewCardTC(newCard));
-    }, [dispatch, cardsPack_ID,question, answer]);
+    }, [dispatch, cardsPack_ID, question, answer]);
 
 
     return (
@@ -69,15 +68,14 @@ export const CardsList = () => {
                             disabled={isFetchingCards}>
                         Add card
                     </Button>
-                    }
-                    <ModalEditAddCard inputAnswer={answer}
-                                      setInputAnswer={setAnswer}
-                                      inputQuestion={question}
-                                      setInputQuestion={setQuestion}
-                                      active={activeModal}
-                                      setActive={setActiveModal}
-                                      setCard={addCardHandler}/>
-
+                }
+                <ModalEditAddCard inputAnswer={answer}
+                                  setInputAnswer={setAnswer}
+                                  inputQuestion={question}
+                                  setInputQuestion={setQuestion}
+                                  active={activeModal}
+                                  setActive={setActiveModal}
+                                  setCard={addCardHandler}/>
 
                 <div className={s.table}>
                     <Table sx={{minWidth: 400}} aria-label="simple table">
@@ -92,9 +90,10 @@ export const CardsList = () => {
                         </TableHead>
                         <TableBody>
                             {cards != [] && cards.map((card) => {
-                                return(
+                                return (
                                     <CardsListItem key={card._id} card={card}/>
-                                )})}
+                                )
+                            })}
                         </TableBody>
                     </Table>
                 </div>

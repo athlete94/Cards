@@ -9,7 +9,7 @@ type ModalEditAddCardType = {
     inputQuestion: string
     setInputQuestion: (value: string) => void
     active: boolean
-    setActive: (state:boolean) => void
+    setActive: (state: boolean) => void
     setCard: () => void
 }
 
@@ -33,10 +33,11 @@ export const ModalEditAddCard: React.FC<ModalEditAddCardType> = (
         setActive(false)
     };
 
-    const handleTextInputQuestionChange = (event: any)=> {
+    const handleTextInputQuestionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputQuestion(event.currentTarget.value);
     };
-    const handleTextInputAnswerChange = (event: any) => {
+
+    const handleTextInputAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputAnswer(event.currentTarget.value);
     };
 

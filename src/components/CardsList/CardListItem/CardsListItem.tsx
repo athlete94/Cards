@@ -8,8 +8,8 @@ import {CardType, UpdateCardModelType} from "../../../api/cardsApi";
 import {deleteCardTC, updateCardTC} from "../../../redux/cardListReducer";
 import Button from "@mui/material/Button";
 import {ModalDeleteCard} from "../../Modals/ModalCard/ModalDeleteCard";
+import {ModalEditAddCard} from "../../Modals/ModalCard/ModalEditAddCard";
 
-//"62b9b4a05803e85268e8a67c" id profile
 
 type CardsListItemPropsType = {
     card: CardType
@@ -62,7 +62,15 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
                         setActive={setActiveDeleteModal}
                         deletePack={deleteCardHandler}
                     />
-
+                    <ModalEditAddCard
+                        inputAnswer={answer}
+                        setInputAnswer={setAnswer}
+                        inputQuestion={question}
+                        setInputQuestion={setQuestion}
+                        active={activeModal}
+                        setActive={setActiveModal}
+                        setCard={editCardHandler}
+                    />
                 </TableCell>
             }
         </TableRow>
