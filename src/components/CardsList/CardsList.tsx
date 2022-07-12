@@ -1,8 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./CardsList.module.css";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Search} from "../Search/Search";
+import {useCallback, useEffect, useState} from "react";
+import {CardsListItem} from "./CardListItem/CardsListItem";
+import {addNewCardTC, getCardsTC} from "../../redux/cardListReducer";
 import {useCallback, useEffect} from "react";
 import {CardsListTable} from "./CardListItem/CardsListTable";
 import {
@@ -12,39 +15,50 @@ import {
     setSearchQueryByQuestionAC
 } from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
-import {NewCardDataType} from "../../api/cardsApi";
+import {CardType, NewCardDataType} from "../../api/cardsApi";
 import {Button} from "@material-ui/core";
 import {PATH} from "../../App";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import Table from "@mui/material/Table";
+import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
 import useDebounce from "../../common/hooks/useDebounce";
 import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 
 
 export const CardsList = () => {
+export const CardsList = () => {
     const cardQuestion = useAppSelector(state => state.cardsList.cardQuestion)
     const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
 
     const urlParams = useParams<'cardPackID'>();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const cardsPack_ID = urlParams.cardPackID;
-
     const dispatch = useTypedDispatch()
 
-    const debouncedSearchQuestion = useDebounce(cardQuestion, 500);
-    const debouncedSearchAnswer = useDebounce(cardAnswer, 500);
+    const cards = useAppSelector<Array<CardType>>((state) => state.cardsList.cards);
+    const packUser_ID = useAppSelector((state) => state.cardsList.packUserId)
+    const userId = useAppSelector<string>((state) => state.profile._id);
+    const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
+
+    const [activeModal, setActiveModal] = useState<boolean>(false);
+    const [answer, setAnswer] = useState<string>("");
+    const [question, setQuestion] = useState<string>("");
 
     useEffect(() => {
         if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-    }, [debouncedSearchQuestion, debouncedSearchAnswer])
+    }, [])
 
     const addCardHandler = useCallback(() => {
         const newCard: NewCardDataType = {
             cardsPack_id: cardsPack_ID as string,
-            question: 'Added new question',
-            answer: 'Added new answer',
+            question: question,
+            answer: answer,
         };
         dispatch(addNewCardTC(newCard));
-
-    }, [dispatch, cardsPack_ID]);
+    }, [dispatch, cardsPack_ID, question, answer]);
 
     //radio
     const [valueRadio, setValueRadio] = React.useState('question');
@@ -72,30 +86,44 @@ export const CardsList = () => {
                             callback={searchHandler}
                             value={valueSearch}/>
                 </div>
-                <div>
 
-                    <FormLabel id="demo-controlled-radio-buttons-group">Search by</FormLabel>
-                    <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={valueRadio}
-                        onChange={handleChange}
-                    >
-                        <FormControlLabel value="question" control={<Radio/>} label="Question"/>
-                        <FormControlLabel value="answer" control={<Radio/>} label="Answer"/>
-                    </RadioGroup>
-                </div>
-                <div className={s.button}>
+                {userId === packUser_ID &&
                     <Button size={'small'}
                             type={"submit"}
                             variant={"contained"}
                             color={"inherit"}
-                            onClick={addCardHandler}>
+                            onClick={() => setActiveModal(true)}
+                            disabled={isFetchingCards}>
                         Add card
                     </Button>
-                </div>
+                }
+                <ModalEditAddCard inputAnswer={answer}
+                                  setInputAnswer={setAnswer}
+                                  inputQuestion={question}
+                                  setInputQuestion={setQuestion}
+                                  active={activeModal}
+                                  setActive={setActiveModal}
+                                  setCard={addCardHandler}/>
+
                 <div className={s.table}>
-                    <CardsListTable/>
+                    <Table sx={{minWidth: 400}} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Question</TableCell>
+                                <TableCell align="center">Answer</TableCell>
+                                <TableCell align="center">Last Updated</TableCell>
+                                <TableCell align="center">Grade</TableCell>
+                                {userId === packUser_ID && <TableCell align="center">Actions</TableCell>}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {cards != [] && cards.map((card) => {
+                                return (
+                                    <CardsListItem key={card._id} card={card}/>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
                 </div>
             </div>
         </div>
