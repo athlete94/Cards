@@ -7,6 +7,7 @@ import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {CardType, UpdateCardModelType} from "../../../api/cardsApi";
 import {deleteCardTC, updateCardTC} from "../../../redux/cardListReducer";
 import Button from "@mui/material/Button";
+import {ModalDeleteCard} from "../../Modals/ModalCard/ModalDeleteCard";
 
 //"62b9b4a05803e85268e8a67c" id profile
 
@@ -18,9 +19,9 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
 
     const dispatch = useTypedDispatch()
     const userId = useAppSelector<string>((state) => state.profile._id);
-    const isFetchingCards = useAppSelector<boolean>((state)=> state.cardsList.isFetchingCards)
+    const isFetchingCards = useAppSelector<boolean>((state) => state.cardsList.isFetchingCards)
 
-    const [activeDeleteModal,setActiveDeleteModal] = useState<boolean>(false)
+    const [activeDeleteModal, setActiveDeleteModal] = useState<boolean>(false)
     const [activeModal, setActiveModal] = useState<boolean>(false)
     const [question, setQuestion] = useState<string>(card.question)
     const [answer, setAnswer] = useState<string>(card.answer)
@@ -43,19 +44,24 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
     };
 
     return (
-        <TableRow  sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+        <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
             <TableCell component="th" scope="row">{card.question}</TableCell>
             <TableCell align="center">{card.answer}</TableCell>
             <TableCell align="center">{card.updated}</TableCell>
             <TableCell align="center">{card.grade}</TableCell>
             {card.user_id === userId &&
                 <TableCell align="center">
-                    <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards} color="inherit" >
+                    <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards} color="inherit">
                         <ModeEditIcon/>
                     </Button>
-                    <Button onClick={deleteButtonHandler} disabled={isFetchingCards} color="error" >
+                    <Button onClick={deleteButtonHandler} disabled={isFetchingCards} color="error">
                         <DeleteIcon/>
                     </Button>
+                    <ModalDeleteCard
+                        active={activeDeleteModal}
+                        setActive={setActiveDeleteModal}
+                        deletePack={deleteCardHandler}
+                    />
                 </TableCell>
             }
         </TableRow>

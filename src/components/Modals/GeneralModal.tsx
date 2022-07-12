@@ -1,7 +1,5 @@
 import React, {FC, ReactNode} from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const style = {
@@ -17,27 +15,29 @@ const style = {
 };
 
 type PropsType = {
-    children: ReactNode
+    visible?: boolean
+    setVisible?: (isVisible: boolean) => void
+    children?: ReactNode
 }
 
-export const GeneralModal: FC<PropsType> = ({children}) => {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+export const GeneralModal: FC<PropsType> = ({visible, setVisible, children}) => {
+
+    const close = () => {
+        if (setVisible) {
+            setVisible(false)
+        }
+    }
 
     return (
-        <div>
-            <Button onClick={handleOpen}>Open modal</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    {children}
-                </Box>
-            </Modal>
-        </div>
+        <Modal
+            open={visible ? visible : false}
+            onClose={close}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+                {children}
+            </Box>
+        </Modal>
     );
 }
