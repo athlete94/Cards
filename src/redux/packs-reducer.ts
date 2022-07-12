@@ -19,8 +19,7 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
     switch (action.type) {
         case'SET-CARDS':
             return {
-                ...state,
-                cardPacks: action.payload.cardPacks
+                ...action.payload
             }
         default:
             return state
@@ -37,7 +36,6 @@ const setCardsAll = (payload: PacksStateType) => {
 export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string): AppThunkType => (dispatch, getState) => {
     dispatch(setStatus('loading'))
     if (value === "All") {
-        debugger
         packsApi.getPacks(sliderParams, search, '', sort).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
@@ -53,7 +51,6 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
 
         if (userId != null) packsApi.getPacks(sliderParams, search, userId, sort)
             .then((res) => {
-                debugger
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
             }).catch((e) => {

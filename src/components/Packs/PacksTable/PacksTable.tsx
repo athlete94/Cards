@@ -24,8 +24,7 @@ export default function PacksTable(props: PacksTableType) {
     const cards = useAppSelector(state => state.picks.cardPacks)
 
     const userId = useAppSelector(state => state.profile._id)
-    if(userId!=null){}
-
+    // if(userId!=null){}
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id))
@@ -38,7 +37,7 @@ export default function PacksTable(props: PacksTableType) {
     if(up!=null) up.addEventListener('click', ()=>{
 
     })
-
+    console.log(cards)
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 400}} aria-label="simple table">
@@ -52,9 +51,9 @@ export default function PacksTable(props: PacksTableType) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards !== [] && cards.map((card: CardPacksType) => (
+                    {cards.length && cards.map((card: CardPacksType, index) => (
                         <TableRow
-                            key={card.name}
+                            key={index}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
                             <TableCell

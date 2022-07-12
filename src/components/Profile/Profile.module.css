@@ -70,21 +70,6 @@
 }
 
 
-
-.logoutButton {
-    position: absolute;
-    top: -25px;
-    right: 0;
-}
-
-.logoutButton button {
-    background-color: #e7eaf6;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #5c5394;
-}
-
 .search_block {
     display: flex;
     align-items: center;

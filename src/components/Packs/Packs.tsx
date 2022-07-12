@@ -94,10 +94,6 @@ export default function Packs() {
                         <button onClick={onClickSortHandler}>Sort</button>
                     </div>
                 </div>
-
-                <div className={s.logoutButton}>
-                    <button>LOGOUT</button>
-                </div>
             </div>
         </div>
     );
