@@ -27,6 +27,7 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
 }
 
 const setCardsAll = (payload: PacksStateType) => {
+
     return {
         type: 'SET-CARDS',
         payload
