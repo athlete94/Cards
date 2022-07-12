@@ -62,6 +62,7 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
                         setActive={setActiveDeleteModal}
                         deletePack={deleteCardHandler}
                     />
+
                 </TableCell>
             }
         </TableRow>
