@@ -70,7 +70,7 @@ export const authMe = () => (dispatch: TypedDispatch) => {
 export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
     authApi.login(payload).then((res) => {
-        debugger
+
         dispatch(setUserDataAC(res.data))
         dispatch(isLoginAC(true))
         sessionStorage.setItem('userId', res.data._id)

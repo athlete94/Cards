@@ -18,6 +18,8 @@ import {CardsList} from "./components/CardsList/CardsList";
 import Packs from "./components/Packs/Packs";
 import {Navbar} from "./components/Navbar/Navbar";
 import EditProfile from "./components/Profile/EditProfile/EditProfile";
+import s from "./components/Profile/Profile.module.css";
+import {Logout} from "./components/Logout/Logout";
 
 
 export const PATH = {

@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {deletePickToState, editPackToState} from "../../../redux/packs-reducer";
+import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/packs-reducer";
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
@@ -20,12 +20,11 @@ type PacksTableType = {
 export default function PacksTable(props: PacksTableType) {
 
     const dispatch = useTypedDispatch()
+
     const cards = useAppSelector(state => state.picks.cardPacks)
 
-    const userId = sessionStorage.getItem('userId')
-    if(userId!=null){}
-
-
+    const userId = useAppSelector(state => state.profile._id)
+    // if(userId!=null){}
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id))
@@ -38,7 +37,7 @@ export default function PacksTable(props: PacksTableType) {
     if(up!=null) up.addEventListener('click', ()=>{
 
     })
-
+    console.log(cards)
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 400}} aria-label="simple table">
@@ -52,9 +51,9 @@ export default function PacksTable(props: PacksTableType) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards != [] && cards.map((card) => (
+                    {cards.length && cards.map((card: CardPacksType, index) => (
                         <TableRow
-                            key={card.name}
+                            key={index}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
                             <TableCell

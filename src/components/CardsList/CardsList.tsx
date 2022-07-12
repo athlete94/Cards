@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./CardsList.module.css";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
@@ -18,7 +18,7 @@ import Table from "@mui/material/Table";
 import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
 
 
-export const CardsList = () => {
+export  const CardsList = ()=> {
 
     const urlParams = useParams<'cardPackID'>();
     const navigate = useNavigate();
@@ -47,6 +47,18 @@ export const CardsList = () => {
         dispatch(addNewCardTC(newCard));
     }, [dispatch, cardsPack_ID, question, answer]);
 
+    //radio
+    const [valueRadio, setValueRadio] = React.useState('question');
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValueRadio((event.target as HTMLInputElement).value);
+    };
+    //search
+    const searchHandler = (value: string) => {
+        valueRadio === 'question' ?
+            dispatch(setSearchQueryByQuestionAC(value))
+            : dispatch(setSearchQueryByAnswerAC(value))
+    }
+    const valueSearch = valueRadio === 'question' ? cardQuestion : cardAnswer
 
     return (
         <div className={style.projectBlock}>
@@ -56,7 +68,24 @@ export const CardsList = () => {
                        ⬅ Pack name
                     </span>
                 <div>
-                    <Search label={'🔍Search ...'} width={'100%'}/>
+                    <Search label={'Search'}
+                            width={'100%'}
+                            callback={searchHandler}
+                            value={valueSearch}/>
+                </div>
+
+                <div>
+
+                    <FormLabel id="demo-controlled-radio-buttons-group">Search by</FormLabel>
+                    <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={valueRadio}
+                        onChange={handleChange}
+                    >
+                        <FormControlLabel value="question" control={<Radio/>} label="Question"/>
+                        <FormControlLabel value="answer" control={<Radio/>} label="Answer"/>
+                    </RadioGroup>
                 </div>
 
                 {userId === packUser_ID &&

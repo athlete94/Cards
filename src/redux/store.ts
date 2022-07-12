@@ -43,3 +43,6 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 //type AppThunk
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>;
+
+//@ts-ignore
+window.store = store
