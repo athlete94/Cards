@@ -60,7 +60,7 @@ export const CardsList = () => {
         dispatch(addNewCardTC(newCard));
     }, [dispatch, cardsPack_ID, question, answer]);
 
-
+    //qwe
     //radio
     const [valueRadio, setValueRadio] = React.useState('question');
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
