@@ -1,4 +1,4 @@
-import {AppThunkType, TypedDispatch} from "./store";
+import {AppThunkType} from "./store";
 import {setStatus} from "./authReducer";
 import {packsApi} from "../api/packs-api";
 import {setErrorAC} from "./registrationReducer";
@@ -6,7 +6,7 @@ import {setErrorAC} from "./registrationReducer";
 const initialState = {
     cardPacks: [] as Array<CardPacksType>,
     page: 0,
-    pageCount: 0,
+    pageCount: 5,
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
@@ -21,23 +21,48 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
             return {
                 ...action.payload
             }
+        case 'SET_PAGE_COUNT':
+            return {
+                ...state,
+                pageCount: action.pageCount
+            }
+        case 'SET_PAGE':
+            return {
+                ...state,
+                page: action.page
+            }
+
         default:
             return state
     }
 }
 
+//AC
 const setCardsAll = (payload: PacksStateType) => {
-
     return {
         type: 'SET-CARDS',
         payload
     } as const
 }
 
-export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string): AppThunkType => (dispatch, getState) => {
+export const setPageCount = (pageCount: number) => {
+    return {
+        type: 'SET_PAGE_COUNT',
+        pageCount
+    } as const
+}
+export const setPage = (page: number) => {
+    return {
+        type: 'SET_PAGE',
+        page
+    } as const
+}
+
+
+export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string, page?:number, pageCount?:number): AppThunkType => (dispatch, getState) => {
     dispatch(setStatus('loading'))
     if (value === "All") {
-        packsApi.getPacks(sliderParams, search, '', sort).then((res) => {
+        packsApi.getPacks(sliderParams, search, '', sort, page, pageCount).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         }).catch((e) => {
@@ -50,7 +75,7 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
     } else {
         let userId = getState().profile._id;
 
-        if (userId != null) packsApi.getPacks(sliderParams, search, userId, sort)
+        if (userId != null) packsApi.getPacks(sliderParams, search, userId, sort, page, pageCount)
             .then((res) => {
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
@@ -69,9 +94,12 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
 
 export const addPickToState = (): AppThunkType => (dispatch, getState) => {
     let userId = getState().profile._id
+    let {page, pageCount} = getState().picks
+    let {sortPacks, searchText, paramsSlider} = getState().search
+
     dispatch(setStatus('loading'))
     packsApi.addPack().then(() => {
-        packsApi.getPacks( [0, 100], '', userId).then((res) => {
+        packsApi.getPacks(paramsSlider, searchText, userId, sortPacks, page, pageCount).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -86,10 +114,13 @@ export const addPickToState = (): AppThunkType => (dispatch, getState) => {
 
 export const deletePickToState = (idPack: string): AppThunkType => (dispatch, getState) => {
     let userId = getState().profile._id
+    let {page, pageCount} = getState().picks
+    let {sortPacks, searchText, paramsSlider} = getState().search
+
     dispatch(setStatus('loading'))
     packsApi.deletePick(idPack)
         .then(() => {
-            packsApi.getPacks( [0, 100], '', userId)
+            packsApi.getPacks( paramsSlider, searchText, userId, sortPacks, page, pageCount)
                 .then((res) => {
                     dispatch(setCardsAll(res.data))
                     dispatch(setStatus('succeeded'))
@@ -104,9 +135,12 @@ export const deletePickToState = (idPack: string): AppThunkType => (dispatch, ge
 }
 export const editPackToState = (idPack: string): AppThunkType => (dispatch, getState) => {
     let userId = getState().profile._id
+    let {page, pageCount} = getState().picks
+    let {sortPacks, searchText, paramsSlider} = getState().search
+
     dispatch(setStatus('loading'))
     packsApi.editPack(idPack).then(() => {
-        packsApi.getPacks([0, 100], '', userId).then((res) => {
+        packsApi.getPacks(paramsSlider, searchText, userId, sortPacks, page, pageCount).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         })
@@ -120,9 +154,10 @@ export const editPackToState = (idPack: string): AppThunkType => (dispatch, getS
 }
 
 type SetCardsAllType = ReturnType<typeof setCardsAll>
+type SetPageCountType = ReturnType<typeof setPageCount>
+type SetPageType = ReturnType<typeof setPage>
 
-
-export type ActionsPacksType = SetCardsAllType
+export type ActionsPacksType = SetCardsAllType | SetPageCountType | SetPageType
 
 
 export type PacksStateType = typeof initialState

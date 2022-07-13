@@ -12,16 +12,17 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../App";
 import {RadioButton} from "../../utils/RadioButton/RadioButton";
 import {Button} from "@mui/material";
-import {setSearch} from "../../redux/searchReducer";
+import {setSearch, setSort} from "../../redux/searchReducer";
+import PaginationRounded from "../Pagination/Pagination";
+import BasicSelect from "../PageCount/PageCount";
 
 
 export default function Packs() {
 
     const dispatch = useTypedDispatch()
-    const handler = useAppSelector(state => state.search.handler)
-    let sliderParams = useAppSelector(state => state.search.paramsSlider)
-    let search = useAppSelector(state => state.search.searchText)
+    let {searchText: search, handler, paramsSlider, sortPacks} = useAppSelector(state => state.search)
     let isLogin = useAppSelector(state => state.login)
+    let {page, pageCount, cardPacksTotalCount} = useAppSelector(state => state.picks)
 
 
     const debouncedSearchTerm = useDebounce(search, 500);
@@ -31,24 +32,22 @@ export default function Packs() {
     }
 
     const [value, setValue] = useState<string>("All")
-    const [sort, setSort] = useState<string>('0updated')
 
-
+    debugger
     useEffect(() => {
-        dispatch(setCardsAllThunkCreator(search, sliderParams, value, sort))
-    }, [handler, debouncedSearchTerm, value, sort])
+        dispatch(setCardsAllThunkCreator(search, paramsSlider, value, sortPacks, page, pageCount))
+    }, [handler, debouncedSearchTerm, value, sortPacks, page, pageCount])
 
 
     const onChangeListener = (value: string) => {
         setValue(value)
-
     }
 
     const onClickSortHandler = () => {
-        if (sort === '0updated') {
-            setSort('1updated')
+        if (sortPacks === '0updated') {
+            dispatch(setSort('1updated'))
         } else {
-            setSort('0updated')
+            dispatch(setSort('0updated'))
         }
     }
 
@@ -91,8 +90,13 @@ export default function Packs() {
                         </div>
                     </div>
                     <div>
-                        <PacksTable sort={sort}/>
-                        <button onClick={onClickSortHandler}>Sort</button>
+                        <PacksTable sort={sortPacks}/>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <button onClick={onClickSortHandler}>Sort</button>
+                            <BasicSelect pageCount={pageCount}/>
+                            <PaginationRounded count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
+                        </div>
+
                     </div>
                 </div>
             </div>

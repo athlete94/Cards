@@ -21,10 +21,9 @@ export default function PacksTable(props: PacksTableType) {
 
     const dispatch = useTypedDispatch()
 
-    const cards = useAppSelector(state => state.picks.cardPacks)
 
+    const cards = useAppSelector(state => state.picks.cardPacks)
     const userId = useAppSelector(state => state.profile._id)
-    // if(userId!=null){}
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id))
@@ -33,13 +32,13 @@ export default function PacksTable(props: PacksTableType) {
         dispatch(editPackToState(id))
     }
 
-    let up = document.getElementById("update")
-    if(up!=null) up.addEventListener('click', ()=>{
-
-    })
-    console.log(cards)
+    // let up = document.getElementById("update")
+    // if(up!=null) up.addEventListener('click', ()=>{
+    //
+    // })
+    //
     return (
-        <TableContainer component={Paper}>
+        <TableContainer style={{marginBottom:'20px'}} component={Paper}>
             <Table sx={{minWidth: 400}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -67,7 +66,7 @@ export default function PacksTable(props: PacksTableType) {
                             <TableCell align="center" >{card.updated.slice(0, 10)}</TableCell>
                             <TableCell align="center">{card.user_name}</TableCell>
                             <TableCell align="center">
-                                <Box sx={{ '& button': { m: 1 } }}>
+                                <Box sx={{ '& button': { m: 1 }, minWidth: 250 }}>
                                     <Button size="small" variant="outlined" color="primary">Learn</Button>
                                     {userId === card.user_id ?
                                         <Button size="small" variant="contained" color="info" onClick={() => {
