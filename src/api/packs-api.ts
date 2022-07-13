@@ -1,10 +1,10 @@
+import {CardPacksType, PacksStateType} from "../redux/packs-reducer";
 import {instance} from "./instance";
 
 
 export const packsApi = {
-    //@ts-ignore
-    getPacks(search?: string, sliderParams: number[], userId?: string, sort?: string) {
-        return instance.get('cards/pack', {
+    getPacks( sliderParams: number[], search?: string, userId?: string, sort?: string) {
+        return instance.get<PacksStateType>('cards/pack', {
             params: {
                 packName: search,
                 min: sliderParams[0],

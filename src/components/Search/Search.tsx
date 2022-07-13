@@ -1,26 +1,20 @@
 import React, {ChangeEvent} from 'react';
 import s from './Search.module.css'
 import {Box, TextField} from "@mui/material";
-import {useAppSelector, useTypedDispatch} from "../../redux/store";
-import {setSearch} from "../../redux/searchReducer";
 
 
 type SearchPropsType = {
     label: string,
-    width:string,
+    width: string,
+    callback: (value: string) => void
+    value: string
 }
 
-export const Search = ({label, width}: SearchPropsType) => {
-    let value = useAppSelector(state => state.search.searchText)
+export const Search = ({label, width, callback, value}: SearchPropsType) => {
 
-
-
-    let dispatch = useTypedDispatch()
-
-    const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setSearch(e.currentTarget.value.trimStart()))
+    const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
+        callback(e.currentTarget.value.trimStart())
     }
-
 
     return (
         <div className={s.search}>
@@ -37,7 +31,7 @@ export const Search = ({label, width}: SearchPropsType) => {
                     id="fullWidth"
                     label={label}
                     variant="standard"
-                    onChange={searchHandler}
+                    onChange={onChangeSearch}
                 />
             </Box>
 
