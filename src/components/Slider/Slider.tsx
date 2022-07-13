@@ -2,21 +2,16 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
-import {setHandler, setSliderParams} from "../../redux/searchReducer";
-import {useState} from "react";
+import {setSliderParams, setTouchSlider} from "../../redux/searchReducer";
 
-function valuetext(value: number) {
-    return `${value}°C`;
-}
 
 const minDistance = 10;
 
 export default function MinimumDistanceSlider() {
-    // const [value1, setValue1] = React.useState<number[]>([0, 100]);
     const dispatch = useTypedDispatch()
 
     let value = useAppSelector(state => state.search.paramsSlider)
-    let [count, setCount] = useState<number>(0)
+    let touchSlider = useAppSelector(state => state.search.touchSlider)
 
     const handleChange1 = (
         event: Event,
@@ -34,23 +29,27 @@ export default function MinimumDistanceSlider() {
         }
     };
 
-    const onMouseUpHandler = () => {
-        setCount(++count)
-        dispatch(setHandler(count))
+    const committedHandler = () => { // запускается при отпускании слайдера
+        dispatch(setTouchSlider(!touchSlider))
     }
 
     return (
-        <Box sx={{ width: 200 }}>
+        <Box sx={{width: 200}}>
+            <div style={{display:'flex', justifyContent: 'space-between'}}>
+                <span>{value[0]}</span>
+                <span>{value[1]}</span>
+            </div>
+
             <Slider
+                valueLabelDisplay='off'
                 getAriaLabel={() => 'Minimum distance'}
                 value={value}
                 onChange={handleChange1}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
                 disableSwap
-                onMouseUp={onMouseUpHandler}
                 color="secondary"
+                onChangeCommitted={committedHandler}
             />
+
         </Box>
     );
 }

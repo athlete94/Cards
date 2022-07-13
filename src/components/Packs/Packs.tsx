@@ -20,7 +20,7 @@ import BasicSelect from "../PageCount/PageCount";
 export default function Packs() {
 
     const dispatch = useTypedDispatch()
-    let {searchText: search, handler, paramsSlider, sortPacks} = useAppSelector(state => state.search)
+    let {searchText: search, touchSlider, paramsSlider, sortPacks} = useAppSelector(state => state.search)
     let isLogin = useAppSelector(state => state.login)
     let {page, pageCount, cardPacksTotalCount} = useAppSelector(state => state.picks)
 
@@ -36,7 +36,7 @@ export default function Packs() {
     debugger
     useEffect(() => {
         dispatch(setCardsAllThunkCreator(search, paramsSlider, value, sortPacks, page, pageCount))
-    }, [handler, debouncedSearchTerm, value, sortPacks, page, pageCount])
+    }, [touchSlider, debouncedSearchTerm, value, sortPacks, page, pageCount])
 
 
     const onChangeListener = (value: string) => {
