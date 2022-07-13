@@ -1,0 +1,72 @@
+import React, {useState} from 'react';
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import {NavLink} from "react-router-dom";
+import {ModalDeletePack} from "../../Modals/ModalPack/ModalDeletePack";
+import {ModalEditPack} from "../../Modals/ModalPack/ModalEditPack";
+import Box from "@mui/material/Box";
+import {Button} from "@mui/material";
+import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/packs-reducer";
+import {useAppSelector, useTypedDispatch} from "../../../redux/store";
+
+type PackItemType = {
+    pack:CardPacksType
+}
+
+const PackItem:React.FC<PackItemType> = ({pack}) => {
+
+    const userId = useAppSelector(state => state.profile._id)
+    let allOrMyPacks = useAppSelector(state=>state.login.allOrMyPacks)
+
+    const [activeDeleteModal, setActiveDeleteModal] = useState<boolean>(false);
+    const [activeEditModal, setActiveEditModal] = useState<boolean>(false);
+
+    const dispatch = useTypedDispatch()
+
+    const onClickDeleteHandler = (id: string) => {
+        dispatch(deletePickToState(id,allOrMyPacks))
+        setActiveDeleteModal(false)
+    }
+    const onClickEditHandler = (id: string,newName:string) => {
+        debugger
+        dispatch(editPackToState(id,newName,allOrMyPacks))
+        setActiveEditModal(false)
+    }
+
+    return (
+        <TableRow
+            key={pack._id}
+            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+        >
+            <TableCell
+                component="th" scope="row" onClick={() => {
+            }}>
+                <NavLink to={`/cards/${pack._id}`}>
+                    {pack.name}
+                </NavLink>
+            </TableCell>
+            <TableCell align="center">{pack.cardsCount}</TableCell>
+            <TableCell align="center" >{pack.updated.slice(0, 10)}</TableCell>
+            <TableCell align="center">{pack.user_name}</TableCell>
+            <TableCell align="center">
+                <ModalDeletePack active={activeDeleteModal} setActive={setActiveDeleteModal} packName={pack.name} deletePack={()=>onClickDeleteHandler(pack._id)}/>
+                <ModalEditPack active={activeEditModal} setActive={setActiveEditModal} editPack={(value:string)=>onClickEditHandler(pack._id,value)} packName={pack.name}/>
+                <Box sx={{ '& button': { m: 1 } }}>
+                    <Button size="small" variant="outlined" color="primary">Learn</Button>
+                    {userId === pack.user_id ?
+                        <Button size="small" variant="contained" color="info" onClick={() => {
+                            setActiveEditModal(true)
+                        }}>Edit
+                        </Button>:null}
+                    {userId === pack.user_id ?
+                        <Button size="small" variant="contained" color="error" onClick={() => {
+                            setActiveDeleteModal(true)
+                        }}>Delete</Button>
+                        :null}
+                </Box>
+            </TableCell>
+        </TableRow>
+    );
+};
+
+export default PackItem;

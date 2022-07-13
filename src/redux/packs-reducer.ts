@@ -1,4 +1,4 @@
-import {AppThunkType, TypedDispatch} from "./store";
+import {AppThunkType} from "./store";
 import {setStatus} from "./authReducer";
 import {packsApi} from "../api/packs-api";
 import {setErrorAC} from "./registrationReducer";
@@ -37,6 +37,7 @@ const setCardsAll = (payload: PacksStateType) => {
 export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string): AppThunkType => (dispatch, getState) => {
     dispatch(setStatus('loading'))
     if (value === "All") {
+        debugger
         packsApi.getPacks(sliderParams, search, '', sort).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
@@ -47,9 +48,9 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
             dispatch(setStatus('failed'))
             throw Error(error)
         })
-    } else {
+    } else if (value==='My'){
         let userId = getState().profile._id;
-
+        debugger
         if (userId != null) packsApi.getPacks(sliderParams, search, userId, sort)
             .then((res) => {
                 dispatch(setCardsAll(res.data))
@@ -67,56 +68,114 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
     }
 }
 
-export const addPickToState = (): AppThunkType => (dispatch, getState) => {
-    let userId = getState().profile._id
-    dispatch(setStatus('loading'))
-    packsApi.addPack().then(() => {
-        packsApi.getPacks( [0, 100], '', userId).then((res) => {
-            dispatch(setCardsAll(res.data))
-            dispatch(setStatus('succeeded'))
+export const addPickToState = (newPack:string, allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
+    if(allOrMyPacks==='All'){
+        dispatch(setStatus('loading'))
+        packsApi.addPack(newPack).then(() => {
+            packsApi.getPacks( [0, 100], '').then((res) => {
+                dispatch(setCardsAll(res.data))
+                dispatch(setStatus('succeeded'))
+            })
+        }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setErrorAC(error))
+            dispatch(setStatus('failed'))
         })
-    }).catch((e) => {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
-        dispatch(setStatus('failed'))
-    })
+    } else {
+        let userId = getState().profile._id
+        dispatch(setStatus('loading'))
+        packsApi.addPack(newPack).then(() => {
+            packsApi.getPacks( [0, 100], '',userId).then((res) => {
+                dispatch(setCardsAll(res.data))
+                dispatch(setStatus('succeeded'))
+            })
+        }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setErrorAC(error))
+            dispatch(setStatus('failed'))
+        })
+    }
+
+
 }
 
-export const deletePickToState = (idPack: string): AppThunkType => (dispatch, getState) => {
-    let userId = getState().profile._id
-    dispatch(setStatus('loading'))
-    packsApi.deletePick(idPack)
-        .then(() => {
-            packsApi.getPacks( [0, 100], '', userId)
-                .then((res) => {
-                    dispatch(setCardsAll(res.data))
-                    dispatch(setStatus('succeeded'))
-                })
-        }).catch((e) => {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
-        dispatch(setStatus('failed'))
-    })
-}
-export const editPackToState = (idPack: string): AppThunkType => (dispatch, getState) => {
-    let userId = getState().profile._id
-    dispatch(setStatus('loading'))
-    packsApi.editPack(idPack).then(() => {
-        packsApi.getPacks([0, 100], '', userId).then((res) => {
-            dispatch(setCardsAll(res.data))
-            dispatch(setStatus('succeeded'))
+export const deletePickToState = (idPack: string, allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
+    if(allOrMyPacks==="All"){
+        dispatch(setStatus('loading'))
+        packsApi.deletePick(idPack)
+            .then(() => {
+                debugger
+                packsApi.getPacks( [0, 100], '')
+                    .then((res) => {
+                        debugger
+                        dispatch(setCardsAll(res.data))
+                        dispatch(setStatus('succeeded'))
+                    })
+            }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setErrorAC(error))
+            dispatch(setStatus('failed'))
         })
-    }).catch((e) => {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-        dispatch(setErrorAC(error))
-        dispatch(setStatus('failed'))
-    })
+    } else {
+        const userId  = getState().profile._id
+        dispatch(setStatus('loading'))
+        packsApi.deletePick(idPack)
+            .then(() => {
+                debugger
+                packsApi.getPacks( [0, 100], '',userId)
+                    .then((res) => {
+                        debugger
+                        dispatch(setCardsAll(res.data))
+                        dispatch(setStatus('succeeded'))
+                    })
+            }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setErrorAC(error))
+            dispatch(setStatus('failed'))
+        })
+    }
+
+
+}
+export const editPackToState = (idPack: string,newName:string,allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
+    if(allOrMyPacks==='All'){
+        dispatch(setStatus('loading'))
+        packsApi.editPack(idPack,newName).then(() => {
+            packsApi.getPacks([0, 100], '').then((res) => {
+                dispatch(setCardsAll(res.data))
+                dispatch(setStatus('succeeded'))
+            })
+        }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setErrorAC(error))
+            dispatch(setStatus('failed'))
+        })
+    } else {
+        let userId = getState().profile._id
+        dispatch(setStatus('loading'))
+        packsApi.editPack(idPack,newName).then(() => {
+            packsApi.getPacks([0, 100], '', userId).then((res) => {
+                dispatch(setCardsAll(res.data))
+                dispatch(setStatus('succeeded'))
+            })
+        }).catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setErrorAC(error))
+            dispatch(setStatus('failed'))
+        })
+    }
 }
 
 type SetCardsAllType = ReturnType<typeof setCardsAll>

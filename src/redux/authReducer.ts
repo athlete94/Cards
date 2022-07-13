@@ -7,7 +7,8 @@ import {setUserDataAC} from "./profileReducer";
 let initialState: AuthStateType = {
     isLogin: false,
     initialized: false,
-    status: 'idle'
+    status: 'idle',
+    allOrMyPacks: 'All',
 }
 
 
@@ -22,7 +23,9 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
                 ...state, initialized: action.payload.isInitialized
             };
         case 'SET-STATUS':
-            return {...state, status: action.payload.status}
+            return {...state, status: action.payload.status};
+        case 'SET-ALLORMY':
+            return {...state, allOrMyPacks: action.payload.allOrMyPacks}
         default:
             return state
     }
@@ -32,6 +35,12 @@ export const isLoginAC = (isLogin: boolean) => {
     return {
         type: "IS-LOGIN",
         payload: {isLogin},
+    } as const
+}
+export const setAllOrMyPacks = (allOrMyPacks:string ) => {
+    return {
+        type: "SET-ALLORMY",
+        payload: {allOrMyPacks},
     } as const
 }
 
@@ -84,7 +93,7 @@ export const loginTC = (payload: FormLoginType) => (dispatch: TypedDispatch) => 
     })
 }
 
-export type AuthActionsType = isLoginACType | SetInitializedType | SetStatusType
+export type AuthActionsType = isLoginACType | SetInitializedType | SetStatusType | setAllOrMyPacksType
 
 export const logoutTC = () => (dispatch: TypedDispatch) => {
     authApi.logout()
@@ -101,11 +110,14 @@ export const logoutTC = () => (dispatch: TypedDispatch) => {
 export type SetInitializedType = ReturnType<typeof setInitialized>
 export type SetStatusType = ReturnType<typeof setStatus>
 type isLoginACType = ReturnType<typeof isLoginAC>
-
+type setAllOrMyPacksType = ReturnType<typeof setAllOrMyPacks>
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+
+export type AllOrMyPacksType = 'All' | 'My'
 
 type AuthStateType = {
     isLogin: boolean
     initialized: boolean
     status: RequestStatusType
+    allOrMyPacks: string
 }

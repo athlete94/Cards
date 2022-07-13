@@ -1,10 +1,9 @@
-import {CardPacksType, PacksStateType} from "../redux/packs-reducer";
 import {instance} from "./instance";
 
 
 export const packsApi = {
     getPacks( sliderParams: number[], search?: string, userId?: string, sort?: string) {
-        return instance.get<PacksStateType>('cards/pack', {
+        return instance.get('cards/pack', {
             params: {
                 packName: search,
                 min: sliderParams[0],
@@ -14,8 +13,8 @@ export const packsApi = {
             }
         })
     },
-    addPack() {
-        return instance.post('cards/pack', {cardsPack: {name: 'My Pack'}})
+    addPack(newPack:string) {
+        return instance.post('cards/pack', {cardsPack: {name: newPack}})
     },
     deletePick(idPack: string) {
         return instance.delete('cards/pack', {
@@ -24,7 +23,7 @@ export const packsApi = {
             }
         })
     },
-    editPack(idPack: string) {
-        return instance.put('cards/pack', {cardsPack: {_id: idPack, name: "Edit My Pack"}})
+    editPack(idPack: string, newName:string) {
+        return instance.put('cards/pack', {cardsPack: {_id: idPack, name: newName}})
     },
 }

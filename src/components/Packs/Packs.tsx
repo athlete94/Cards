@@ -13,6 +13,8 @@ import {PATH} from "../../App";
 import {RadioButton} from "../../utils/RadioButton/RadioButton";
 import {Button} from "@mui/material";
 import {setSearch} from "../../redux/searchReducer";
+import {setAllOrMyPacks} from "../../redux/authReducer";
+import {ModalAddPack} from "../Modals/ModalPack/ModalAddPack";
 
 
 export default function Packs() {
@@ -22,25 +24,26 @@ export default function Packs() {
     let sliderParams = useAppSelector(state => state.search.paramsSlider)
     let search = useAppSelector(state => state.search.searchText)
     let isLogin = useAppSelector(state => state.login)
-
+    let allOrMyPacks = useAppSelector(state=>state.login.allOrMyPacks)
 
     const debouncedSearchTerm = useDebounce(search, 500);
 
-    const onClickButton = () => {
-        dispatch(addPickToState())
+    const onClickAddPackHandler = (newPack:string) => {
+        dispatch(addPickToState(newPack, allOrMyPacks))
+        setActiveAddModule(false)
     }
 
-    const [value, setValue] = useState<string>("All")
+    const [activeAddModule, setActiveAddModule] = useState(false)
     const [sort, setSort] = useState<string>('0updated')
 
 
     useEffect(() => {
-        dispatch(setCardsAllThunkCreator(search, sliderParams, value, sort))
-    }, [handler, debouncedSearchTerm, value, sort])
+        dispatch(setCardsAllThunkCreator(search, sliderParams, allOrMyPacks, sort))
+    }, [handler, debouncedSearchTerm, allOrMyPacks, sort])
 
 
     const onChangeListener = (value: string) => {
-        setValue(value)
+        dispatch(setAllOrMyPacks(value))
 
     }
 
@@ -69,7 +72,7 @@ export default function Packs() {
                 <div className={s.profileItem}>
                     <div className={s.userInfo}>
                         <div className="form_radio_group">
-                            <RadioButton value={value} onChangeListener={onChangeListener}/>
+                            <RadioButton value={allOrMyPacks} onChangeListener={onChangeListener}/>
                         </div>
 
                     </div>
@@ -80,14 +83,15 @@ export default function Packs() {
                 </div>
                 <div className={s.packsList}>
                     <div>
-                        {value === "All" ? <div className={style.title}>All Packs</div> :
+                        {allOrMyPacks === "All" ? <div className={style.title}>All Packs</div> :
                             <div className={style.title}>My packs</div>}
                         <div className={style.form}>
                             <Search label={'Search'}
                                     width={'280%'}
                                     callback={searchHandler}
                                     value={search}/>
-                            <Button variant="contained" color="secondary" onClick={onClickButton}>Add new pack</Button>
+                            <Button variant="contained" color="secondary" onClick={()=>setActiveAddModule(true)}>Add new pack</Button>
+                            <ModalAddPack active={activeAddModule} setActive={setActiveAddModule} addPack={(value)=>{onClickAddPackHandler(value)}}/>
                         </div>
                     </div>
                     <div>
