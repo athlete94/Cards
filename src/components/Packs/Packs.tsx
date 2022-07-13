@@ -4,7 +4,7 @@ import s from "./Packs.module.css";
 import MinimumDistanceSlider from "../Slider/Slider";
 import PacksTable from "./PacksTable/PacksTable";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
-import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
+import {addPickToState, setCardsAllThunkCreator, setPage, setPageCount} from "../../redux/packs-reducer";
 import {Search} from "../Search/Search";
 import {useEffect, useState} from "react";
 import useDebounce from "../../common/hooks/useDebounce";
@@ -15,7 +15,6 @@ import {Button} from "@mui/material";
 import {setSearch, setSort} from "../../redux/searchReducer";
 import PaginationRounded from "../Pagination/Pagination";
 import BasicSelect from "../PageCount/PageCount";
-
 
 export default function Packs() {
 
@@ -93,8 +92,8 @@ export default function Packs() {
                         <PacksTable sort={sortPacks}/>
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
                             <button onClick={onClickSortHandler}>Sort</button>
-                            <BasicSelect pageCount={pageCount}/>
-                            <PaginationRounded count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
+                            <BasicSelect setCount={(count) => dispatch(setPageCount(count))} pageCount={pageCount}/>
+                            <PaginationRounded callback={(page) => setPage(page)} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
                         </div>
 
                     </div>

@@ -2,18 +2,17 @@ import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import {useTypedDispatch} from "../../redux/store";
-import {setPage} from "../../redux/packs-reducer";
+
 
 type PaginationRoundedPropsType = {
     count: number,
-    page: number
+    page: number,
+    callback: (page: number) => void
 }
 
-export default function PaginationRounded({count, page}: PaginationRoundedPropsType) {
-    let dispatch = useTypedDispatch()
-
+export default function PaginationRounded({count, page, callback}: PaginationRoundedPropsType) {
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        dispatch(setPage(value));
+        callback(value);
     };
 
     return (

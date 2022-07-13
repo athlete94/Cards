@@ -5,7 +5,7 @@ import {setErrorAC} from "./registrationReducer";
 
 const initialState = {
     cardPacks: [] as Array<CardPacksType>,
-    page: 0,
+    page: 1,
     pageCount: 5,
     cardPacksTotalCount: 0,
     minCardsCount: 0,

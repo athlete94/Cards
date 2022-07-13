@@ -9,7 +9,7 @@ import {
     addNewCardTC,
     getCardsTC,
     setSearchQueryByQuestionAC,
-    setSearchQueryByAnswerAC
+    setSearchQueryByAnswerAC, setCurrentPageCardsListAC, setPageCountAC
 } from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {CardType, NewCardDataType} from "../../api/cardsApi";
@@ -23,6 +23,8 @@ import Table from "@mui/material/Table";
 import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
 import useDebounce from "../../common/hooks/useDebounce";
 import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import PaginationRounded from "../Pagination/Pagination";
+import BasicSelect from "../PageCount/PageCount";
 
 
 export const CardsList = () => {
@@ -39,6 +41,8 @@ export const CardsList = () => {
     const cardQuestion = useAppSelector(state => state.cardsList.cardQuestion)
     const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
 
+    const {page, pageCount, cardsTotalCount} = useAppSelector(state => state.cardsList)
+
 
     const [activeModal, setActiveModal] = useState<boolean>(false);
     const [answer, setAnswer] = useState<string>("");
@@ -50,7 +54,7 @@ export const CardsList = () => {
 
     useEffect(() => {
         if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-    }, [debouncedSearchQuestion, debouncedSearchAnswer])
+    }, [debouncedSearchQuestion, debouncedSearchAnswer, page, pageCount])
 
     const addCardHandler = useCallback(() => {
         const newCard: NewCardDataType = {
@@ -139,6 +143,11 @@ export const CardsList = () => {
                             })}
                         </TableBody>
                     </Table>
+                </div>
+
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <BasicSelect setCount={(count) => dispatch(setPageCountAC(count))} pageCount={pageCount}/>
+                    <PaginationRounded callback={(page) => dispatch(setCurrentPageCardsListAC(page))} count={Math.ceil(cardsTotalCount/pageCount)} page={page} />
                 </div>
             </div>
         </div>

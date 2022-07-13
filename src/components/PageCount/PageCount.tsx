@@ -8,19 +8,15 @@ import {useTypedDispatch} from "../../redux/store";
 import {setPageCount} from "../../redux/packs-reducer";
 
 type BasicSelectPropsType = {
-    pageCount: number
+    pageCount: number,
+    setCount: (count: number) => void
 }
 
-export default function BasicSelect({pageCount}: BasicSelectPropsType) {
-    let dispatch = useTypedDispatch()
+export default function BasicSelect({pageCount, setCount}: BasicSelectPropsType) {
 
-    // const handleChange = (event: SelectChangeEvent) => {
-    //     setAge(event.target.value as number);
-    // };
-    console.log(pageCount)
+
     const handleChange = (event: SelectChangeEvent) => {
-        dispatch(setPageCount(Number(event.target.value)));
-
+        setCount(Number(event.target.value))
     };
 
     return (
