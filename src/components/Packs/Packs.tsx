@@ -93,7 +93,7 @@ export default function Packs() {
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
                             <button onClick={onClickSortHandler}>Sort</button>
                             <BasicSelect setCount={(count) => dispatch(setPageCount(count))} pageCount={pageCount}/>
-                            <PaginationRounded callback={(page) => setPage(page)} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
+                            <PaginationRounded callback={(page) => dispatch(setPage(page))} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
                         </div>
 
                     </div>
