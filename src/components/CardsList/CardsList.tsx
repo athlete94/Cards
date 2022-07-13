@@ -5,7 +5,12 @@ import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Search} from "../Search/Search";
 import {useCallback, useEffect, useState} from "react";
 import {CardsListItem} from "./CardListItem/CardsListItem";
-import {addNewCardTC, getCardsTC} from "../../redux/cardListReducer";
+import {
+    addNewCardTC,
+    getCardsTC,
+    setSearchQueryByQuestionAC,
+    setSearchQueryByAnswerAC
+} from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {CardType, NewCardDataType} from "../../api/cardsApi";
 import {Button} from "@material-ui/core";
@@ -16,9 +21,11 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
+import useDebounce from "../../common/hooks/useDebounce";
+import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 
 
-export  const CardsList = ()=> {
+export const CardsList = () => {
 
     const urlParams = useParams<'cardPackID'>();
     const navigate = useNavigate();
@@ -29,14 +36,21 @@ export  const CardsList = ()=> {
     const packUser_ID = useAppSelector((state) => state.cardsList.packUserId)
     const userId = useAppSelector<string>((state) => state.profile._id);
     const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
+    const cardQuestion = useAppSelector(state => state.cardsList.cardQuestion)
+    const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
+
 
     const [activeModal, setActiveModal] = useState<boolean>(false);
     const [answer, setAnswer] = useState<string>("");
     const [question, setQuestion] = useState<string>("");
 
+    const debouncedSearchQuestion = useDebounce(cardQuestion, 500);
+    const debouncedSearchAnswer = useDebounce(cardAnswer, 500);
+
+
     useEffect(() => {
         if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-    }, [])
+    }, [debouncedSearchQuestion, debouncedSearchAnswer])
 
     const addCardHandler = useCallback(() => {
         const newCard: NewCardDataType = {

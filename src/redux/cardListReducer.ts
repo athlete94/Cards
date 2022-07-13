@@ -4,11 +4,11 @@ import {
     GetCardsResponseDataType,
     NewCardDataType,
     UpdateCardModelType,
-    UpdatedGradeType
 } from "../api/cardsApi";
 import {AppRootStateType, AppThunkType} from "./store";
 import {setStatus} from "./authReducer";
 import {handleAppRequestError} from "../utils/Error/errorUtils";
+import {UpdatedGradeType} from "../api/learnApi";
 
 
 type InitialStateType = typeof initialState
