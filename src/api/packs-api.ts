@@ -4,7 +4,6 @@ import {instance} from "./instance";
 export const packsApi = {
     //@ts-ignore
     getPacks(search?: string, sliderParams: number[], userId?: string, sort?: string) {
-        debugger
         return instance.get('cards/pack', {
             params: {
                 packName: search,

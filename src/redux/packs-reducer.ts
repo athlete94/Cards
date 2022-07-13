@@ -33,7 +33,7 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
 }
 
 const setCardsAll = (payload: PacksStateType) => {
-    debugger
+
     return {
         type: 'SET-CARDS',
         payload
@@ -43,7 +43,6 @@ const setCardsAll = (payload: PacksStateType) => {
 export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string): AppThunkType => (dispatch, getState) => {
     dispatch(setStatus('loading'))
     if (value === "All") {
-        debugger
         packsApi.getPacks(search, sliderParams, '', sort).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
@@ -59,7 +58,6 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
 
         if (userId != null) packsApi.getPacks(search, sliderParams, userId, sort)
             .then((res) => {
-                debugger
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
             }).catch((e) => {
@@ -93,7 +91,7 @@ export const addPickToState = () => (dispatch: TypedDispatch) => {
 
 export const deletePickToState = (idPack: string) => (dispatch: TypedDispatch) => {
     dispatch(setStatus('loading'))
-    packsApi.deletePick(idPack).then(() => {
+    packsApi.deletePack(idPack).then(() => {
         packsApi.getPacks('', [0, 100]).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
