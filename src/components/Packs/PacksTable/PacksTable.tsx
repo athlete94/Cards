@@ -10,7 +10,9 @@ import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import {Button} from "@mui/material";
 import Box from '@mui/material/Box';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import {PATH} from "../../../App";
+import {setLearnPackNameAC} from "../../../redux/learnReducer";
 
 type PacksTableType = {
     sort: string
@@ -20,23 +22,31 @@ type PacksTableType = {
 export default function PacksTable(props: PacksTableType) {
 
     const dispatch = useTypedDispatch()
+    const navigate = useNavigate()
 
-    const cards = useAppSelector(state => state.picks.cardPacks)
+    const cards = useAppSelector(state => state.picks.cardPacks);
 
-    const userId = useAppSelector(state => state.profile._id)
+    const userId = useAppSelector(state => state.profile._id);
     // if(userId!=null){}
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id))
-    }
+    };
+
+    const learnHandler = (id: string, name: string) => {
+        dispatch(setLearnPackNameAC(name));
+        navigate(PATH.LEARN + `/${id}`);
+    };
+
     const onClickEditHandler = (id: string) => {
         dispatch(editPackToState(id))
-    }
+    };
 
     let up = document.getElementById("update")
     if(up!=null) up.addEventListener('click', ()=>{
 
     })
+
     console.log(cards)
     return (
         <TableContainer component={Paper}>
@@ -68,7 +78,8 @@ export default function PacksTable(props: PacksTableType) {
                             <TableCell align="center">{card.user_name}</TableCell>
                             <TableCell align="center">
                                 <Box sx={{ '& button': { m: 1 } }}>
-                                    <Button size="small" variant="outlined" color="primary">Learn</Button>
+                                    <Button size="small" variant="outlined" color="primary"
+                                            onClick={() => learnHandler(card._id, card.name)}>Learn</Button>
                                     {userId === card.user_id ?
                                         <Button size="small" variant="contained" color="info" onClick={() => {
                                             onClickEditHandler(card._id)

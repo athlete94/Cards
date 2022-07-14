@@ -25,8 +25,8 @@ export type UpdatedGradeType = {
 };
 
 export const learnApi = {
-    gradeCard(data: UpdatedGradeType) {
-        return instance.put('cards/grade', data)
+    gradeCard(data: UpdateGradeDataType) {
+        return instance.put<UpdateGradeResponseDataType>('cards/grade', data)
             .then(response => response.data)
     },
 };

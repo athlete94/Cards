@@ -11,6 +11,7 @@ import {NewPasswordActionsType, newPasswordReducer} from "./newPasswordReducer";
 import {CardsListActionsType, cardsListReducer} from "./cardListReducer";
 import {ActionsPacksType, packsReducer} from "./packs-reducer";
 import {searchReducer, SearchReducerActionType} from "./searchReducer";
+import {LearnActionType,learnReducer} from "./learnReducer";
 
 
 const reducers = combineReducers({
@@ -22,6 +23,7 @@ const reducers = combineReducers({
     cardsList: cardsListReducer,
     search: searchReducer,
     picks:packsReducer,
+    learn:learnReducer,
     testReducer
 })
 
@@ -32,8 +34,8 @@ export type AppActionType =
     AuthActionsType | ActionsProfileType |
     RegistrationActionsType | PasswordRecoveryActionsType |
     NewPasswordActionsType | CardsListActionsType |
-    NewPasswordActionsType | ActionsPacksType
-    | SearchReducerActionType
+    ActionsPacksType| SearchReducerActionType |
+    LearnActionType
 
 
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
