@@ -1,6 +1,7 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./CardsList.module.css";
+import st from '../../common/style/PaginationBlock.module.css'
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Search} from "../Search/Search";
 import {useCallback, useEffect, useState} from "react";
@@ -145,7 +146,7 @@ export const CardsList = () => {
                     </Table>
                 </div>
 
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div  className={st.paginationBlock}>
                     <BasicSelect setCount={(count) => dispatch(setPageCountAC(count))} pageCount={pageCount}/>
                     <PaginationRounded callback={(page) => dispatch(setCurrentPageCardsListAC(page))} count={Math.ceil(cardsTotalCount/pageCount)} page={page} />
                 </div>

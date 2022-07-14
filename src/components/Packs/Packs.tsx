@@ -1,6 +1,7 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./Packs.module.css";
+import st from '../../common/style/PaginationBlock.module.css'
 import MinimumDistanceSlider from "../Slider/Slider";
 import PacksTable from "./PacksTable/PacksTable";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
@@ -92,8 +93,10 @@ export default function Packs() {
                         <PacksTable sort={sortPacks}/>
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
                             <button onClick={onClickSortHandler}>Sort</button>
-                            <BasicSelect setCount={(count) => dispatch(setPageCount(count))} pageCount={pageCount}/>
-                            <PaginationRounded callback={(page) => dispatch(setPage(page))} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
+                            <div className={st.paginationBlock}>
+                                <BasicSelect setCount={(count) => dispatch(setPageCount(count))} pageCount={pageCount}/>
+                                <PaginationRounded callback={(page) => dispatch(setPage(page))} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
+                            </div>
                         </div>
 
                     </div>
