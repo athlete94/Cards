@@ -1,0 +1,23 @@
+.projectBlock {
+    background-color: #e7eaf6;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+.container {
+    background-color: #fff;
+    width: 413px;
+    flex-direction: column;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title {
+
+}

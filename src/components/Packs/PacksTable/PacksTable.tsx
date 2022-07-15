@@ -6,8 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {CardPacksType} from "../../../redux/packs-reducer";
-import {useAppSelector} from "../../../redux/store";
+import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/packs-reducer";
+import {useAppSelector, useTypedDispatch} from "../../../redux/store";
+import {Button} from "@mui/material";
+import Box from '@mui/material/Box';
+import {NavLink, useNavigate} from "react-router-dom";
+import {PATH} from "../../../App";
+import {setLearnPackNameAC} from "../../../redux/learnReducer";
 import PackItem from "./PackItem";
 import style from './PacksTable.module.css'
 
@@ -21,13 +26,16 @@ export default function PacksTable(props: PacksTableType) {
 
     const packs = useAppSelector(state => state.picks.cardPacks)
 
+    const cards = useAppSelector(state => state.picks.cardPacks)
+
+    const userId = useAppSelector(state => state.profile._id)
+    // if(userId!=null){}
 
 
     let up = document.getElementById("update")
     if(up!=null) up.addEventListener('click', ()=>{
 
     })
-    console.log(packs)
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 400}} aria-label="simple table">
@@ -35,7 +43,7 @@ export default function PacksTable(props: PacksTableType) {
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell align="center">Cards</TableCell>
-                        <TableCell className={style.sortTableCell} align="center" onClick={props.onClickSortHandler}>Last Updated {props.sort==='0updated'?'↓':'↑'}</TableCell>
+                        <TableCell align="center" id='update'>Last Updated {props.sort==='0updated'?'↓':'↑'}</TableCell>
                         <TableCell align="center">Created by</TableCell>
                         <TableCell align="center">Actions</TableCell>
                     </TableRow>

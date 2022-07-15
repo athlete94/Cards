@@ -1,8 +1,6 @@
 import {FormLoginType} from "../components/Login/Login";
 import {instance} from "./instance";
 
-
-
 export const authApi = {
     login(payload:FormLoginType){
             return instance.post<ResponseUserDataLogin>('auth/login', payload)
@@ -12,10 +10,8 @@ export const authApi = {
     },
     logout() {
         return instance.delete('auth/me')
-    }
-}
-
-
+    },
+};
 
 export type ResponseUserDataLogin = {
     _id: string;

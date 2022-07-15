@@ -14,12 +14,10 @@ import {useAppSelector, useTypedDispatch} from "./redux/store";
 import {LinearProgress} from "@material-ui/core";
 import NewPassword from "./components/NewPassword/NewPassword";
 import {CardsList} from "./components/CardsList/CardsList";
-
 import Packs from "./components/Packs/Packs";
 import {Navbar} from "./components/Navbar/Navbar";
 import EditProfile from "./components/Profile/EditProfile/EditProfile";
-import s from "./components/Profile/Profile.module.css";
-import {Logout} from "./components/Logout/Logout";
+import {LearnPageContainer} from "./components/Learn/LearnPageContainer";
 
 
 export const PATH = {
@@ -33,7 +31,8 @@ export const PATH = {
     ERROR: "*",
     CARDS: '/cards',
     PACKS:'/packs',
-    EDIT_PROFILE: '/edit-profile'
+    EDIT_PROFILE: '/edit-profile',
+    LEARN:'/learn'
 }
 
 
@@ -71,6 +70,7 @@ function App() {
                         <Route path={PATH.CARDS + '/:cardPackID'} element={<CardsList/>}/>
                         <Route path={PATH.PACKS} element={<Packs/>}/>
                         <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
+                        <Route path={PATH.LEARN + '/:cardPackID'} element={<LearnPageContainer/>}/>
                     </Routes>
                 </div>
             </div>

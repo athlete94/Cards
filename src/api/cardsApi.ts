@@ -32,7 +32,7 @@ export type CardType = {
     questionVideo?: string
 }
 
-export type UpdateCardModelType = {_id: string} & Partial<Omit<CardType, "_id">>;
+export type UpdateCardModelType = { _id: string } & Partial<Omit<CardType, "_id">>;
 
 export type GetCardsResponseDataType = {
     cards: CardType[]
@@ -41,53 +41,36 @@ export type GetCardsResponseDataType = {
     minGrade: number
     page: number
     pageCount: number
-    packUserId:string
+    packUserId: string
 }
 
-export type NewCardDataType ={
+export type NewCardDataType = {
     cardsPack_id: string
-    question?:string
-    answer?:string
+    question?: string
+    answer?: string
     grade?: number
     shots?: number
-    answerImg?:string
-    questionImg?:string
-    questionVideo?:string
-    answerVideo?:string
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
 }
 
-
-
 export const cardsApi = {
-    getCards(params: GetCardsQueryParams){
+    getCards(params: GetCardsQueryParams) {
         return instance.get<GetCardsResponseDataType>('cards/card', {params})
             .then(response => response.data)
     },
-    createCard(newCards:NewCardDataType){
+    createCard(newCards: NewCardDataType) {
         return instance.post('cards/card', {card: newCards})
             .then(response => response.data)
     },
-    deleteCard(id:string){
-        return instance.delete('cards/card', {params:{id}})
+    deleteCard(id: string) {
+        return instance.delete('cards/card', {params: {id}})
             .then(response => response.data)
     },
     updateCard(cardModel: UpdateCardModelType) {
-        return instance.put("cards/card", {card: cardModel})
+        return instance.put('cards/card', {card: cardModel})
             .then(response => response.data);
     },
-}
-
-
-// перенести в learnApi
-export type UpdatedGradeType = {
-    _id: string
-    cardsPack_id: string
-    card_id: string
-    user_id: string
-    grade: number
-    shots: number
-    more_id: string
-    created: string
-    updated: string
-    __v: number
 };
