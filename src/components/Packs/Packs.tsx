@@ -23,7 +23,7 @@ export default function Packs() {
     const handler = useAppSelector(state => state.search.handler)
     let sliderParams = useAppSelector(state => state.search.paramsSlider)
     let search = useAppSelector(state => state.search.searchText)
-    let isLogin = useAppSelector(state => state.login)
+    let isLogin = useAppSelector(state => state.login.isLogin)
     let allOrMyPacks = useAppSelector(state=>state.login.allOrMyPacks)
 
     const debouncedSearchTerm = useDebounce(search, 500);
@@ -95,8 +95,7 @@ export default function Packs() {
                         </div>
                     </div>
                     <div>
-                        <PacksTable sort={sort}/>
-                        <button onClick={onClickSortHandler}>Sort</button>
+                        <PacksTable sort={sort} onClickSortHandler={onClickSortHandler}/>
                     </div>
                 </div>
             </div>

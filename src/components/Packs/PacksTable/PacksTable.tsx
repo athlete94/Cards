@@ -9,9 +9,11 @@ import Paper from '@mui/material/Paper';
 import {CardPacksType} from "../../../redux/packs-reducer";
 import {useAppSelector} from "../../../redux/store";
 import PackItem from "./PackItem";
+import style from './PacksTable.module.css'
 
 type PacksTableType = {
     sort: string
+    onClickSortHandler:()=>void
 }
 
 
@@ -33,7 +35,7 @@ export default function PacksTable(props: PacksTableType) {
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell align="center">Cards</TableCell>
-                        <TableCell align="center" id='update'>Last Updated {props.sort==='0updated'?'↓':'↑'}</TableCell>
+                        <TableCell className={style.sortTableCell} align="center" onClick={props.onClickSortHandler}>Last Updated {props.sort==='0updated'?'↓':'↑'}</TableCell>
                         <TableCell align="center">Created by</TableCell>
                         <TableCell align="center">Actions</TableCell>
                     </TableRow>

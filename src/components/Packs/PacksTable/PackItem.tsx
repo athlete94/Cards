@@ -8,9 +8,12 @@ import Box from "@mui/material/Box";
 import {Button} from "@mui/material";
 import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/packs-reducer";
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
+import moment from "moment";
+
 
 type PackItemType = {
     pack:CardPacksType
+
 }
 
 const PackItem:React.FC<PackItemType> = ({pack}) => {
@@ -33,6 +36,10 @@ const PackItem:React.FC<PackItemType> = ({pack}) => {
         setActiveEditModal(false)
     }
 
+    const updateTime = (time:string) =>{
+        return  moment(time).format('D/MM/YY h:mm');
+    }
+
     return (
         <TableRow
             key={pack._id}
@@ -45,8 +52,8 @@ const PackItem:React.FC<PackItemType> = ({pack}) => {
                     {pack.name}
                 </NavLink>
             </TableCell>
-            <TableCell align="center">{pack.cardsCount}</TableCell>
-            <TableCell align="center" >{pack.updated.slice(0, 10)}</TableCell>
+            <TableCell align="center" >{pack.cardsCount}</TableCell>
+            <TableCell align="center">{updateTime(pack.updated)}</TableCell>
             <TableCell align="center">{pack.user_name}</TableCell>
             <TableCell align="center">
                 <ModalDeletePack active={activeDeleteModal} setActive={setActiveDeleteModal} packName={pack.name} deletePack={()=>onClickDeleteHandler(pack._id)}/>
