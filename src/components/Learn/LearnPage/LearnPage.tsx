@@ -1,18 +1,20 @@
-import React, { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CardType } from '../../../api/cardsApi';
+import React, {FC, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {CardType} from '../../../api/cardsApi';
 import {useTypedDispatch} from "../../../redux/store";
 import {PATH} from "../../../App";
-import { gradeCardTC } from '../../../redux/learnReducer';
+import {gradeCardTC} from '../../../redux/learnReducer';
 import {Button} from '@mui/material';
 import style from "./LearnPage.module.css"
-import { RadioRating } from './RadioRating/RadioRating';
+import {RadioRating} from './RadioRating/RadioRating';
+import SendIcon from '@mui/icons-material/Send';
 
 type LearnPagePropsType = {
     card: CardType
 };
 
 export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
+
     const dispatch = useTypedDispatch();
     const navigate = useNavigate();
 
@@ -72,9 +74,12 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
                     <div className={style.buttonsBlock}>
                         <Button onClick={cancelHandler}>Cancel</Button>
                         {isAnswered ?
-                            <Button onClick={nextHandler}>Next</Button>
+                            <Button onClick={nextHandler} sx={{marginLeft: '65px'}}>Next</Button>
                             :
-                            <Button onClick={showAnswerHandler}>Show answer</Button>
+                            <Button onClick={showAnswerHandler}
+                                    color="success"
+                                    endIcon={<SendIcon/>}
+                            >Show answer</Button>
                         }
                     </div>
                 </div>

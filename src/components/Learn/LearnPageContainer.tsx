@@ -52,10 +52,10 @@ export const LearnPageContainer = () => {
     return (
         <div className={style.projectBlock}>
             <div className={style.container}>
-                <h1>Learn pack: {cardPackName}</h1>
+                <h2>Learn pack: {cardPackName}</h2>
                 {isFetchingCards ?
                     <div>
-                        <p>Just a moment, please :)</p>
+                        <p>Just a moment, please.</p>
                         <p>Getting random card for You...</p>
                     </div>
                     :

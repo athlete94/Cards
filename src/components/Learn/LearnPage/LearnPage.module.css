@@ -3,7 +3,7 @@
 }
 
 .cardInfoBlock {
-    margin: 30px 0;
+    margin: 10px 0;
 }
 
 .grade, .shots {
@@ -26,4 +26,5 @@
 
 .buttonsBlock button {
     padding: 7px 15px;
+    margin: 10px;
 }
