@@ -5,6 +5,9 @@ import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Navigate, NavLink} from "react-router-dom";
 import MinimumDistanceSlider from "../Slider/Slider";
 import {PATH} from "../../App";
+import {logoutTC} from "../../redux/authReducer";
+import {Search} from "../Search/Search";
+import Packs from "../Packs/Packs";
 import PacksTable from "../Packs/PacksTable/PacksTable";
 import {Logout} from "../Logout/Logout";
 
