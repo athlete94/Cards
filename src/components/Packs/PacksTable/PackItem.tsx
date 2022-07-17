@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {ModalDeletePack} from "../../Modals/ModalPack/ModalDeletePack";
 import {ModalEditPack} from "../../Modals/ModalPack/ModalEditPack";
 import Box from "@mui/material/Box";
@@ -9,6 +9,8 @@ import {Button} from "@mui/material";
 import {CardPacksType, deletePickToState, editPackToState} from "../../../redux/packs-reducer";
 import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import moment from "moment";
+import { setLearnPackNameAC } from '../../../redux/learnReducer';
+import {PATH} from "../../../App";
 
 
 type PackItemType = {
@@ -25,6 +27,13 @@ const PackItem:React.FC<PackItemType> = ({pack}) => {
     const [activeEditModal, setActiveEditModal] = useState<boolean>(false);
 
     const dispatch = useTypedDispatch()
+    const navigate = useNavigate()
+
+
+    const learnHandler = (id: string, name: string) => {
+        dispatch(setLearnPackNameAC(name));
+        navigate(PATH.LEARN + `/${id}`);
+    };
 
     const onClickDeleteHandler = (id: string) => {
         dispatch(deletePickToState(id,allOrMyPacks))
@@ -59,7 +68,10 @@ const PackItem:React.FC<PackItemType> = ({pack}) => {
                 <ModalDeletePack active={activeDeleteModal} setActive={setActiveDeleteModal} packName={pack.name} deletePack={()=>onClickDeleteHandler(pack._id)}/>
                 <ModalEditPack active={activeEditModal} setActive={setActiveEditModal} editPack={(value:string)=>onClickEditHandler(pack._id,value)} packName={pack.name}/>
                 <Box sx={{ '& button': { m: 1 } }}>
-                    <Button size="small" variant="outlined" color="primary">Learn</Button>
+
+                    <Button size="small" variant="outlined" color="primary"
+                            onClick={() => learnHandler(pack._id, pack.name)}>Learn</Button>
+
                     {userId === pack.user_id ?
                         <Button size="small" variant="contained" color="info" onClick={() => {
                             setActiveEditModal(true)
