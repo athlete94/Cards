@@ -1,10 +1,11 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./Packs.module.css";
+import st from '../../common/style/PaginationBlock.module.css'
 import MinimumDistanceSlider from "../Slider/Slider";
 import PacksTable from "./PacksTable/PacksTable";
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
-import {addPickToState, setCardsAllThunkCreator} from "../../redux/packs-reducer";
+import {addPickToState, setCardsAllThunkCreator, setPage, setPageCount} from "../../redux/packs-reducer";
 import {Search} from "../Search/Search";
 import {useEffect, useState} from "react";
 import useDebounce from "../../common/hooks/useDebounce";
@@ -16,15 +17,19 @@ import {setSearch} from "../../redux/searchReducer";
 import {setAllOrMyPacks} from "../../redux/authReducer";
 import {ModalAddPack} from "../Modals/ModalPack/ModalAddPack";
 
+import {setSearch, setSort} from "../../redux/searchReducer";
+import PaginationRounded from "../Pagination/Pagination";
+import BasicSelect from "../PageCount/PageCount";
 
 export default function Packs() {
 
     const dispatch = useTypedDispatch()
-    const handler = useAppSelector(state => state.search.handler)
-    let sliderParams = useAppSelector(state => state.search.paramsSlider)
-    let search = useAppSelector(state => state.search.searchText)
-    let isLogin = useAppSelector(state => state.login.isLogin)
+    let sortPacks = useAppSelector(state => state.search.sortPacks)
     let allOrMyPacks = useAppSelector(state=>state.login.allOrMyPacks)
+    let {page, pageCount, cardPacksTotalCount} = useAppSelector(state => state.picks)
+    let {searchText: search, touchSlider, paramsSlider, sortPacks} = useAppSelector(state => state.search)
+    let isLogin = useAppSelector(state => state.login)
+
 
     const debouncedSearchTerm = useDebounce(search, 500);
 
@@ -34,12 +39,12 @@ export default function Packs() {
     }
 
     const [activeAddModule, setActiveAddModule] = useState(false)
-    const [sort, setSort] = useState<string>('0updated')
+
 
 
     useEffect(() => {
-        dispatch(setCardsAllThunkCreator(search, sliderParams, allOrMyPacks, sort))
-    }, [handler, debouncedSearchTerm, allOrMyPacks, sort])
+        dispatch(setCardsAllThunkCreator(search, sliderParams, allOrMyPacks, sortPacks, page, pageCount))
+    }, [touchSlider, debouncedSearchTerm, allOrMyPacks, sortPacks,  page, pageCount])
 
 
     const onChangeListener = (value: string) => {
@@ -48,10 +53,10 @@ export default function Packs() {
     }
 
     const onClickSortHandler = () => {
-        if (sort === '0updated') {
-            setSort('1updated')
+        if (sortPacks === '0updated') {
+            dispatch(setSort('1updated'))
         } else {
-            setSort('0updated')
+            dispatch(setSort('0updated'))
         }
     }
 
@@ -95,7 +100,14 @@ export default function Packs() {
                         </div>
                     </div>
                     <div>
-                        <PacksTable sort={sort} onClickSortHandler={onClickSortHandler}/>
+                        <PacksTable sort={sortPacks} onClickSortHandler={onClickSortHandler} />
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div className={st.paginationBlock}>
+                                <BasicSelect setCount={(count) => dispatch(setPageCount(count))} pageCount={pageCount}/>
+                                <PaginationRounded callback={(page) => dispatch(setPage(page))} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

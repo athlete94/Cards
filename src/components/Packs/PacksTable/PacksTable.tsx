@@ -29,15 +29,18 @@ export default function PacksTable(props: PacksTableType) {
     const cards = useAppSelector(state => state.picks.cardPacks)
 
     const userId = useAppSelector(state => state.profile._id)
-    // if(userId!=null){}
 
 
-    let up = document.getElementById("update")
-    if(up!=null) up.addEventListener('click', ()=>{
+    const onClickDeleteHandler = (id: string) => {
+        dispatch(deletePickToState(id))
+    }
+    const onClickEditHandler = (id: string) => {
+        dispatch(editPackToState(id))
+    }
 
-    })
+
     return (
-        <TableContainer component={Paper}>
+        <TableContainer style={{marginBottom:'20px'}} component={Paper}>
             <Table sx={{minWidth: 400}} aria-label="simple table">
                 <TableHead>
                     <TableRow>

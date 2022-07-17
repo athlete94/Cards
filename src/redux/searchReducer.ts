@@ -2,7 +2,8 @@ type InitialStateType = typeof initialState
 let initialState = {
     searchText: '',
     paramsSlider: [0, 100] as number[],
-    handler: 0 // изменяется при отпускании слайдера
+    touchSlider: false , // изменяется при отпускании слайдера
+    sortPacks: '0updated'
 }
 
 
@@ -18,17 +19,22 @@ export const searchReducer = (state: InitialStateType = initialState, action: Se
                 ...state,
                 paramsSlider: action.paramsSlider
             }
-        case 'SET_HANDLER':
+        case 'SET_TOUCH_SLIDER':
             return {
                 ...state,
-                handler: action.handler
+                touchSlider: action.touchSlider
+            }
+        case 'SET_SORT':
+            return {
+                ...state,
+                sortPacks: action.sort
             }
         default:
             return state
     }
 }
 
-export type SearchReducerActionType = SetSearchType | SetSliderParamsType | SetHandlerType
+export type SearchReducerActionType = SetSearchType | SetSliderParamsType | SetTouchSliderType | SetSortType
 
 export type SetSearchType = ReturnType<typeof setSearch>
 export const setSearch = (searchText: string) => {
@@ -46,10 +52,18 @@ export const setSliderParams = (paramsSlider: number[]) => {
     }as const
 }
 
-export type SetHandlerType = ReturnType<typeof setHandler>
-export const setHandler = (handler: number) => {
+export type SetTouchSliderType = ReturnType<typeof setTouchSlider>
+export const setTouchSlider = (touchSlider: boolean) => {
     return {
-        type: 'SET_HANDLER',
-        handler
+        type: 'SET_TOUCH_SLIDER',
+        touchSlider
     }as const
+}
+type SetSortType = ReturnType<typeof setSort>
+export const setSort = (sort: string) => {
+    debugger
+    return {
+        type: 'SET_SORT',
+        sort
+    } as const
 }

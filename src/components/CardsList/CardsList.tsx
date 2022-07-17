@@ -1,6 +1,7 @@
 import * as React from 'react';
 import style from "../../common/style/ProjectBlock.module.css";
 import s from "./CardsList.module.css";
+import st from '../../common/style/PaginationBlock.module.css'
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Search} from "../Search/Search";
 import {useCallback, useEffect, useState} from "react";
@@ -9,7 +10,7 @@ import {
     addNewCardTC,
     getCardsTC,
     setSearchQueryByQuestionAC,
-    setSearchQueryByAnswerAC
+    setSearchQueryByAnswerAC, setCurrentPageCardsListAC, setPageCountAC
 } from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {CardType, NewCardDataType} from "../../api/cardsApi";
@@ -23,6 +24,8 @@ import Table from "@mui/material/Table";
 import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
 import useDebounce from "../../common/hooks/useDebounce";
 import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import PaginationRounded from "../Pagination/Pagination";
+import BasicSelect from "../PageCount/PageCount";
 
 
 export const CardsList = () => {
@@ -39,6 +42,8 @@ export const CardsList = () => {
     const cardQuestion = useAppSelector(state => state.cardsList.cardQuestion)
     const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
 
+    const {page, pageCount, cardsTotalCount} = useAppSelector(state => state.cardsList)
+
 
     const [activeModal, setActiveModal] = useState<boolean>(false);
     const [answer, setAnswer] = useState<string>("");
@@ -50,7 +55,7 @@ export const CardsList = () => {
 
     useEffect(() => {
         if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-    }, [debouncedSearchQuestion, debouncedSearchAnswer])
+    }, [debouncedSearchQuestion, debouncedSearchAnswer, page, pageCount])
 
     const addCardHandler = useCallback(() => {
         const newCard: NewCardDataType = {
@@ -139,6 +144,11 @@ export const CardsList = () => {
                             })}
                         </TableBody>
                     </Table>
+                </div>
+
+                <div  className={st.paginationBlock}>
+                    <BasicSelect setCount={(count) => dispatch(setPageCountAC(count))} pageCount={pageCount}/>
+                    <PaginationRounded callback={(page) => dispatch(setCurrentPageCardsListAC(page))} count={Math.ceil(cardsTotalCount/pageCount)} page={page} />
                 </div>
             </div>
         </div>

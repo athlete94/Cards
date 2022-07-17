@@ -5,8 +5,8 @@ import {setErrorAC} from "./registrationReducer";
 
 const initialState = {
     cardPacks: [] as Array<CardPacksType>,
-    page: 0,
-    pageCount: 0,
+    page: 1,
+    pageCount: 5,
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
@@ -21,6 +21,17 @@ export const packsReducer = (state: PacksStateType = initialState, action: Actio
             return {
                 ...action.payload
             }
+        case 'SET_PAGE_COUNT':
+            return {
+                ...state,
+                pageCount: action.pageCount
+            }
+        case 'SET_PAGE':
+            return {
+                ...state,
+                page: action.page
+            }
+
         default:
             return state
     }
@@ -34,11 +45,24 @@ const setCardsAll = (payload: PacksStateType) => {
     } as const
 }
 
-export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string): AppThunkType => (dispatch, getState) => {
+export const setPageCount = (pageCount: number) => {
+    return {
+        type: 'SET_PAGE_COUNT',
+        pageCount
+    } as const
+}
+export const setPage = (page: number) => {
+    return {
+        type: 'SET_PAGE',
+        page
+    } as const
+}
+
+
+export const setCardsAllThunkCreator = (search: string, sliderParams: number[], value: string, sort?: string, page?:number, pageCount?:number): AppThunkType => (dispatch, getState) => {
     dispatch(setStatus('loading'))
     if (value === "All") {
-        debugger
-        packsApi.getPacks(sliderParams, search, '', sort).then((res) => {
+        packsApi.getPacks(sliderParams, search, '', sort, page, pageCount).then((res) => {
             dispatch(setCardsAll(res.data))
             dispatch(setStatus('succeeded'))
         }).catch((e) => {
@@ -50,8 +74,8 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
         })
     } else if (value==='My'){
         let userId = getState().profile._id;
-        debugger
-        if (userId != null) packsApi.getPacks(sliderParams, search, userId, sort)
+
+        if (userId != null) packsApi.getPacks(sliderParams, search, userId, sort, page, pageCount)
             .then((res) => {
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
@@ -69,10 +93,12 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
 }
 
 export const addPickToState = (newPack:string, allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
+    let {page, pageCount} = getState().picks
+    let {sortPacks, searchText, paramsSlider} = getState().search
     if(allOrMyPacks==='All'){
         dispatch(setStatus('loading'))
         packsApi.addPack(newPack).then(() => {
-            packsApi.getPacks( [0, 100], '').then((res) => {
+            packsApi.getPacks(paramsSlider, searchText, '', sortPacks, page, pageCount).then((res) => {
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
             })
@@ -100,29 +126,27 @@ export const addPickToState = (newPack:string, allOrMyPacks:string): AppThunkTyp
         })
     }
 
-
-}
-
-export const deletePickToState = (idPack: string, allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
+export const deletePickToState = (idPack: string): AppThunkType => (dispatch, getState) => {
+    let userId = getState().profile._id
+    let {page, pageCount} = getState().picks
+    let {sortPacks, searchText, paramsSlider} = getState().search
     if(allOrMyPacks==="All"){
-        dispatch(setStatus('loading'))
-        packsApi.deletePick(idPack)
-            .then(() => {
-                debugger
-                packsApi.getPacks( [0, 100], '')
-                    .then((res) => {
-                        debugger
-                        dispatch(setCardsAll(res.data))
-                        dispatch(setStatus('succeeded'))
-                    })
-            }).catch((e) => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ', more details in the console');
-            dispatch(setErrorAC(error))
-            dispatch(setStatus('failed'))
-        })
-    } else {
+    dispatch(setStatus('loading'))
+    packsApi.deletePick(idPack)
+        .then(() => {
+            packsApi.getPacks( paramsSlider, searchText, userId, sortPacks, page, pageCount)
+                .then((res) => {
+                    dispatch(setCardsAll(res.data))
+                    dispatch(setStatus('succeeded'))
+                })
+        }).catch((e) => {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        dispatch(setErrorAC(error))
+        dispatch(setStatus('failed'))
+    }) }
+    else {
         const userId  = getState().profile._id
         dispatch(setStatus('loading'))
         packsApi.deletePick(idPack)
@@ -142,14 +166,16 @@ export const deletePickToState = (idPack: string, allOrMyPacks:string): AppThunk
             dispatch(setStatus('failed'))
         })
     }
-
-
 }
-export const editPackToState = (idPack: string,newName:string,allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
-    if(allOrMyPacks==='All'){
+export const editPackToState = (idPack: string, newName:string,allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
+    let userId = getState().profile._id
+    let {page, pageCount} = getState().picks
+    let {sortPacks, searchText, paramsSlider} = getState().search
+
+    if(allOrMyPacks==='All') {
         dispatch(setStatus('loading'))
-        packsApi.editPack(idPack,newName).then(() => {
-            packsApi.getPacks([0, 100], '').then((res) => {
+        packsApi.editPack(idPack, newName).then(() => {
+            packsApi.getPacks(paramsSlider, searchText, userId, sortPacks, page, pageCount).then((res) => {
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
             })
@@ -160,7 +186,7 @@ export const editPackToState = (idPack: string,newName:string,allOrMyPacks:strin
             dispatch(setErrorAC(error))
             dispatch(setStatus('failed'))
         })
-    } else {
+    }else {
         let userId = getState().profile._id
         dispatch(setStatus('loading'))
         packsApi.editPack(idPack,newName).then(() => {
@@ -177,11 +203,13 @@ export const editPackToState = (idPack: string,newName:string,allOrMyPacks:strin
         })
     }
 }
+}
 
 type SetCardsAllType = ReturnType<typeof setCardsAll>
+type SetPageCountType = ReturnType<typeof setPageCount>
+type SetPageType = ReturnType<typeof setPage>
 
-
-export type ActionsPacksType = SetCardsAllType
+export type ActionsPacksType = SetCardsAllType | SetPageCountType | SetPageType
 
 
 export type PacksStateType = typeof initialState
