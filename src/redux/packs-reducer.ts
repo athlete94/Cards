@@ -6,7 +6,7 @@ import {setErrorAC} from "./registrationReducer";
 const initialState = {
     cardPacks: [] as Array<CardPacksType>,
     page: 1,
-    pageCount: 5,
+    pageCount: 4,
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
@@ -95,7 +95,7 @@ export const setCardsAllThunkCreator = (search: string, sliderParams: number[], 
 export const addPickToState = (newPack:string, allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
     let {page, pageCount} = getState().picks
     let {sortPacks, searchText, paramsSlider} = getState().search
-    if(allOrMyPacks==='All'){
+    if (allOrMyPacks === 'All') {
         dispatch(setStatus('loading'))
         packsApi.addPack(newPack).then(() => {
             packsApi.getPacks(paramsSlider, searchText, '', sortPacks, page, pageCount).then((res) => {
@@ -113,7 +113,7 @@ export const addPickToState = (newPack:string, allOrMyPacks:string): AppThunkTyp
         let userId = getState().profile._id
         dispatch(setStatus('loading'))
         packsApi.addPack(newPack).then(() => {
-            packsApi.getPacks( [0, 100], '',userId).then((res) => {
+            packsApi.getPacks([0, 100], '', userId).then((res) => {
                 dispatch(setCardsAll(res.data))
                 dispatch(setStatus('succeeded'))
             })
@@ -125,8 +125,8 @@ export const addPickToState = (newPack:string, allOrMyPacks:string): AppThunkTyp
             dispatch(setStatus('failed'))
         })
     }
-
-export const deletePickToState = (idPack: string): AppThunkType => (dispatch, getState) => {
+}
+export const deletePickToState = (idPack: string, allOrMyPacks: string): AppThunkType => (dispatch, getState) => {
     let userId = getState().profile._id
     let {page, pageCount} = getState().picks
     let {sortPacks, searchText, paramsSlider} = getState().search
@@ -167,6 +167,7 @@ export const deletePickToState = (idPack: string): AppThunkType => (dispatch, ge
         })
     }
 }
+
 export const editPackToState = (idPack: string, newName:string,allOrMyPacks:string): AppThunkType => (dispatch, getState) => {
     let userId = getState().profile._id
     let {page, pageCount} = getState().picks
@@ -203,7 +204,7 @@ export const editPackToState = (idPack: string, newName:string,allOrMyPacks:stri
         })
     }
 }
-}
+
 
 type SetCardsAllType = ReturnType<typeof setCardsAll>
 type SetPageCountType = ReturnType<typeof setPageCount>

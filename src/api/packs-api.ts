@@ -3,7 +3,7 @@ import {instance} from "./instance";
 
 export const packsApi = {
     getPacks( sliderParams: number[], search?: string, userId?: string, sort?: string, page?:number, pageCount?:number) {
-        return instance.get<PacksStateType>('cards/pack', {
+        return instance.get('cards/pack', {
             params: {
                 packName: search,
                 min: sliderParams[0],

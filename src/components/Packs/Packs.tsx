@@ -13,18 +13,16 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../App";
 import {RadioButton} from "../../utils/RadioButton/RadioButton";
 import {Button} from "@mui/material";
-import {setSearch} from "../../redux/searchReducer";
-import {setAllOrMyPacks} from "../../redux/authReducer";
 import {ModalAddPack} from "../Modals/ModalPack/ModalAddPack";
 
 import {setSearch, setSort} from "../../redux/searchReducer";
 import PaginationRounded from "../Pagination/Pagination";
 import BasicSelect from "../PageCount/PageCount";
+import {setAllOrMyPacks} from "../../redux/authReducer";
 
 export default function Packs() {
 
     const dispatch = useTypedDispatch()
-    let sortPacks = useAppSelector(state => state.search.sortPacks)
     let allOrMyPacks = useAppSelector(state=>state.login.allOrMyPacks)
     let {page, pageCount, cardPacksTotalCount} = useAppSelector(state => state.picks)
     let {searchText: search, touchSlider, paramsSlider, sortPacks} = useAppSelector(state => state.search)
@@ -43,13 +41,13 @@ export default function Packs() {
 
 
     useEffect(() => {
-        dispatch(setCardsAllThunkCreator(search, sliderParams, allOrMyPacks, sortPacks, page, pageCount))
+        dispatch(setCardsAllThunkCreator(search, paramsSlider, allOrMyPacks, sortPacks, page, pageCount))
     }, [touchSlider, debouncedSearchTerm, allOrMyPacks, sortPacks,  page, pageCount])
 
 
     const onChangeListener = (value: string) => {
+        dispatch(setSearch(''))
         dispatch(setAllOrMyPacks(value))
-
     }
 
     const onClickSortHandler = () => {
@@ -101,7 +99,7 @@ export default function Packs() {
                     </div>
                     <div>
                         <PacksTable sort={sortPacks} onClickSortHandler={onClickSortHandler} />
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{display: 'flex', justifyContent: 'right'}}>
                             <div className={st.paginationBlock}>
                                 <BasicSelect setCount={(count) => dispatch(setPageCount(count))} pageCount={pageCount}/>
                                 <PaginationRounded callback={(page) => dispatch(setPage(page))} count={Math.ceil(cardPacksTotalCount / pageCount)} page={page}/>

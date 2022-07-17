@@ -61,7 +61,6 @@ export const setTouchSlider = (touchSlider: boolean) => {
 }
 type SetSortType = ReturnType<typeof setSort>
 export const setSort = (sort: string) => {
-    debugger
     return {
         type: 'SET_SORT',
         sort

@@ -4,8 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {useTypedDispatch} from "../../redux/store";
-import {setPageCount} from "../../redux/packs-reducer";
+
 
 type BasicSelectPropsType = {
     pageCount: number,
@@ -30,9 +29,9 @@ export default function BasicSelect({pageCount, setCount}: BasicSelectPropsType)
                     label="Page count"
                     onChange={handleChange}
                 >
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={8}>8</MenuItem>
+                    <MenuItem value={12}>12</MenuItem>
                 </Select>
             </FormControl>
         </Box>

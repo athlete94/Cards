@@ -1,15 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Profile.module.css'
 import style from '../../common/style/ProjectBlock.module.css'
 import {useAppSelector, useTypedDispatch} from "../../redux/store";
 import {Navigate, NavLink} from "react-router-dom";
 import MinimumDistanceSlider from "../Slider/Slider";
 import {PATH} from "../../App";
-import {logoutTC} from "../../redux/authReducer";
-import {Search} from "../Search/Search";
-import Packs from "../Packs/Packs";
 import PacksTable from "../Packs/PacksTable/PacksTable";
 import {Logout} from "../Logout/Logout";
+import {setSort} from "../../redux/searchReducer";
+import {setCardsAllThunkCreator} from "../../redux/packs-reducer";
 
 const Profile = () => {
 
@@ -18,10 +17,21 @@ const Profile = () => {
     const dispatch = useTypedDispatch()
 
     let isLogin = useAppSelector(state => state.login.isLogin)
+    let {sortPacks, paramsSlider, searchText: search} = useAppSelector(state => state.search)
+
     let {name, avatar} = useAppSelector(state => state.profile)
 
-    //-----------
+    const onClickSortHandler = () => {
+        if (sortPacks === '0updated') {
+            dispatch(setSort('1updated'))
+        } else {
+            dispatch(setSort('0updated'))
+        }
+    }
 
+    useEffect(() => {
+        dispatch(setCardsAllThunkCreator(search, paramsSlider ,"My", sortPacks, 0, 0))
+    }, [])
 
 
     if (!isLogin) {
@@ -42,12 +52,6 @@ const Profile = () => {
                                 alt=""/>
                         </div>
                         <div className={s.userName}>
-                            {/*<input type="text"*/}
-                            {/*              autoFocus*/}
-                            {/*              placeholder={name}*/}
-                            {/*              onChange={changeUserName}*/}
-                            {/*              onBlur={onBlurHandler}*/}
-                            {/*              onKeyPress={onKeyPressHandler}/>*/}
                             <span className={s.userName}>
                                     {name}
                                 </span>
@@ -68,7 +72,7 @@ const Profile = () => {
                     <div className={s.search_block}>
                         {/*<Search label={'search to packs list'} width={'280%'}/>*/}
                     </div>
-                    <PacksTable  sort={'0updated'} onClickSortHandler={()=>{}}/>
+                    <PacksTable sort={sortPacks} onClickSortHandler={onClickSortHandler} />
                 </div>
                 <Logout/>
             </div>
