@@ -26,6 +26,7 @@ import useDebounce from "../../common/hooks/useDebounce";
 import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import PaginationRounded from "../Pagination/Pagination";
 import BasicSelect from "../PageCount/PageCount";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 
 export const CardsList = () => {
@@ -37,11 +38,10 @@ export const CardsList = () => {
 
     const cards = useAppSelector<Array<CardType>>((state) => state.cardsList.cards);
     const packUser_ID = useAppSelector((state) => state.cardsList.packUserId)
-    const userId = useAppSelector<string>((state) => state.profile._id);
-    const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
+    const userId = useAppSelector((state) => state.profile._id);
+    const isFetchingCards = useAppSelector(state => state.cardsList.isFetchingCards);
     const cardQuestion = useAppSelector(state => state.cardsList.cardQuestion)
     const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
-
     const {page, pageCount, cardsTotalCount} = useAppSelector(state => state.cardsList)
 
 
@@ -82,10 +82,14 @@ export const CardsList = () => {
     return (
         <div className={style.projectBlock}>
             <div className={s.profile}>
-                    <span className={s.text}
-                          onClick={() => navigate(PATH.PACKS)}>
-                       ⬅️ Pack name
-                    </span>
+
+                <Button className={s.text}
+                        onClick={() => navigate(PATH.PACKS)}
+                        variant="contained"
+                        startIcon={<ArrowBackIosIcon/>}>
+                        Pack name
+                </Button>
+
                 <div>
                     <Search label={'Search'}
                             width={'100%'}
@@ -94,7 +98,6 @@ export const CardsList = () => {
                 </div>
 
                 <div>
-
                     <FormLabel id="demo-controlled-radio-buttons-group">Search by</FormLabel>
                     <RadioGroup
                         aria-labelledby="demo-controlled-radio-buttons-group"
@@ -147,7 +150,7 @@ export const CardsList = () => {
                 </div>
 
                 <div  className={st.paginationBlock}>
-                    <BasicSelect setCount={(count) => dispatch(setPageCountAC(count))} pageCount={pageCount}/>
+                    {/*<BasicSelect setCount={(count) => dispatch(setPageCountAC(count))} pageCount={pageCount}/>*/}
                     <PaginationRounded callback={(page) => dispatch(setCurrentPageCardsListAC(page))} count={Math.ceil(cardsTotalCount/pageCount)} page={page} />
                 </div>
             </div>

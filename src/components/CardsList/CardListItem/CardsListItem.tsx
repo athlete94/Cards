@@ -9,6 +9,8 @@ import {deleteCardTC, updateCardTC} from "../../../redux/cardListReducer";
 import Button from "@mui/material/Button";
 import {ModalDeleteCard} from "../../Modals/ModalCard/ModalDeleteCard";
 import {ModalEditAddCard} from "../../Modals/ModalCard/ModalEditAddCard";
+import Rating from "@mui/material/Rating";
+import StarIcon from '@mui/icons-material/Star';
 
 
 type CardsListItemPropsType = {
@@ -48,7 +50,16 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
             <TableCell component="th" scope="row">{card.question}</TableCell>
             <TableCell align="center">{card.answer}</TableCell>
             <TableCell align="center">{card.updated}</TableCell>
-            <TableCell align="center">{card.grade}</TableCell>
+            <TableCell align="center">
+
+                <Rating
+                    value={card.grade}
+                    readOnly
+                    precision={0.25}
+                    emptyIcon={<StarIcon style={{opacity: 0.55}} fontSize="inherit"/>}
+                />
+
+            </TableCell>
             {card.user_id === userId &&
                 <TableCell align="center">
                     <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards} color="inherit">
