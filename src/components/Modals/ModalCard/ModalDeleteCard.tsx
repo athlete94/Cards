@@ -3,6 +3,7 @@ import {GeneralModal} from "../GeneralModal";
 import Button from "@mui/material/Button";
 
 type ModalDeleteCardType = {
+    title: string
     active: boolean
     setActive: (state: boolean) => void
     deletePack: () => void
@@ -10,6 +11,7 @@ type ModalDeleteCardType = {
 
 export const ModalDeleteCard: React.FC<ModalDeleteCardType> = (
     {
+        title,
         active,
         setActive,
         deletePack,
@@ -26,7 +28,7 @@ export const ModalDeleteCard: React.FC<ModalDeleteCardType> = (
     return (
         <GeneralModal visible={active} setVisible={setActive}>
             <h2>Delete Pack</h2>
-            <h3>Do you really want to remove? All cards will be excluded from this course.</h3>
+            <h3>Do you really want to remove {title}? All cards will be excluded from this course.</h3>
             <div>
                 <Button onClick={cancelHandler}>
                     Cancel

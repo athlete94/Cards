@@ -10,7 +10,7 @@ import {
     addNewCardTC,
     getCardsTC,
     setSearchQueryByQuestionAC,
-    setSearchQueryByAnswerAC, setCurrentPageCardsListAC, setPageCountAC
+    setSearchQueryByAnswerAC, setCurrentPageCardsListAC, 
 } from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {CardType, NewCardDataType} from "../../api/cardsApi";
@@ -25,7 +25,6 @@ import {ModalEditAddCard} from "../Modals/ModalCard/ModalEditAddCard";
 import useDebounce from "../../common/hooks/useDebounce";
 import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import PaginationRounded from "../Pagination/Pagination";
-import BasicSelect from "../PageCount/PageCount";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 

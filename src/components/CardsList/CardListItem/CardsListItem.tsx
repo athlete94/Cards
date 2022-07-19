@@ -62,17 +62,22 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
             </TableCell>
             {card.user_id === userId &&
                 <TableCell align="center">
+
                     <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards} color="inherit">
                         <ModeEditIcon/>
                     </Button>
+
                     <Button onClick={deleteButtonHandler} disabled={isFetchingCards} color="error">
                         <DeleteIcon/>
                     </Button>
+
                     <ModalDeleteCard
+                        title = {card.question}
                         active={activeDeleteModal}
                         setActive={setActiveDeleteModal}
                         deletePack={deleteCardHandler}
                     />
+
                     <ModalEditAddCard
                         inputAnswer={answer}
                         setInputAnswer={setAnswer}
