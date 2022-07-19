@@ -59,7 +59,7 @@ const PackItem:React.FC<PackItemType> = ({pack}) => {
                 component="th" scope="row" onClick={() => {
             }}>
                 <NavLink to={`/cards/${pack._id}`}>
-                   <TransitionText packName = {pack.name}/>
+                   <TransitionText packName={pack.name}/>
                 </NavLink>
             </TableCell>
             <TableCell align="center" >{pack.cardsCount}</TableCell>
