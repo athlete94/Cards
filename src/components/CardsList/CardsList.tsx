@@ -10,7 +10,7 @@ import {
     addNewCardTC,
     getCardsTC,
     setSearchQueryByQuestionAC,
-    setSearchQueryByAnswerAC, setCurrentPageCardsListAC, 
+    setSearchQueryByAnswerAC, setCurrentPageCardsListAC,
 } from "../../redux/cardListReducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {CardType, NewCardDataType} from "../../api/cardsApi";
@@ -43,6 +43,7 @@ export const CardsList = () => {
     const cardAnswer = useAppSelector(state => state.cardsList.cardAnswer)
     const {page, pageCount, cardsTotalCount} = useAppSelector(state => state.cardsList)
 
+    //const packsName = useAppSelector<string>((state) => state.picks.name);
 
     const [activeModal, setActiveModal] = useState<boolean>(false);
     const [answer, setAnswer] = useState<string>("");
@@ -86,7 +87,7 @@ export const CardsList = () => {
                         onClick={() => navigate(PATH.PACKS)}
                         variant="contained"
                         startIcon={<ArrowBackIosIcon/>}>
-                        Pack name
+                    Pack name
                 </Button>
 
                 <div>
