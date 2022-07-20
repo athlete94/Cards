@@ -8,6 +8,8 @@ import {Button} from '@mui/material';
 import style from "./LearnPage.module.css"
 import {RadioRating} from './RadioRating/RadioRating';
 import SendIcon from '@mui/icons-material/Send';
+import StarIcon from "@mui/icons-material/Star";
+import Rating from "@mui/material/Rating";
 
 type LearnPagePropsType = {
     card: CardType
@@ -47,9 +49,17 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
                 :
                 <div className={style.cardBlock}>
                     <div className={style.cardInfoBlock}>
-                        <div>
-                            <div className={style.grade}>Card grade: {roundedCardGrade}</div>
-                            <div className={style.shots}>Card shots: {card.shots}</div>
+                        <div className={style.grade}>
+                            <div>
+                                Card grade:
+                            </div>
+                            <Rating
+                                value={card.grade}
+                                readOnly
+                                precision={0.25}
+                                emptyIcon={<StarIcon style={{opacity: 0.55}} fontSize="inherit"/>}
+                            />
+                            <div>Card shots: {card.shots}</div>
                         </div>
                         <h4>Question:</h4>
                         <p>{card.question}</p>
@@ -74,7 +84,7 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
                     <div className={style.buttonsBlock}>
                         <Button onClick={cancelHandler}>Cancel</Button>
                         {isAnswered ?
-                            <Button onClick={nextHandler} sx={{marginLeft: '65px'}}>Next</Button>
+                            <Button onClick={nextHandler}>Next</Button>
                             :
                             <Button onClick={showAnswerHandler}
                                     color="success"

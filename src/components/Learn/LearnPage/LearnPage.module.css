@@ -1,18 +1,26 @@
 .cardBlock h4 {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .cardInfoBlock {
     margin: 5px 20px 10px 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .grade, .shots {
-    display: inline-block;
-    margin: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .rateBlock {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .rateBlock p {
@@ -24,7 +32,10 @@
     margin-bottom: 15px;
 }
 
-.buttonsBlock button {
+.buttonsBlock{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     padding: 7px 15px;
     margin: 10px;
 }

@@ -4,7 +4,6 @@
     min-height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 50px;
 }
 
@@ -14,10 +13,9 @@
     flex-direction: column;
     border-radius: 8px;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
 }
 
 .title {
-    margin: 25px 20px 0px 20px;
+    margin: 15px 10px 0px 20px;
 }
