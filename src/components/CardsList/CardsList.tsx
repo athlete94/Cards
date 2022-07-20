@@ -83,27 +83,26 @@ export const CardsList = () => {
         <div className={style.projectBlock}>
             <div className={s.profile}>
 
-                <Button className={s.text}
-                        onClick={() => navigate(PATH.PACKS)}
+                <Button onClick={() => navigate(PATH.PACKS)}
                         variant="contained"
                         startIcon={<ArrowBackIosIcon/>}>
                     Pack name
                 </Button>
 
                 <div>
-                    <Search label={'Search'}
+                    <Search label={'Search by'}
                             width={'100%'}
                             callback={searchHandler}
                             value={valueSearch}/>
                 </div>
 
-                <div>
-                    <FormLabel id="demo-controlled-radio-buttons-group">Search by</FormLabel>
+                <div className={style.radioSearchContainer}>
                     <RadioGroup
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         value={valueRadio}
                         onChange={handleChange}
+                        row={true}
                     >
                         <FormControlLabel value="question" control={<Radio/>} label="Question"/>
                         <FormControlLabel value="answer" control={<Radio/>} label="Answer"/>
