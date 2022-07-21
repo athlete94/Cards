@@ -9,6 +9,7 @@ import PacksTable from "../Packs/PacksTable/PacksTable";
 import {Logout} from "../Logout/Logout";
 import {setSort} from "../../redux/searchReducer";
 import {setCardsAllThunkCreator} from "../../redux/packs-reducer";
+import EditIcon from '@mui/icons-material/Edit';
 
 const Profile = () => {
 
@@ -48,7 +49,7 @@ const Profile = () => {
                     >
                         <div className={s.avatar}>
                             <img
-                                src={'https://www.meme-arsenal.com/memes/b877babd9c07f94b952c7f152c4e264e.jpg'}
+                                src={avatar ? avatar : 'https://www.meme-arsenal.com/memes/b877babd9c07f94b952c7f152c4e264e.jpg'}
                                 alt=""/>
                         </div>
                         <div className={s.userName}>
@@ -59,7 +60,7 @@ const Profile = () => {
 
                         {show && <div className={s.edit}>
                             <NavLink to={PATH.EDIT_PROFILE}>
-                                Edit
+                                <EditIcon fontSize={'small'}/>
                             </NavLink>
                         </div>}
                     </div>

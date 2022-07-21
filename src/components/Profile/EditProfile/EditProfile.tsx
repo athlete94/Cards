@@ -2,18 +2,19 @@ import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import s from './EditProfile.module.css'
 import style from '../../../common/style/ProjectBlock.module.css'
 import {useAppSelector, useTypedDispatch} from '../../../redux/store'
-import {updateUserData, updateUserDataTC} from "../../../redux/profileReducer";
-import {logoutTC} from "../../../redux/authReducer";
-import {Button, Icon} from "@mui/material";
+import {updateUserDataTC} from "../../../redux/profileReducer";
+import {Button} from "@mui/material";
 import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../../App";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {InputTypeFile} from "../../InputTypeFile/InputTypeFile";
 
 const EditProfile = () => {
     let {name, avatar} = useAppSelector(state => state.profile)
     let isLogin = useAppSelector(state => state.login.isLogin)
 
-    let [userName, setUserName] = useState<string>('')
+    let [userAva, setUserAva] = useState(avatar)
+    let [userName, setUserName] = useState<string>(name)
     let [edit, setEdit] = useState<boolean>(true)
 
     const dispatch = useTypedDispatch()
@@ -23,15 +24,14 @@ const EditProfile = () => {
         setEdit(true)
     }
     const changeUserName = (e: ChangeEvent<HTMLInputElement>) => {
+        debugger
         setUserName(e.currentTarget.value.trimStart())
     }
     const saveBtnHandler = () => {
-        userName && dispatch(updateUserDataTC(userName))
-        setEdit(false)
-    }
-
-    const logoutHandler = () => {
-        dispatch(logoutTC())
+        if (userName !== name || userAva !== avatar) {
+            dispatch(updateUserDataTC(userName, userAva))
+            setEdit(false)
+        }
     }
 
 
@@ -50,23 +50,26 @@ const EditProfile = () => {
                 </div>
 
                 <div className={s.avatar}>
-                    <img
-                        src={'https://www.meme-arsenal.com/memes/b877babd9c07f94b952c7f152c4e264e.jpg'}
-                        alt=""/>
+                    <InputTypeFile userAva={userAva}
+                                   setUserAva={setUserAva}/>
                 </div>
                 <div className={s.userName}>
                     {edit ? <input type="text"
                                    autoFocus
                                    placeholder={name}
                                    onChange={changeUserName}
-                                   />
+                        />
                         : <span className={s.userName} onDoubleClick={editUserData}>
                                     {name}
                                 </span>
                     }
                 </div>
                 <div>
-                    <Button variant="outlined" onClick={saveBtnHandler}>Save</Button>
+                    <Button variant="outlined"
+                            onClick={saveBtnHandler}
+                            disabled={userName === name && userAva === avatar}>
+                        Save
+                    </Button>
                 </div>
 
             </div>

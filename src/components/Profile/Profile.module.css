@@ -58,7 +58,7 @@
 .edit {
     position: absolute;
     color: #4a4f4f;
-    left: 10px;
+    right: 10px;
     top: 10px;
     font-size: 12px;
 }
