@@ -3,13 +3,12 @@ import { CardType } from "../../api/cardsApi";
 export const getRandomCard = (cards: Array<CardType>): CardType => {
     const sum = cards.reduce((acc, card) => acc + ((6 - card.grade) ** 2), 0);
     const randomNumber = Math.random() * sum;
-    let s = 0;
-    let i = 0;
+    const res = cards.reduce((acc: { sum: number, id: number}, card, i) => {
+            const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
+            return {sum: newSum, id: newSum < randomNumber ? i : acc.id}
+        }
+        , {sum: 0, id: -1});
+    console.log('test: ', sum, randomNumber, res)
 
-    while (s < randomNumber) {
-        s += (6 - cards[i].grade) ** 2;
-        i++;
-    }
-
-    return cards[i - 1];
+    return cards[res.id + 1];
 };
