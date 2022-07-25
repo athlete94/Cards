@@ -2,6 +2,7 @@ import React from 'react';
 import s from "./Logout.module.css";
 import {logoutTC} from "../../redux/authReducer";
 import {useTypedDispatch} from "../../redux/store";
+import LogoutIcon from "../../asets/svg/Logout.svg"
 
 export const Logout = () => {
 
@@ -10,9 +11,10 @@ export const Logout = () => {
     const logoutHandler = () => {
         dispatch(logoutTC())
     }
+
     return (
-        <div className={s.logoutButton}>
-            <button onClick={logoutHandler}>LOGOUT</button>
-        </div>
+        <button onClick={logoutHandler} className={s.logout}>
+            <img src={LogoutIcon} alt="Logout"/>
+        </button>
     );
 };

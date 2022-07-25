@@ -74,7 +74,6 @@ const Profile = () => {
                     </div>
                     <PacksTable sort={sortPacks} onClickSortHandler={onClickSortHandler} />
                 </div>
-                <Logout/>
             </div>
         </div>
     );

@@ -1,13 +1,16 @@
-.logoutButton {
-    position: absolute;
-    top: -25px;
-    right: 0px;
-}
+.logout {
+    /*display: flex;
+    flex-direction: row;
+    justify-content: flex-end;*/
 
-.logoutButton button {
-    background-color: #e7eaf6;
+    background-color: #c7acef;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     color: #5c5394;
+}
+
+.logout:hover {
+    background-color: #b296db;
+    border: 1px solid #3f2e67;
 }
