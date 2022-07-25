@@ -2,7 +2,6 @@ import React from 'react';
 import s from './Navbar.module.css'
 import {PATH} from "../../App";
 import {NavLink} from "react-router-dom";
-import StyleIcon from '@mui/icons-material/Style';
 
 export const Navbar = () => {
     return (

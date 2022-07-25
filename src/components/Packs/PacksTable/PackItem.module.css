@@ -1,0 +1,7 @@
+.name{
+    transition: 0.8s;
+    text-align: center;
+}
+.name:hover {
+    transform: scale(1.2);
+}

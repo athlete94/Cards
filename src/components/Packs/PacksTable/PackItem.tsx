@@ -11,12 +11,11 @@ import {useAppSelector, useTypedDispatch} from "../../../redux/store";
 import moment from "moment";
 import { setLearnPackNameAC } from '../../../redux/learnReducer';
 import {PATH} from "../../../App";
-import {TransitionText} from "../../StyledTranformText/StyleTransformText";
+import style from "./PackItem.module.css";
 
 
 type PackItemType = {
     pack:CardPacksType
-
 }
 
 const PackItem:React.FC<PackItemType> = ({pack}) => {
@@ -55,11 +54,9 @@ const PackItem:React.FC<PackItemType> = ({pack}) => {
             key={pack._id}
             sx={{'&:last-child td, &:last-child th': {border: 0}}}
         >
-            <TableCell
-                component="th" scope="row" onClick={() => {
-            }}>
+            <TableCell className={style.name} component="th" scope="row" onClick={() => {}}>
                 <NavLink to={`/cards/${pack._id}`}>
-                   <TransitionText packName={pack.name}/>
+                   {pack.name}
                 </NavLink>
             </TableCell>
             <TableCell align="center" >{pack.cardsCount}</TableCell>
