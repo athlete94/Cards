@@ -1,5 +1,5 @@
 .navbar {
-    height: 50px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,13 +8,35 @@
     background-color: #c7acef;
 }
 
+.navlinkContainer {
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navlinkContainer:hover {
+    background-color: #b296db;
+}
+
+.navbar a:active {
+    color: #3f2e67;
+}
+
+.active {
+    background-color: #b296db;
+}
+
+/*Old style*/
+/*
 .navbar a {
-    width: 150px;
-    border-radius: 1000px;
-
-
     text-align: center;
-    height: 25px;
 }
 
 .navbar a:hover {
@@ -27,4 +49,4 @@
 
 .active {
     background-color: #b296db;
-}
+}*/
