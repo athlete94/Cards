@@ -4,7 +4,6 @@ import { Route, Routes} from "react-router-dom";
 import Login from "./components/Login/Login";
 import NotFound from "./components/Error404/NotFound";
 import Profile from "./components/Profile/Profile";
-import Nav from "./components/Nav/Nav";
 import Registration from "./components/Registration/Registration";
 import {ErrorSnackbar} from "./utils/Error/ErrorSnackbar";
 import RecoveryPassword from './components/RecoveryPassword/RecoveryPassword';
@@ -18,6 +17,7 @@ import Packs from "./components/Packs/Packs";
 import {Navbar} from "./components/Navbar/Navbar";
 import EditProfile from "./components/Profile/EditProfile/EditProfile";
 import {LearnPageContainer} from "./components/Learn/LearnPageContainer";
+import {Logotip} from "./components/Logo/Logo";
 
 
 export const PATH = {
@@ -41,6 +41,7 @@ function App() {
     const dispatch = useTypedDispatch()
     let initialized = useAppSelector(state=>state.login.initialized)
     let status = useAppSelector((state)=>state.login.status)
+    const userId = useAppSelector<string>((state) => state.profile._id);
 
     useEffect(()=>{
          dispatch(authMe())
@@ -52,12 +53,10 @@ function App() {
     }
 
     return (
-
             <div className="App">
                 <ErrorSnackbar/>
-                <Nav />
-                <Navbar/>
                 {status === 'loading' && <LinearProgress/>}
+                { userId ? <Navbar/> : <Logotip/>}
                 <div>
                     <Routes>
                         <Route path={PATH.LOGIN} element={<Login/>}/>

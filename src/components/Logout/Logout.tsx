@@ -4,6 +4,7 @@ import {logoutTC} from "../../redux/authReducer";
 import {useTypedDispatch} from "../../redux/store";
 import LogoutIcon from "../../asets/svg/Logout.svg"
 
+
 export const Logout = () => {
 
     let dispatch = useTypedDispatch()
