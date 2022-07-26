@@ -2,10 +2,16 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 12px;
     gap: 4%;
 
     background-color: #c7acef;
+}
+
+.linkWrapper {
+    display: flex;
+    align-items: center;
 }
 
 .navlinkContainer {
@@ -31,6 +37,11 @@
 
 .active {
     background-color: #b296db;
+}
+
+
+.logoContainer{
+    height: 60px;
 }
 
 /*Old style*/
