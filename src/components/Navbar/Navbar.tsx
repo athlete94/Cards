@@ -11,7 +11,7 @@ export const Navbar = () => {
     return (
             <div className={s.navbar}>
                 <div className={s.logoContainer}>
-                    <img src={Logo} alt='Logo'/>
+                    <img className={s.img} src={Logo} alt='Logo'/>
                     <div>Learn Card</div>
                 </div>
                 <div className={s.linkWrapper}>

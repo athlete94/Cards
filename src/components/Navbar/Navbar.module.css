@@ -22,6 +22,7 @@
     border-radius: 5px;
 }
 
+
 .text {
     font-weight: bold;
     font-size: 18px;
@@ -44,20 +45,8 @@
     height: 60px;
 }
 
-/*Old style*/
-/*
-.navbar a {
-    text-align: center;
+.img {
+    width: 78px;
+    height: 32px;
 }
 
-.navbar a:hover {
-    background-color: #b296db;
-}
-
-.navbar a:active {
-    color: #3f2e67;
-}
-
-.active {
-    background-color: #b296db;
-}*/
