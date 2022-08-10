@@ -24,7 +24,6 @@ const EditProfile = () => {
         setEdit(true)
     }
     const changeUserName = (e: ChangeEvent<HTMLInputElement>) => {
-        debugger
         setUserName(e.currentTarget.value.trimStart())
     }
     const saveBtnHandler = () => {
