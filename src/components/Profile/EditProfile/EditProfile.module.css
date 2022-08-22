@@ -11,11 +11,17 @@
     position: relative;
 }
 
-.avatar img {
-    width: 220px;
-    height: 220px;
+
+.avatar {
     border-radius: 50%;
 }
+
+.avatar img {
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+}
+
 
 .userName {
     font-size: 1rem;
@@ -33,7 +39,17 @@
 
 
 .backBtn {
+
     position: absolute;
     top: 5px;
     left: 5px;
+}
+
+
+/*/////////*/
+
+.uploadIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

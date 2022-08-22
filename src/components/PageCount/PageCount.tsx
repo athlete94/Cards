@@ -11,7 +11,7 @@ type BasicSelectPropsType = {
     setCount: (count: number) => void
 }
 
-export default function BasicSelect({pageCount, setCount}: BasicSelectPropsType) {
+    export default function BasicSelect({pageCount, setCount}: BasicSelectPropsType) {
 
 
     const handleChange = (event: SelectChangeEvent) => {
