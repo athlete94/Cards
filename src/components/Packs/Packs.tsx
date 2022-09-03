@@ -26,7 +26,7 @@ export default function Packs() {
     let allOrMyPacks = useAppSelector(state=>state.login.allOrMyPacks)
     let {page, pageCount, cardPacksTotalCount} = useAppSelector(state => state.picks)
     let {searchText: search, touchSlider, paramsSlider, sortPacks} = useAppSelector(state => state.search)
-    let isLogin = useAppSelector(state => state.login)
+    let isLogin = useAppSelector(state => state.login.isLogin)
 
 
     const debouncedSearchTerm = useDebounce(search, 500);
@@ -68,7 +68,6 @@ export default function Packs() {
     if (!isLogin) {
         return <Navigate to={PATH.LOGIN}/>
     }
-
     return (
         <div className={style.projectBlock}>
             <div className={s.profile}>
