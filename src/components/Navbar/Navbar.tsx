@@ -10,7 +10,7 @@ import {Logotip} from "../Logo/Logo";
 export const Navbar = () => {
     return (
         <div className={s.navbar}>
-            <Logotip/>
+            <Logotip />
             <div className={s.linkWrapper}>
                 <NavLink className={({isActive}) => isActive ? s.active : ''} to={PATH.PACKS}>
                     <div className={s.navlinkContainer}>
